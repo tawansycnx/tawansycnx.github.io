@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tawansy Restaurant & Cafe Menu</title>
+  <meta name="description" content="Halal-friendly, Thai, Western, Isaan" />
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./scripts/config.js"></script>
+  <script src="./scripts/scripts.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="header-grid container">
+      <!-- Top row -->
+      <div class="logo"></div>
+
+      <div class="actions">
+        <!-- Desktop language buttons -->
+        <div class="controls" aria-label="Language toggle">
+          <button class="btn" id="lang-en" aria-pressed="true">EN</button>
+          <button class="btn" id="lang-th" aria-pressed="false">TH</button>
+          <button class="btn" id="lang-zh" aria-pressed="false">中文</button>
+        </div>
+
+        <!-- Mobile language cycler -->
+        <button id="lang-cycle" class="lang-cycle" aria-label="Change language">EN</button>
+
+        <!-- Hamburger -->
+        <button id="hamburger" class="hamburger" aria-label="Open categories" aria-controls="catDrawer" aria-expanded="false">☰</button>
+      </div>
+      <!-- Second row -->
+      <h1 id="siteTitle">Tawansy Restaurant & Cafe</h1>
+      <div class="search" role="search">
+        <input id="q" type="search" placeholder="Search..." aria-describedby="searchHint" />
+      </div>
+
+    </div>
+    <div class="toolbar container" role="navigation" aria-label="Category filters">
+      <div id="sectionPills"></div>
+    </div>
+    <div id="catDrawer" class="drawer" aria-hidden="true">
+      <div class="drawer-panel container">
+        <div id="drawerList" class="drawer-grid" role="menu" aria-label="Categories"></div>
+      </div>
+    </div>
+  </header>
+
+  <div id="notice" class="notice" role="alert"></div>
+
+  <!-- Lightbox for large image preview -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Image preview">
+    <div class="lightbox-inner">
+      <img id="lightboxImg" alt="Dish photo">
+      <button id="lightboxClose" class="close" aria-label="Close preview">✕</button>
+    </div>
+  </div>
+
+  <main class="container">
+    <div id="grid" class="grid" aria-live="polite"></div>
+  </main>
+
+  <footer>
+    <p>Freshly cooked to order • Halal-friendly • PromptPay/AliPay/WeChat accepted</p>
+  </footer>
+</body>
+</html>
