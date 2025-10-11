@@ -94,41 +94,50 @@
     const drawerList=document.getElementById('drawerList');
     const hamburger=document.getElementById('hamburger');
     const catDrawer=document.getElementById('catDrawer');
-    const langBtns={en:document.getElementById('lang-en'),th:document.getElementById('lang-th'),cn:document.getElementById('lang-cn')};
+    const langBtns = {
+        en: document.getElementById('lang-en'),
+        th: document.getElementById('lang-th'),
+        cn: document.getElementById('lang-cn')
+    };
     const notice=document.getElementById('notice');
 
     // Mobile language cycler
     const langCycleBtn = document.getElementById('lang-cycle');
     if (langCycleBtn) {
-      const order = ['en', 'th', 'cn'];
-      function labelFor(lang) {
-        if (lang === 'th') return 'ไทย';
-        if (lang === 'cn') return '中文';
-        return 'EN';
-      }
+        const order = ['en', 'th', 'cn'];
+        function labelFor(lang) {
+            if (lang === 'th') return 'LANG: ไทย';
+            if (lang === 'cn') return '中文';
+            return 'EN';
+        }
+        function cycleLang() {
+            const idx = order.indexOf(state.lang);
+            const next = order[(idx + 1) % order.length];
+            state.lang = next;
 
-      function cycleLang() {
-        const idx = order.indexOf(state.lang);
-        const next = order[(idx + 1) % order.length];
-        state.lang = next;
+            // sync desktop buttons if present
+            const map = { en: 'lang-en', th: 'lang-th', cn: 'lang-cn' };
+            Object.values(map).forEach(id => { 
+                const el = document.getElementById(id); 
+                if (el) el.setAttribute('aria-pressed','false'); 
+            });
+            const active = document.getElementById(map[next]); 
+            if (active) 
+                active.setAttribute('aria-pressed','true');
 
-        // update desktop 3-button state too (for when screen rotates/widens)
-        const map = { en: 'lang-en', th: 'lang-th', cn: 'lang-cn' };
-        Object.values(map).forEach(id => {
-          const el = document.getElementById(id);
-          if (el) el.setAttribute('aria-pressed', 'false');
-        });
-        const active = document.getElementById(map[next]);
-        if (active) active.setAttribute('aria-pressed', 'true');
-
-        langCycleBtn.textContent = labelFor(next);
-        renderSections(); // refresh section/drawer labels
-        render(); // re-render items with new language
-      }
-      // init label
-      langCycleBtn.textContent = labelFor(state.lang);
-      langCycleBtn.addEventListener('click', cycleLang);
+            langCycleBtn.textContent = labelFor(next);
+            if (typeof renderSections === 'function') 
+                renderSections();
+            render();
+            try { 
+                localStorage.setItem('LANG', state.lang); 
+            } catch {}
+            document.documentElement.setAttribute('lang', state.lang);
+        }
+        langCycleBtn.textContent = labelFor(state.lang || 'en');
+        langCycleBtn.addEventListener('click', cycleLang);
     }
+
     
     function showNotice(msg){ notice.textContent = msg; notice.style.display='block'; }
 
@@ -235,10 +244,21 @@
 
     // ====== EVENTS ======
     document.getElementById('q').addEventListener('input',()=>{state.q=q.value;render();});
-    Object.entries(langBtns).forEach(([k,b])=>b.addEventListener('click',()=>{
-      state.lang=k; Object.values(langBtns).forEach(x=>x.setAttribute('aria-pressed','false'));
-      b.setAttribute('aria-pressed','true'); renderSections(); render();
-    }));
+
+    Object.entries(langBtns).forEach(([k, b]) => {
+    if (!b) return;
+    b.addEventListener('click', () => {
+        state.lang = k;
+        Object.values(langBtns).forEach(x => x && x.setAttribute('aria-pressed','false'));
+        b.setAttribute('aria-pressed','true');
+        if (typeof renderSections === 'function') 
+            renderSections();
+        render();
+        // persist global language so menu page uses the same
+        try { localStorage.setItem('LANG', state.lang); } catch {}
+        document.documentElement.setAttribute('lang', state.lang);
+    });
+    });    
 
     // ====== LOADERS ======
     async function loadItems(){
