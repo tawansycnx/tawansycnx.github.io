@@ -106,7 +106,7 @@
     if (langCycleBtn) {
         const order = ['en', 'th', 'cn'];
         function labelFor(lang) {
-            if (lang === 'th') return 'LANG: ไทย';
+            if (lang === 'th') return 'ไทย';
             if (lang === 'cn') return '中文';
             return 'EN';
         }
@@ -333,3 +333,4 @@
       renderSections();
       render();
     })();
+
