@@ -62,23 +62,23 @@
     // Language display rules
     function pickLang(it, lang){
       if(lang==='th') return { main: it.th_name||it.en_name||'', sub: it.en_name||'', desc: it.desc_th||'' };
-      if(lang==='zh') return { main: it.zh_name||it.en_name||'', sub: it.en_name||'', desc: it.desc_zh||it.desc_en||'' };
+      if(lang==='cn') return { main: it.cn_name||it.en_name||'', sub: it.en_name||'', desc: it.desc_cn||it.desc_en||'' };
       return { main: it.en_name||it.th_name||'', sub: it.th_name||'', desc: it.desc_en||'' }; // default EN
     }
 
     function catLabel(cat, lang){
       if(!cat) return '';
       if(lang==='th') return cat.th_name || cat.en_name || '';
-      if(lang==='zh') return cat.zh_name || cat.en_name || '';
+      if(lang==='cn') return cat.cn_name || cat.en_name || '';
       return cat.en_name || '';
     }
 
     function getItemCategoryId(it, categories){
       if(it.category_id && String(it.category_id).trim()!=='') return String(it.category_id);
-      const names = [it.category, it.category_en, it.category_th, it.category_zh].filter(Boolean).map(s=>String(s).trim().toLowerCase());
+      const names = [it.category, it.category_en, it.category_th, it.category_cn].filter(Boolean).map(s=>String(s).trim().toLowerCase());
       for(const c of categories){
         if(String(c.id)==='all') continue;
-        const cands=[c.en_name,c.th_name,c.zh_name].filter(Boolean).map(s=>s.toLowerCase());
+        const cands=[c.en_name,c.th_name,c.cn_name].filter(Boolean).map(s=>s.toLowerCase());
         if(names.some(n=>cands.includes(n))) return String(c.id);
       }
       return '';
@@ -94,16 +94,16 @@
     const drawerList=document.getElementById('drawerList');
     const hamburger=document.getElementById('hamburger');
     const catDrawer=document.getElementById('catDrawer');
-    const langBtns={en:document.getElementById('lang-en'),th:document.getElementById('lang-th'),zh:document.getElementById('lang-zh')};
+    const langBtns={en:document.getElementById('lang-en'),th:document.getElementById('lang-th'),cn:document.getElementById('lang-cn')};
     const notice=document.getElementById('notice');
 
     // Mobile language cycler
     const langCycleBtn = document.getElementById('lang-cycle');
     if (langCycleBtn) {
-      const order = ['en', 'th', 'zh'];
+      const order = ['en', 'th', 'cn'];
       function labelFor(lang) {
-        if (lang === 'th') return 'TH';
-        if (lang === 'zh') return '中文';
+        if (lang === 'th') return 'ไทย';
+        if (lang === 'cn') return '中文';
         return 'EN';
       }
 
@@ -113,7 +113,7 @@
         state.lang = next;
 
         // update desktop 3-button state too (for when screen rotates/widens)
-        const map = { en: 'lang-en', th: 'lang-th', zh: 'lang-zh' };
+        const map = { en: 'lang-en', th: 'lang-th', cn: 'lang-cn' };
         Object.values(map).forEach(id => {
           const el = document.getElementById(id);
           if (el) el.setAttribute('aria-pressed', 'false');
@@ -144,7 +144,7 @@
     // ====== RENDER SECTIONS (pills + drawer) ======
     function renderSections(){
       const cats = (state.categories && state.categories.length) ? state.categories : SAMPLE_CATEGORIES;
-      const all = cats.find(c=>String(c.id)==='all') || {id:'all', en_name:'All', th_name:'ทั้งหมด', zh_name:'全部', order:0};
+      const all = cats.find(c=>String(c.id)==='all') || {id:'all', en_name:'All', th_name:'ทั้งหมด', cn_name:'全部', order:0};
       const rest = cats.filter(c=>String(c.id)!=='all').slice().sort((a,b)=> (Number(a.order||999)-Number(b.order||999)) || String(a.en_name||'').localeCompare(String(b.en_name||'')));
       const full = [all, ...rest];
 
@@ -182,7 +182,7 @@
         const opts=parseOptions(it.options);
         const itemCatId = getItemCategoryId(it, cats);
         const catOK = state.cat==='all' || String(itemCatId)===String(state.cat);
-        const hay=[it.prefix,it.en_name,it.th_name,it.zh_name,it.desc_en,it.desc_th,it.desc_zh,opts.map(o=>o.label).join(' ')].join(' ').toLowerCase();
+        const hay=[it.prefix,it.en_name,it.th_name,it.cn_name,it.desc_en,it.desc_th,it.desc_cn,opts.map(o=>o.label).join(' ')].join(' ').toLowerCase();
         return catOK && (!term || hay.includes(term));
       });
 
@@ -258,11 +258,11 @@
             category_id:r.category_id||r.Category_id||r.cat_id||'',
             en_name:r.en_name||r.English||r.en||r.name_en||'',
             th_name:r.th_name||r.Thai||r.th||r.name_th||'',
-            zh_name:r.zh_name||r.Chinese||r.zh||r.name_zh||'',
+            cn_name:r.cn_name||r.Chinese||r.cn||r.name_cn||'',
             price:r.price||r.Price||'',
             desc_en:r.desc_en||r.Description_en||r.en_desc||r.Description||'',
             desc_th:r.desc_th||r.Description_th||r.th_desc||'',
-            desc_zh:r.desc_zh||r.Description_zh||r.zh_desc||'',
+            desc_cn:r.desc_cn||r.Description_cn||r.cn_desc||'',
             image_url:r.image_url||r.Image||r.image||'',
             badges:r.badges||r.Badges||'',
             options:r.options||r.Variants||r.variant||r.variant_options||''
@@ -292,11 +292,11 @@
             id: (r.id||r.ID||r.cat_id||'').trim() || 'all',
             en_name: r.en_name||r.English||r.name_en||r.label_en||'',
             th_name: r.th_name||r.Thai||r.name_th||r.label_th||'',
-            zh_name: r.zh_name||r.Chinese||r.name_zh||r.label_zh||'',
+            cn_name: r.cn_name||r.Chinese||r.name_cn||r.label_cn||'',
             order: Number(r.order||r.sort||r.idx||999)
           }));
           const hasAll = cats.some(c=>String(c.id)==='all');
-          state.categories = hasAll ? cats : [{id:'all', en_name:'All', th_name:'ทั้งหมด', zh_name:'全部', order:0}, ...cats];
+          state.categories = hasAll ? cats : [{id:'all', en_name:'All', th_name:'ทั้งหมด', cn_name:'全部', order:0}, ...cats];
         } else {
           state.categories = SAMPLE_CATEGORIES;
         }
