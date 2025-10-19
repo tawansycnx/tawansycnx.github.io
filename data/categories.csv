@@ -1,0 +1,12 @@
+﻿id,en_name,th_name,cn_name,order
+all,All,ทั้งหมด,全部,0
+1,Soups,ซุป,汤类,1
+2,Salads,สลัด,沙拉,2
+3,Appetizers,อาหารเรียกน้ำย่อย,开胃菜,3
+4,Burgers,เบอร์เกอร์,汉堡,4
+5,Spaghetti,สปาเก็ตตี้,意大利面,5
+6,Som Tum,ส้มตำ,青木瓜沙拉,6
+7,Curries,แกงกะหรี่,咖喱,7
+8,One Dish,อาหารจานเดียว,单点菜,8
+9,Fried Grills,อาหารย่างทอด,煎烤,9
+10,Stir-fries,ผัด,炒菜,10
