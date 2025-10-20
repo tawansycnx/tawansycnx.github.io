@@ -23,6 +23,48 @@ lightbox.addEventListener('click', (e)=>{ if(e.target===lightbox) closeLightbox(
 window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeLightbox(); });
 
 // ====== HELPERS ======
+function setupDescToggles(){
+  // Mobile-only behavior: if you want it strictly on small screens
+  const isMobile = window.matchMedia('(max-width: 900px)').matches;
+
+  document.querySelectorAll('#grid .desc').forEach(d => {
+    const textEl = d.querySelector('.desc-text');
+    const btn = d.querySelector('.more-toggle');
+    if (!textEl || !btn) return;
+
+    // Default: collapsed on mobile, expanded on desktop
+    d.setAttribute('data-collapsed', isMobile ? 'true' : 'false');
+    btn.setAttribute('aria-expanded', isMobile ? 'false' : 'true');
+
+    // Measure overflow only on mobile; hide toggle if single line
+    // Force a reflow so clientHeight is measured correctly after render()
+    if (isMobile) {
+      // brief trick to ensure styles applied before measurement
+      requestAnimationFrame(() => {
+        const overflow = textEl.scrollHeight - textEl.clientHeight > 1;
+        btn.style.display = overflow ? 'inline' : 'none';
+      });
+    } else {
+      btn.style.display = 'none';
+    }
+
+    // Toggle handler
+    btn.onclick = () => {
+      const collapsed = d.getAttribute('data-collapsed') !== 'false';
+      d.setAttribute('data-collapsed', collapsed ? 'false' : 'true');
+      btn.textContent = collapsed ? ' less' : '… more';
+      btn.setAttribute('aria-expanded', String(!collapsed));
+    };
+  });
+}
+
+// (Optional) re-check on resize so clamping stays correct when viewport changes
+let _descResizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(_descResizeTimer);
+  _descResizeTimer = setTimeout(() => setupDescToggles(), 150);
+});
+
 function parseCSV(text){
   const rows=[]; let row=[]; let field=''; let i=0; let inQuotes=false; const s=String(text||'');
   while(i<s.length){
@@ -405,7 +447,10 @@ function render(){
               <span class="sub">${view.sub || ''}</span>
             </div>
           </div>
-          <div class="desc">${view.desc || ''}</div>
+          <div class="desc" data-collapsed="true">
+            <span class="desc-text">${view.desc || ''}</span>
+            <button class="more-toggle" type="button" aria-expanded="false">… more</button>
+          </div>
           <div class="meta">
             ${variantsHTML}
             ${singlePriceHTML}
@@ -501,6 +546,8 @@ function render(){
       }
     });
   });
+  // After binding image handlers…
+  setupDescToggles();
 }
 
 // ====== EVENTS ======
