@@ -24,7 +24,6 @@ window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeLightbox(); 
 
 // ====== HELPERS ======
 function setupDescToggles(){
-  // Mobile-only behavior: if you want it strictly on small screens
   const isMobile = window.matchMedia('(max-width: 900px)').matches;
 
   document.querySelectorAll('#grid .desc').forEach(d => {
@@ -32,23 +31,20 @@ function setupDescToggles(){
     const btn = d.querySelector('.more-toggle');
     if (!textEl || !btn) return;
 
-    // Default: collapsed on mobile, expanded on desktop
+    // Default states
     d.setAttribute('data-collapsed', isMobile ? 'true' : 'false');
     btn.setAttribute('aria-expanded', isMobile ? 'false' : 'true');
 
-    // Measure overflow only on mobile; hide toggle if single line
-    // Force a reflow so clientHeight is measured correctly after render()
+    // Show toggle on mobile if text is "long enough"
+    // (length heuristic is more robust than overflow measurements across fonts)
     if (isMobile) {
-      // brief trick to ensure styles applied before measurement
-      requestAnimationFrame(() => {
-        const overflow = textEl.scrollHeight - textEl.clientHeight > 1;
-        btn.style.display = overflow ? 'inline' : 'none';
-      });
+      const textLen = (textEl.textContent || '').trim().length;
+      btn.style.display = textLen > 60 ? 'inline' : 'none';
     } else {
       btn.style.display = 'none';
     }
 
-    // Toggle handler
+    // Toggle
     btn.onclick = () => {
       const collapsed = d.getAttribute('data-collapsed') !== 'false';
       d.setAttribute('data-collapsed', collapsed ? 'false' : 'true');
@@ -57,6 +53,8 @@ function setupDescToggles(){
     };
   });
 }
+
+// Call this at the end of render()
 
 // (Optional) re-check on resize so clamping stays correct when viewport changes
 let _descResizeTimer;
@@ -449,7 +447,7 @@ function render(){
           </div>
           <div class="desc" data-collapsed="true">
             <span class="desc-text">${view.desc || ''}</span>
-            <button class="more-toggle" type="button" aria-expanded="false">… more</button>
+            <button class="more-toggle" type="button" aria-expanded="false">…more</button>
           </div>
           <div class="meta">
             ${variantsHTML}
