@@ -244,3 +244,45 @@
 .imgwrap:focus { outline: 2px solid var(--ring, #2d6cdf); outline-offset: 2px; }
 .imgwrap img { width: 100%; height: 100%; object-fit: cover; }
 
+/* Base styles for description + toggle */
+.desc {
+  font-size: 13px;
+  color: #d6dde6;
+}
+.desc .more-toggle {
+  display: none;           /* shown only when overflow on mobile */
+  margin-left: 6px;
+  border: none;
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0;
+}
+
+/* Mobile-only: clamp to 1 line when collapsed */
+@media (max-width: 900px) {
+  .desc[data-collapsed="true"] .desc-text {
+    /* Fallback for very old browsers (single-line) */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    /* Multi-line clamp (modern) */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    /* Standard property (lint appeasement / future-ready) */
+    line-clamp: 2;
+  }
+
+  /* When expanded, remove clamping */
+  .desc[data-collapsed="false"] .desc-text {
+    white-space: normal;
+    display: block;
+    overflow: visible;
+    text-overflow: clip;
+  }
+}
+
