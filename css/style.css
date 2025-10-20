@@ -260,6 +260,8 @@
   padding: 0;
 }
 
+:root { --desc-clamp-lines: 1; }
+
 /* Mobile-only: clamp to 1 line when collapsed */
 @media (max-width: 900px) {
   .desc[data-collapsed="true"] .desc-text {
@@ -271,10 +273,10 @@
     /* Multi-line clamp (modern) */
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
 
     /* Standard property (lint appeasement / future-ready) */
-    line-clamp: 2;
+    line-clamp: 1;
   }
 
   /* When expanded, remove clamping */
