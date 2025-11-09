@@ -154,7 +154,7 @@
       grid-area:logo;
       width:40px; height:40px;
       border-radius:10px;
-      background: url('../img/res/logov2-bg.png') center/cover no-repeat;
+      background: url('../images/res/logov2-bg.png') center/cover no-repeat;
     }
     .actions{ grid-area:actions; display:flex; align-items:center; gap:6px; justify-self:end; }
     #siteTitle{ grid-area:title; margin:0; font-size:18px; }
@@ -199,13 +199,23 @@
 
     /* Grouped category section in ALL view */
 .cat-section { margin: 8px 0 18px; }
-.cat-title {
+/*.cat-title {
   margin: 12px 0 8px;
   font-size: 16px;
   font-weight: 600;
   color: #e9edf1;
   opacity: 0.9;
+}*/
+
+.cat-title {
+  margin: 16px 0 8px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  border-bottom: 2px solid var(--accent, #ffb703);
+  padding-bottom: 4px;
 }
+
 
 /* Tiles grid: 2 cols on mobile, 3 on desktop */
 .grid-tiles {
@@ -288,3 +298,300 @@
   }
 }
 
+/* Header layout */
+.header-grid { display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:center; padding:10px 16px; }
+.head-actions { display:flex; gap:10px; align-items:center; justify-self:end; }
+#langSelect { border:1px solid #2a2f34; background:#0b0c0d; color:#e9edf1; padding:8px 12px; border-radius:10px; }
+.hamburger { border:1px solid #2a2f34; background:#0b0c0d; color:#e9edf1; padding:8px 12px; border-radius:10px; cursor:pointer; }
+
+/* Drawer nav & submenu */
+.drawer{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;z-index:60}
+.drawer.open{display:block}
+.drawer-panel{position:absolute;right:0;top:0;height:100%;width:min(85vw,360px);background:#0b0c0d;border-left:1px solid #23272b;display:flex;flex-direction:column;gap:12px;padding:20px}
+.nav-vert{display:flex;flex-direction:column;gap:8px}
+.nav-vert a, .nav-parent, .subitem{padding:10px 12px;border-radius:10px;border:1px solid #1f252a;color:#d8e0ea;background:#111315;text-align:left}
+.nav-group{display:flex;flex-direction:column;gap:6px}
+.nav-parent{display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.nav-parent[aria-expanded="true"] .chev { transform:rotate(90deg); }
+.submenu{display:flex;flex-direction:column;gap:6px;padding-left:6px}
+.submenu[hidden]{display:none}
+
+/* Menu page search (under header) */
+.menu-search { padding: 0 16px 8px; }
+.menu-search .search input{ width:100%; padding:10px 12px; border-radius:12px; border:1px solid #2a2f34; background:#0b0c0d; color:#e9edf1 }
+
+/* Always show hamburger */
+.hamburger {
+  display: inline-flex;          /* ensure visible on all breakpoints */
+  align-items: center;
+  justify-content: center;
+}
+
+/* If you still have an old rule like:
+@media (min-width: 900px){ #hamburger{ display:none } }
+this will override it: */
+@media (min-width:0){
+  #hamburger { display: inline-flex !important; }
+}
+
+/* ===== Header 2×2 layout ===== */
+.header-2x2 {
+  display: grid;
+  grid-template-columns: 1fr auto; /* left column grows; right column hugs content */
+  gap: 14px 16px;
+  align-items: center;
+  padding: 10px 16px;
+}
+
+.h-left{
+  display:flex;
+  flex-direction:column;     /* stack: logo (top), name (bottom) */
+  align-items:flex-start;    /* left align both elements */
+  gap:6px;
+  min-width:0;
+}
+
+.h-left .logo{
+  display:block;
+  width:48px; height:48px;        /* a bit larger; adjust if you like */
+  border-radius:8px;
+  background-position:left center;
+  background-repeat:no-repeat;
+  background-size:contain;        /* fits your actual logo without cropping */
+  /* background-image is set via JS so paths work on both pages */
+}
+
+.h-left #siteTitle {
+  margin: 0;
+  font-size: 18px;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.h-right {
+  display: grid;
+  grid-template-rows: auto auto; /* top: lang+ham, bottom: search */
+  row-gap: 8px;
+  justify-items: end; /* align right side to the right edge */
+}
+
+.h-right-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lang-label {
+  color: #e9edf1;
+  font-size: 0.85rem;
+}
+
+#langSelect {
+  border: 1px solid #2a2f34;
+  background: #0b0c0d;
+  color: #e9edf1;
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+
+.hamburger {
+  display: inline-flex !important; /* always visible (desktop + mobile) */
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #2a2f34;
+  background: #0b0c0d;
+  color: #e9edf1;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.h-right-bottom .search input {
+  width: 100%;
+  max-width: min(520px, 75vw);
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #2a2f34;
+  background: #0b0c0d;
+  color: #e9edf1;
+}
+
+/* Mobile adjustments */
+@media (max-width: 900px) {
+  .h-right-bottom .search input {
+    max-width: min(260px, 70vw);
+  }
+}
+
+/* ===== HERO ===== */
+.hero {
+  position: relative;
+  isolation: isolate;
+  /* height scales by viewport; tweak to taste */
+  min-height: clamp(380px, 60vh, 680px);
+  display: grid;
+  align-items: stretch;
+  overflow: hidden;
+  border-bottom: 1px solid #24282c;
+}
+
+.hero-media,
+.hero-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  /* left-to-right vignette so copy is readable on top of image */
+  background: linear-gradient(90deg, rgba(10,12,14,.75) 0%, rgba(10,12,14,.45) 45%, rgba(10,12,14,.15) 70%, rgba(10,12,14,0) 100%);
+  z-index: 1;
+}
+
+/* Copy container */
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  align-items: center;
+  height: 100%;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+/* Text block */
+.hero-copy {
+  max-width: 680px;
+}
+
+.hero-title {
+  margin: 0 0 8px;
+  font-size: clamp(28px, 5vw, 46px);
+  line-height: 1.1;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: .2px;
+}
+
+.hero-sub {
+  margin: 0 0 16px;
+  color: #d0d9e5;
+  font-size: clamp(14px, 2.2vw, 18px);
+}
+
+/* CTAs */
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid #2a2f34;
+}
+
+.cta.primary {
+  background: var(--brand);
+  color: #08100a;
+  border-color: transparent;
+}
+
+.cta.secondary {
+  background: #0b0c0d;
+  color: var(--ink);
+}
+
+/* Small screens: add a bit more overlay for readability */
+@media (max-width: 700px) {
+  .hero-overlay {
+    background: linear-gradient(90deg, rgba(10,12,14,.85) 0%, rgba(10,12,14,.55) 50%, rgba(10,12,14,.2) 85%, rgba(10,12,14,0) 100%);
+  }
+}
+
+.category-title {
+  margin: 16px 0 8px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  border-bottom: 2px solid var(--accent, #ffb703);
+  padding-bottom: 4px;
+}
+
+.prefix {
+  display: inline-block;
+  font-weight: 700;
+  margin-right: 6px;
+  color: #cfe3ff;
+  white-space: nowrap;
+}
+
+/* Collapsible category sections (ALL view) */
+.cat-section { margin: 16px 0; }
+.cat-head {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:8px; padding:8px 0;
+  border-bottom:2px solid var(--accent, #ffb703);
+}
+.cat-toggle {
+  appearance:none; background:none; border:0; color:#fff; cursor:pointer;
+  display:flex; align-items:center; gap:8px; font:inherit; padding:0;
+}
+.cat-toggle .label { font-size:1.1rem; font-weight:700; }
+.cat-toggle .chev { transition: transform .2s ease; display:inline-block; }
+.cat-toggle[aria-expanded="false"] .chev { transform: rotate(-90deg); }
+
+.cat-body[hidden] { display:none; }
+
+/* --- Language selector --- */
+.lang-select {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lang-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.lang-select select {
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.9rem;
+}
+
+.footer-social {
+  display: flex;
+  justify-content: center; /* centers icons horizontally */
+  align-items: center;
+  gap: 16px; /* space between icons */
+  margin-top: 15px;
+}
+
+.footer-social a img {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.footer-social a img:hover {
+  transform: scale(1.15);
+  opacity: 0.8;
+}

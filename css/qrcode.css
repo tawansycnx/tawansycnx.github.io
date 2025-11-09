@@ -1,0 +1,80 @@
+/* Uses your global CSS variables from style.css */
+.qr-card {
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  box-shadow: 0 10px 16px rgba(0,0,0,0.08);
+}
+
+.qr-title {
+  font-size: 20px;
+  margin: 0 0 12px;
+}
+
+.qr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+
+.field label { font-size: 14px; color: var(--muted); display: block; margin-bottom: 6px; }
+
+.field input[type="text"],
+.field input[type="file"],
+.field select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #2a2f34;
+  border-radius: 10px;
+  background: #0b0c0d;
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.field input[type="color"] {
+  height: 40px; width: 100%;
+  padding: 0;
+  border: 1px solid #2a2f34; border-radius: 10px;
+  background: #0b0c0d;
+}
+
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+
+/* Reuse your .btn style; allow a ghost variant using data-variant */
+.btn[data-variant="ghost"] {
+  background: #0b0c0d;
+  color: var(--ink);
+  border: 1px solid #2a2f34;
+}
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+
+.muted { color: #aab2bd; font-size: 13px; }
+.messages .error { color: #fca5a5; background: #3a1414; border:1px solid #5a1b1b; padding:8px 10px; border-radius:8px; font-size:13px; }
+.messages .ok    { color: #9fe6c9; background: #11322a; border:1px solid #1d5748; padding:8px 10px; border-radius:8px; font-size:13px; }
+
+/* Output area */
+.output { margin-top: 18px; display: grid; justify-items: center; }
+
+/* Responsive canvas: match CSS size to screen, keep sharp with device pixels (handled in JS) */
+#compositeCanvas {
+  display: none;
+  width: 90vw;          /* fill most of the viewport width on mobile */
+  height: auto;         /* keep aspect ratio */
+  max-width: 512px;     /* cap on larger screens */
+  border: 1px dashed #2a2f34;
+  border-radius: 10px;
+}
+
+/* Hide internal target where QRCode.js renders */
+#qrcode { display: none; }
+
+/* Don’t overflow on smaller screens */
+*, *::before, *::after { box-sizing: border-box; }
+
+@media (max-width: 720px) {
+  .qr-grid { grid-template-columns: 1fr; }
+}

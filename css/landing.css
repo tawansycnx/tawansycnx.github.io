@@ -1,0 +1,120 @@
+:root{
+    --bg:#0e0f10; --card:#17191b; --ink:#e9edf1; --muted:#aab2bd;
+    --brand:#21c27a; --accent:#ffb703; --ring:#2d6cdf;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+.container{max-width:1100px;margin:auto;padding:16px}
+header{position:sticky;top:0;background:rgba(14,15,16,.85);backdrop-filter:blur(8px);border-bottom:1px solid #24282c;z-index:50}
+.bar{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:10px 16px}
+.brand{display:flex;gap:10px;align-items:center}
+/*.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),#8be89e)}*/
+h1{font-size:18px;margin:0;color:#fff;letter-spacing:.3px}
+
+.actions{display:flex;gap:8px;align-items:center}
+.btn{border:1px solid #2a2f34;background:#0b0c0d;color:var(--ink);padding:8px 12px;border-radius:10px;cursor:pointer}
+.btn[aria-pressed="true"]{outline:2px solid var(--ring)}
+.hamburger{border:1px solid #2a2f34;background:#0b0c0d;color:var(--ink);padding:8px 12px;border-radius:10px;cursor:pointer}
+.hamburger:focus{outline:2px solid var(--ring)}
+
+/* Drawer */
+.drawer{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;z-index:60}
+.drawer.open{display:block}
+.drawer-panel{position:absolute;right:0;top:0;height:100%;width:min(85vw,360px);background:#0b0c0d;border-left:1px solid #23272b;display:flex;flex-direction:column;gap:12px;padding:20px}
+.drawer h2{margin:6px 0 8px;font-size:14px;color:#cfe3ff;text-transform:uppercase;letter-spacing:.12em}
+.nav-vert{display:flex;flex-direction:column;gap:8px}
+.nav-vert a{padding:10px 12px;border-radius:10px;border:1px solid #1f252a;color:#d8e0ea;background:#111315}
+.drawer .close{position:absolute;top:10px;right:10px}
+
+/* Hero */
+.hero{position:relative;isolation:isolate}
+.hero-wrap{display:grid;grid-template-columns:1fr;align-items:center;gap:20px;padding:28px 16px}
+.hero-card{background:linear-gradient(180deg,rgba(15,16,17,.6),rgba(15,16,17,.85));border:1px solid #23272b;border-radius:18px;padding:24px}
+.hero-title{font-size:34px;margin:0 0 6px;color:#fff}
+.hero-sub{color:#cbd3de;margin:0 0 14px}
+.cta-row{display:flex;flex-wrap:wrap;gap:10px}
+.cta{background:var(--brand);color:#0a0f0a;border:none;border-radius:12px;padding:10px 14px;cursor:pointer;font-weight:700}
+.cta.secondary{background:#111315;color:#dfe6ef;border:1px solid #2a2f34}
+
+.hero-bg{position:absolute;inset:0;z-index:-1;opacity:.25;background:url('./images/hero.jpg') center/cover no-repeat}
+
+/* Sections */
+section{padding:18px 16px}
+.section-title{font-size:22px;margin:6px 0 10px;border-left:4px solid var(--accent);padding-left:10px;color:var(--brand);text-transform:uppercase;letter-spacing:.05em}
+
+/* About */
+.about{display:grid;grid-template-columns:1fr;gap:14px}
+.about p{margin:0;color:#d6dde6}
+.about .row{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:900px){
+    .about{grid-template-columns:1.3fr .7fr;align-items:center}
+    .hero-wrap{grid-template-columns:1.2fr .8fr}
+}
+
+/* Signature dishes grid */
+.cards{display:grid;gap:12px}
+@media(max-width:900px){ .cards{grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media(min-width:901px){ .cards{grid-template-columns:repeat(3,minmax(0,1fr));} }
+.card{background:var(--card);border:1px solid #23272b;border-radius:16px;overflow:hidden}
+.card .img{aspect-ratio:5/3;background:#0b0c0d}
+.card .img img{width:100%;height:100%;object-fit:cover}
+.card .body{padding:10px 12px}
+.card .name{display:flex;gap:8px;align-items:baseline}
+.card .prefix{font-weight:600;color:var(--accent);font-family:'Courier New',monospace}
+.card .main{font-weight:700}
+.card .desc{font-size:13px;color:#cfd7e2}
+
+/* Contact / Map */
+.contact-grid{display:grid;gap:12px}
+@media(min-width:900px){ .contact-grid{grid-template-columns:1fr 1fr} }
+.contact-box{background:#0b0c0d;border:1px solid #23272b;border-radius:16px;padding:14px}
+.contact-row{display:flex;gap:10px;flex-wrap:wrap}
+.pill{padding:8px 12px;border-radius:999px;border:1px solid #2a2f34;background:#0b0c0d;color:#dfe6ef}
+
+footer{color:#aab2bd;padding:24px 16px;border-top:1px solid #23272b;text-align:center}
+
+/* Desktop: keep hamburger for consistency per your request */
+@media (min-width:900px){
+    .bar{grid-template-columns:auto 1fr auto}
+}
+
+/* Utility */
+.sr-only{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+.hero-copy {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+  color: #dbd3d3;
+}
+
+.hero-copy h1 {
+  font-size: 2.2em;
+  margin-bottom: 0.5em;
+  font-weight: 700;
+}
+
+.hero-copy p {
+  font-size: 1.2em;
+  margin: 0.6em 0;
+}
+
+.hero-copy .highlight {
+  color: #d97a00; /* warm orange tone — adjust as desired */
+  font-weight: 700;
+}
+.hero-copy p {
+  animation: fadeInUp 1s ease both;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.footer-social .fa-whatsapp {
+  color: #25D366; /* WhatsApp green */
+}
