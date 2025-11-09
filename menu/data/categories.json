@@ -1,0 +1,79 @@
+[
+  {
+    "id": "all",
+    "en_name": "All",
+    "th_name": "ทั้งหมด",
+    "cn_name": "全部",
+    "order": 0
+  },
+  {
+    "id": 1,
+    "en_name": "Soups",
+    "th_name": "ซุป",
+    "cn_name": "汤类",
+    "order": 1
+  },
+  {
+    "id": 2,
+    "en_name": "Salads",
+    "th_name": "สลัด",
+    "cn_name": "沙拉",
+    "order": 2
+  },
+  {
+    "id": 3,
+    "en_name": "Appetizers",
+    "th_name": "อาหารเรียกน้ำย่อย",
+    "cn_name": "开胃菜",
+    "order": 3
+  },
+  {
+    "id": 4,
+    "en_name": "Burgers",
+    "th_name": "เบอร์เกอร์",
+    "cn_name": "汉堡",
+    "order": 4
+  },
+  {
+    "id": 5,
+    "en_name": "Spaghetti",
+    "th_name": "สปาเก็ตตี้",
+    "cn_name": "意大利面",
+    "order": 5
+  },
+  {
+    "id": 6,
+    "en_name": "Som Tum",
+    "th_name": "ส้มตำ",
+    "cn_name": "青木瓜沙拉",
+    "order": 6
+  },
+  {
+    "id": 7,
+    "en_name": "Curries",
+    "th_name": "แกงกะหรี่",
+    "cn_name": "咖喱",
+    "order": 7
+  },
+  {
+    "id": 8,
+    "en_name": "One Dish",
+    "th_name": "อาหารจานเดียว",
+    "cn_name": "单点菜",
+    "order": 8
+  },
+  {
+    "id": 9,
+    "en_name": "Fried Grills",
+    "th_name": "อาหารย่างทอด",
+    "cn_name": "煎烤",
+    "order": 9
+  },
+  {
+    "id": 10,
+    "en_name": "Stir-fries",
+    "th_name": "ผัด",
+    "cn_name": "炒菜",
+    "order": 10
+  }
+]

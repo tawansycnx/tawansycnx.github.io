@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QR Code Generator</title>
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="../css/style.css">
+  <!-- Page styles -->
+  <link rel="stylesheet" href="../css/qrcode.css">
+
+  <!-- QRCode library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+  <!-- Shared header/footer loader -->
+  <script src="../scripts/include.js" defer></script>
+  <!-- Shared chrome & lang -->
+  <script src="../scripts/shared-ui.js" defer></script>
+  <!-- Page script -->
+  <script src="../scripts/qrcode.js" defer></script>
+</head>
+<body>
+  <!-- Header include -->
+  <div data-include="header"></div>
+
+  <main class="container" style="padding-top:16px;">
+    <div class="card qr-card">
+      <h1 class="qr-title">Free QR Code Generator</h1>
+
+      <div class="muted">Generate a QR code for any website address for free.</div>
+      <div class="grid qr-grid">
+        <div class="field">
+          <label for="urlInput">URL</label>
+          <input id="urlInput" type="text" placeholder="https://your-website.com">
+        </div>
+
+        <div class="field">
+          <label for="logoInput">Upload Logo (optional)</label>
+          <input id="logoInput" type="file" accept="image/*" />
+          <div class="muted">PNG with transparent background recommended.<br>Max 2 MB, 64–1024 px.</div>
+        </div>
+
+        <div class="field">
+          <label>Background</label>
+          <div class="row">
+            <label class="row" style="gap:6px; align-items:center;">
+              <input id="bgTransparent" type="checkbox" />
+              <span>Transparent</span>
+            </label>
+            <input id="bgColor" type="color" value="#ffffff" title="Background color" />
+          </div>
+          <div class="muted">If transparent is checked, color is ignored.</div>
+        </div>
+
+        <div class="field">
+          <label for="clipStyle">Logo Shape</label>
+          <select id="clipStyle">
+            <option value="none">None</option>
+            <option value="rounded">Rounded Square</option>
+            <option value="circle">Circle</option>
+          </select>
+
+          <div class="row" id="radiusRow">
+            <input id="cornerRadius" type="range" min="4" max="64" value="16" />
+            <span class="muted" id="cornerRadiusLabel">Corner radius: 16 px</span>
+          </div>
+          <div class="muted">Clipping only applies if a logo is uploaded.</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="generateBtn" class="btn">Generate QR</button>
+        <button id="downloadBtn" class="btn" data-variant="ghost" disabled>Download PNG</button>
+        <button id="clearBtn" class="btn" data-variant="ghost" disabled>Clear</button>
+      </div>
+
+      <div id="messages" class="messages"></div>
+
+      <!-- Hidden base render target (QRCode.js injects canvas/img here) -->
+      <div id="qrcode" hidden></div>
+
+      <!-- Final output canvas (only visible after generation) -->
+      <div class="output">
+        <canvas id="compositeCanvas" width="512" height="512" aria-label="Generated QR code"></canvas>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer include -->
+  <div data-include="footer"></div>
+</body>
+</html>

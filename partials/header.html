@@ -1,0 +1,50 @@
+<header id="siteHeader">
+  <div class="header-2x2 container">
+    <!-- LEFT column (2 rows): Logo (top) + Name (bottom) -->
+    <div class="h-left">
+      <a class="logo" href="#" data-link="home" aria-label="Home"></a>
+      <h1 id="siteTitle">Tawansy Restaurant & Cafe</h1>
+    </div>
+
+    <!-- RIGHT column (2 rows): Lang + Hamburger (top), Search (bottom on /menu/) -->
+    <div class="h-right">
+      <div class="h-right-top">
+        <img src="/images/res/lang.png" alt="Language" class="lang-icon" />
+        <select id="langSelect">
+          <option value="en">EN</option>
+          <option value="th">ไทย</option>
+          <option value="cn">中文</option>
+        </select>
+        <button id="hamburger" class="hamburger" aria-label="Open menu" aria-controls="appDrawer" aria-expanded="false">☰</button>
+      </div>
+
+      <!-- Search row: shown only on /menu/ by shared-ui.js -->
+      <div id="menuSearch2x2" class="h-right-bottom" hidden>
+        <div class="search" role="search">
+          <input id="q" type="search" placeholder="Search..." aria-describedby="searchHint" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Drawer Navigation (unchanged) -->
+  <div id="appDrawer" class="drawer" aria-hidden="true">
+    <div class="drawer-panel container" role="dialog" aria-modal="true" aria-label="Site menu">
+      <button class="btn close" id="drawerClose">✕</button>
+      <nav class="nav-vert" aria-label="Main">
+        <a href="#" data-link="home">Home</a>
+        <a href="#" data-link="about">About Us</a>
+
+        <div class="nav-group">
+          <button class="nav-parent" id="menuParent" aria-expanded="false">
+            <span>Menu</span>
+          </button>
+          <div id="menuSub" class="submenu" hidden aria-label="Menu categories"></div>
+        </div>
+
+        <a href="#" data-link="contact">Contact Us</a>
+        <a href="#" data-link="tools-qrcode">QR Code Generator</a>
+      </nav>
+    </div>
+  </div>
+</header>

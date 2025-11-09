@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="180x180" href="../favicon.png">
+  <link rel="icon" type="image/svg+xml" href="../logo.svg">
+  <title>Tawansy Restaurant & Cafe Menu</title>
+  <meta name="description" content="Halal-friendly, Thai, Western, Isaan" />
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <!-- Scripts (order matters): -->
+  <script>
+    // Optional: override partials path if your site is under a subfolder/domain
+    window.SitePaths = {
+      header: "../partials/header.html",
+      footer: "../partials/footer.html"
+    };
+  </script>
+  <div data-include="header"></div>
+
+  <div id="notice" class="notice" role="alert"></div>
+
+  <!-- Lightbox for large image preview -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Image preview">
+    <img id="lightboxImg" alt="">
+    <button id="lightboxClose" aria-label="Close">✕</button>
+  </div>
+  
+  <!-- Menu main -->
+  <main class="container">
+    <!-- Category header stays visible even for ALL -->
+    <h2 id="categoryTitle" class="category-title">All</h2>
+
+    <!-- Your items grid -->
+    <div id="grid" class="grid" aria-live="polite"></div>
+  </main>
+
+  <!-- Footer include -->
+  <div data-include="footer"></div>
+
+  <script src="../scripts/include.js"></script>
+  <script src="../scripts/shared-ui.js"></script>
+
+  <script src="./scripts/config.js"></script>
+  <script src="./scripts/scripts.js" defer></script>
+</body>
+</html>

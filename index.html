@@ -3,64 +3,118 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="/logo.svg">
   <title>Tawansy Restaurant & Cafe Menu</title>
-  <meta name="description" content="Halal-friendly, Thai, Western, Isaan" />
+  <meta name="description" content="Cozy, modern-fusion kitchen in Chiang Mai. Not just a restaurant — heartfelt food, warm vibes, and a welcoming home-style atmosphere." />
   <link rel="stylesheet" href="./css/style.css">
-  <script src="./scripts/config.js"></script>
-  <script src="./scripts/scripts.js" defer></script>
+  <link rel="stylesheet" href="./css/landing.css">
 </head>
 <body>
-  <header>
-    <div class="header-grid container">
-      <!-- Top row -->
-      <div class="logo"></div>
+  <!-- Header include -->
+  <div data-include="header"></div>
 
-      <div class="actions">
-        <!-- Desktop language buttons -->
-        <div class="controls" aria-label="Language toggle">
-          <button class="btn" id="lang-en" aria-pressed="true">EN</button>
-          <button class="btn" id="lang-th" aria-pressed="false">ไทย</button>
-          <button class="btn" id="lang-cn" aria-pressed="false">中文</button>
+  <main id="home">
+   <!-- HERO -->
+    <section class="hero">
+      <picture class="hero-media">
+        <!-- WebP sources -->
+        <source type="image/webp" media="(min-width: 1200px)" srcset="./images/res/hero-1920.webp">
+        <source type="image/webp" media="(min-width: 700px)"  srcset="./images/res/hero-1280.webp">
+        <source type="image/webp"                              srcset="./images/res/hero-640.webp">
+        <!-- Fallback JPG (optional: provide the sizes you actually export) -->
+        <img src="./images/res/hero-1280.jpg" alt="Cozy modern-fusion dishes at Tawansy Restaurant & Cafe" loading="eager" decoding="async">
+      </picture>
+
+      <div class="hero-overlay" aria-hidden="true"></div>
+
+      <div class="hero-inner container">
+        <div class="hero-copy">
+          <h2 class="hero-title" data-i18n="tagline">Not just a restaurant.</h2>
+          <p>
+            A place where good food meets genuine connection — where guests become friends, and friends become family.
+          </p>
+          <p>
+            We <span class="highlight">cook</span>, we <span class="highlight">connect</span>, we <span class="highlight">care</span>.
+          </p>
+          <p>
+            Every meal comes with warmth, stories, and support — a space built on kindness, food, and community.
+          </p>
+
+
+          <div class="hero-ctas">
+            <a class="cta primary" href="./menu/menu.html" data-i18n="cta_menu">View Our Menu</a>
+            <a class="cta secondary" href="https://maps.google.com" target="_blank" rel="noopener" data-i18n="cta_findus">Find Us</a>
+          </div>
         </div>
-
-        <!-- Mobile language cycler -->
-        <button id="lang-cycle" class="lang-cycle" aria-label="Change language">EN</button>
-
-        <!-- Hamburger -->
-        <button id="hamburger" class="hamburger" aria-label="Open categories" aria-controls="catDrawer" aria-expanded="false">☰</button>
       </div>
-      <!-- Second row -->
-      <h1 id="siteTitle">Tawansy Restaurant & Cafe</h1>
-      <div class="search" role="search">
-        <input id="q" type="search" placeholder="Search..." aria-describedby="searchHint" />
+    </section>
+
+    <!-- About -->
+    <section id="about" class="container">
+      <h3 class="section-title" data-i18n="about_title">About Us</h3>
+      <div class="about">
+        <div>
+          <p data-i18n="about_p1">We blend Thai flavors with Western comfort in a cozy, home-style setting. Every dish is cooked to order using fresh ingredients.</p>
+          <p data-i18n="about_p2" style="margin-top:8px">Relax, share, and enjoy food that’s simple, warm, and welcoming—just like home.</p>
+        </div>
+        <div class="row">
+          <img src="./images/res/interior.png" alt="Warm interior" loading="lazy" style="border-radius:12px;border:1px solid #23272b">
+        </div>
       </div>
+    </section>
 
-    </div>
-    <div class="toolbar container" role="navigation" aria-label="Category filters">
-      <div id="sectionPills"></div>
-    </div>
-    <div id="catDrawer" class="drawer" aria-hidden="true">
-      <div class="drawer-panel container">
-        <div id="drawerList" class="drawer-grid" role="menu" aria-label="Categories"></div>
+    <!-- Signature Dishes -->
+    <section class="container">
+      <h3 class="section-title" data-i18n="sig_title">Signature Dishes</h3>
+      <div id="sigGrid" class="cards" aria-live="polite">
+        <!-- populated from ./data/menu.json -->
       </div>
-    </div>
-  </header>
+    </section>
 
-  <div id="notice" class="notice" role="alert"></div>
-
-  <!-- Lightbox for large image preview -->
-  <div id="lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Image preview">
-    <img id="lightboxImg" alt="">
-    <button id="lightboxClose" aria-label="Close">✕</button>
-  </div>
-  
-
-  <main class="container">
-    <div id="grid" class="grid" aria-live="polite"></div>
+    <!-- Contact & Map -->
+    <section id="contact" class="container">
+      <h3 class="section-title" data-i18n="contact_title">Contact & Hours</h3>
+      <div class="contact-grid">
+        <div class="contact-box">
+          <p><strong data-i18n="address_label">Address:</strong> <span data-i18n="address_val">Chiang Mai, Thailand</span></p>
+          <p><strong data-i18n="phone_label">Phone:</strong> <a href="tel:+66123456789">+66 123-789</a></p>
+          <p><strong data-i18n="hours_label">Hours:</strong> <span data-i18n="hours_val">Daily 12:00 – 24:00</span></p>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/tawansyplus" target="_blank" aria-label="Facebook">
+              <img src="images/res/fb-64.png" alt="Facebook">
+            </a>
+            <a href="https://www.instagram.com/tawansycnx/" target="_blank" aria-label="Instagram">
+              <img src="images/res/ig-64.png" alt="Instagram">
+            </a>
+            <!--a href="https://line.me/ti/p/YourLineID" target="_blank" aria-label="LINE">
+              <img src="images/res/line-64.png" alt="LINE">
+            </a-->
+            <a href="https://r.grab.com/g/6-20251109_132047_2a6c867e32e2461ab5104383fbd87946_MEXMPS-3-C7KGTXX1LRA1A2" target="_blank" aria-label="GrabFood">
+              <img src="images/res/grab-64.png" alt="GrabFood">
+            </a>
+            <a href="https://wa.me/66803913698" target="_blank" aria-label="WhatsApp">
+              <img src="images/res/wa-64.png" alt="WhatsApp">
+            </a>
+          </div>
+        </div>
+        <div class="contact-box" style="padding:0;overflow:hidden">
+          <iframe
+            title="Google Map"
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d236.06247874587896!2d98.9739981!3d18.7981685!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30da3b04d5fc6ce3%3A0x5741d3ddc262bd54!2zVGF3YW5zeSBSZXN0YXVyYW50ICYgQ2FmZSDguJXguLDguKfguLHguJnguIvguLXguYg!5e0!3m2!1sen!2sth!4v1761015969889!5m2!1sen!2sth"
+            width="100%" height="300" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <p>Freshly cooked to order • Halal-friendly • PromptPay/AliPay/WeChat accepted</p>
-  </footer>
+  <!-- Footer include -->
+  <div data-include="footer"></div>
+
+  <script src="./scripts/include.js"></script>
+  <script src="./scripts/shared-ui.js"></script>
+  <script src="./scripts/landing.js"></script> 
+
 </body>
 </html>
