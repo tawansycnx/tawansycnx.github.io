@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Bad Detective</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <div class="title">The Bad Detective</div>
+        <div class="subtitle">Fill the 10 answers ➜ generate your personalized script for a 2–3 actor performance.</div>
+      </div>
+      <div class="flex">
+        <span class="pill">Cast: Detective • Suspect • Backup Cop</span>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- LEFT: QUESTIONS -->
+      <section class="card" id="questionsCard">
+        <h2>Answer Sheet (1–2 words each)</h2>
+        <div id="qList"></div>
+        <div class="actions">
+          <button id="btnGenerate" class="good">Generate Script</button>
+          <button id="btnSample" class="secondary">Use Sample Answers</button>
+          <button id="btnClear" class="warn">Clear</button>
+          <button id="btnClear" class="back"><a href="index.html">Back</a></button>  
+        </div>
+        <div class="hr"></div>
+        <div class="tiny muted">Tip: Keep answers short for maximum punch. You can edit after generating.</div>
+      </section>
+
+      <!-- RIGHT: SCRIPT OUTPUT -->
+      <section class="card" id="scriptCard">
+        <h2>Personalized Script</h2>
+        <div class="actions">
+          <button id="btnCopy" class="secondary">Copy Script</button>
+          <button id="btnPrint" class="secondary">Print</button>
+          <label class="tiny muted" style="margin-left:auto"><input type="checkbox" id="toggleNumbers"  /> Show placeholders inline</label>
+        </div>
+        <div class="hr"></div>
+        <div class="script" id="scriptOut" aria-live="polite">
+          <div class="muted">Fill the answers on the left, then click <b>Generate Script</b>.</div>
+        </div>
+        <div class="hr"></div>
+        <div class="tiny muted">
+          <div><span class="mono">[#n]</span> markers refer to answer numbers. Stage directions appear in italics.</div>
+        </div>
+      </section>
+    </div>
+
+  </div>
+
+<script>
+// =================== DATA ===================
+const QUESTIONS=["A nickname","A random illegal thing (funny)","A household object","A favorite restaurant","A weird body part","A random date (month/day)","A celebrity","A silly verb","A strange noise (1 word)","A vehicle"];
+const TEMPLATE_LINES=[
+ {speaker:"Detective",text:"We know you were at [#4] on [#6]."},
+ {speaker:"Suspect",text:"Prove it."},
+ {speaker:"Backup",text:"([#9])",stage:true},
+ {speaker:"Detective",text:"We found your [#5] prints on a [#3]."},
+ {speaker:"Suspect",text:"Everyone touches [#3]!"},
+ {speaker:"Detective",text:"And you were caught [#8] near a [#10]."},
+ {speaker:"Backup",text:"Classic criminal move."},
+ {speaker:"Suspect",text:"But I was with [#7]!"},
+ {speaker:"Detective",text:"Lie again, [#1], and we’ll add [#2] to your charges."},
+ {speaker:"Suspect",text:"…okay fine, it was me."},
+ {speaker:"_",text:"(Detective celebrates awkwardly)",stage:true}
+];
+const SAMPLES=["Noodles","jaywalking a turtle","remote","SushiGo","left toe","04/01","Beyoncé","wiggling","HONK","scooter"];
+
+</script>
+<script src="script/script.js"></script>
+
+</body>
+</html>

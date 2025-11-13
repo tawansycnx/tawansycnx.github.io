@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Doctor’s Office Freak-Out</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <div class="title">The Doctor’s Office Freak-Out</div>
+        <div class="subtitle">Fill the 10 answers ➜ generate your personalized script for a 2–3 actor performance.</div>
+      </div>
+      <div class="flex">
+        <span class="pill">Cast: Doctor • Patient • Nurse (optional)</span>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- LEFT: QUESTIONS -->
+      <section class="card" id="questionsCard">
+        <h2>Answer Sheet (1–2 words each)</h2>
+        <div id="qList"></div>
+        <div class="actions">
+          <button id="btnGenerate" class="good">Generate Script</button>
+          <button id="btnSample" class="secondary">Use Sample Answers</button>
+          <button id="btnClear" class="warn">Clear</button>
+          <button id="btnClear" class="back"><a href="index.html">Back</a></button>  
+        </div>
+        <div class="hr"></div>
+        <div class="tiny muted">Tip: Keep answers short for maximum punch. You can edit after generating.</div>
+      </section>
+
+      <!-- RIGHT: SCRIPT OUTPUT -->
+      <section class="card" id="scriptCard">
+        <h2>Personalized Script</h2>
+        <div class="actions">
+          <button id="btnCopy" class="secondary">Copy Script</button>
+          <button id="btnPrint" class="secondary">Print</button>
+          <label class="tiny muted" style="margin-left:auto"><input type="checkbox" id="toggleNumbers"  /> Show placeholders inline</label>
+        </div>
+        <div class="hr"></div>
+        <div class="script" id="scriptOut" aria-live="polite">
+          <div class="muted">Fill the answers on the left, then click <b>Generate Script</b>.</div>
+        </div>
+        <div class="hr"></div>
+        <div class="tiny muted">
+          <div><span class="mono">[#n]</span> markers refer to answer numbers. Stage directions appear in italics.</div>
+        </div>
+      </section>
+    </div>
+
+  </div>
+
+<script>
+// =================== DATA ===================
+const QUESTIONS=[
+  "Something slimy",
+  "Animal sound",
+  "Body part (funny)",
+  "A school subject",
+  "A random object",
+  "A celebrity",
+  "A cartoon character",
+  "A dessert",
+  "A color (crazy)",
+  "A weird hobby (1-2 words)"
+];
+
+const TEMPLATE_LINES=[
+  {speaker:"Doctor",text:"So, your test results show… you’re allergic to [#8]."},
+  {speaker:"Patient",text:"But I LOVE [#8]."},
+  {speaker:"Doctor",text:"It gets worse. Your [#3] is growing a second [#3]."},
+  {speaker:"Patient",text:"([#2]) NOOO!",stage:true},
+  {speaker:"Nurse",text:"Doctor, their [#5] is vibrating again."},
+  {speaker:"Doctor",text:"Patient, have you been studying [#4] while doing [#10]?"},
+  {speaker:"Patient",text:"Only on weekends…"},
+  {speaker:"Doctor",text:"We must call [#6] and [#7], the finest specialists in [#9] medicine."},
+  {speaker:"Patient",text:"Will I survive?"},
+  {speaker:"Doctor",text:"Only if you stop touching [#1]."}
+];
+const SAMPLES=["slime","moo","elbow","math","toaster","Taylor Swift","SpongeBob","cheesecake","neon","extreme ironing"];
+
+</script>
+<script src="script/script.js"></script>
+
+</body>
+</html>

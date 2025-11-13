@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alien Abduction Interview</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <div class="title">Alien Abduction Interview</div>
+        <div class="subtitle">Fill the 10 answers ➜ generate your personalized script for a 2–3 actor performance.</div>
+      </div>
+      <div class="flex">
+        <span class="pill">Cast: Alien Zorp • Human Interviewer • Translator (optional)</span>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- LEFT: QUESTIONS -->
+      <section class="card" id="questionsCard">
+        <h2>Answer Sheet (1–2 words each)</h2>
+        <div id="qList"></div>
+        <div class="actions">
+          <button id="btnGenerate" class="good">Generate Script</button>
+          <button id="btnSample" class="secondary">Use Sample Answers</button>
+          <button id="btnClear" class="warn">Clear</button>
+          <button id="btnClear" class="back"><a href="index.html">Back</a></button>  
+        </div>
+        <div class="hr"></div>
+        <div class="tiny muted">Tip: Keep answers short for maximum punch. You can edit after generating.</div>
+      </section>
+
+      <!-- RIGHT: SCRIPT OUTPUT -->
+      <section class="card" id="scriptCard">
+        <h2>Personalized Script</h2>
+        <div class="actions">
+          <button id="btnCopy" class="secondary">Copy Script</button>
+          <button id="btnPrint" class="secondary">Print</button>
+          <label class="tiny muted" style="margin-left:auto"><input type="checkbox" id="toggleNumbers"  /> Show placeholders inline</label>
+        </div>
+        <div class="hr"></div>
+        <div class="script" id="scriptOut" aria-live="polite">
+          <div class="muted">Fill the answers on the left, then click <b>Generate Script</b>.</div>
+        </div>
+        <div class="hr"></div>
+        <div class="tiny muted">
+          <div><span class="mono">[#n]</span> markers refer to answer numbers. Stage directions appear in italics.</div>
+        </div>
+      </section>
+    </div>
+
+  </div>
+
+<script>
+// =================== DATA ===================
+const QUESTIONS=[
+    "Favorite childhood toy",
+    "A gross food",
+    "A planet/moon name",
+    "A body part",
+    "A random verb (1 word)",
+    "A weird sound",
+    "A favorite smell",
+    "A color",
+    "A random occupation",
+    "A sports team"
+];
+
+const TEMPLATE_LINES=[
+ {speaker:"Interviewer",text:"Alien Zorp, why have you taken planet Earth hostage?"},
+ {speaker:"Alien",text:"We require [#2]. Lots of it."},
+ {speaker:"Translator",text:"([#6]) This is serious.",stage:true},
+ {speaker:"Alien",text:"On [#3], we use it to repair our [#4]."},
+ {speaker:"Interviewer",text:"How long will this take?"},
+ {speaker:"Alien",text:"Until every human learns to [#5] properly."},
+ {speaker:"Translator",text:"They brought a sample—your [#1]."},
+ {speaker:"Interviewer",text:"That’s my childhood memory!"},
+ {speaker:"Alien",text:"We will trade it for tickets to [#10]."},
+ {speaker:"Translator",text:"Their favorite smell is [#7], and they prefer humans of [#8] color."},
+ {speaker:"Interviewer",text:"I’m a [#9]… does that help?"},
+ {speaker:"Alien",text:"…Yes. Welcome aboard."}
+];
+
+const SAMPLES=[
+    "yo-yo",
+    "brussels sprouts",
+    "Europa",
+    "knee",
+    "wiggle",
+    "bleep",
+    "rain",
+    "purple",
+    "barista",
+    "Lakers"
+];
+
+
+</script>
+<script src="script/script.js"></script>
+
+</body>
+</html>
