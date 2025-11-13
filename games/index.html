@@ -7,11 +7,8 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="wrap">
+  <div>
     <header>
-      <div>
-        <div id="gameTitle" class="title"></div>
-      </div>
     <div class="dropdown-wrapper">
       <label for="categorySelect">Choose Script:</label>
       <select id="categorySelect" onchange="handleSelection(this.value)">
@@ -28,6 +25,10 @@
         <option value="11">Time Travel Troubles</option>
       </select>
     </div>
+      <br>
+      <div>
+        <div id="gameTitle" class="title"></div>
+      </div>
 
     </header>
     <div class="card">
@@ -84,4 +85,5 @@
 <script src="script/script.js"></script>
 
 </body>
+
 </html>
