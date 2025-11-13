@@ -77,7 +77,7 @@ button:disabled{opacity:.5; cursor:not-allowed}
   font-size: 1rem;
 }
 
-#categorySelect {
+#scriptSelect {
   padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid #ccc;

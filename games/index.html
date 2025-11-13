@@ -15,20 +15,8 @@
     </header>
     <div class="card">
       <div class="dropdown-wrapper">
-        <label for="categorySelect">Choose Script:</label>
-        <select id="categorySelect" onchange="handleSelection(this.value)">
-          <option value="1" selected>Interogation Room</option>
-          <option value="2">The Suspicious Package</option>
-          <option value="3">The Doctor’s Office Freak-Out</option>
-          <option value="4">Restaurant From Hell</option>
-          <option value="5">Alien Abduction Interview</option>
-          <option value="6">The Bad Detective</option>
-          <option value="7">Airport Security Nightmare</option>
-          <option value="8">Royal Tea Disaster</option>
-          <option value="9">The Haunted House Tour</option>
-          <option value="10">Tech Support Meltdown</option>
-          <option value="11">Time Travel Troubles</option>
-        </select>
+        <label for="scriptSelect">Choose Script:</label>
+        <select id="scriptSelect"></select>
       </div>
     </div>
     <div class="card">
@@ -74,6 +62,8 @@
 
 <script src="script/data.js"></script>
 <script>
+  // 4️⃣ Run the generator on page load
+  populateDropdown();
   getData(1);
   function handleSelection(value) {
     if (!value) return;
@@ -85,7 +75,4 @@
 <script src="script/script.js"></script>
 
 </body>
-
 </html>
-
-
