@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>🍜 Group Dinner Connection — Conversation Randomizer</title>
+<style>
+  :root{
+    --bg:#fff9f2; --ink:#1b1b1b; --muted:#6b6b6b; --card:#ffffff; --accent:#ff7a00; --accent2:#00a97b;
+    --ring:#ffd7b2;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial; background:var(--bg); color:var(--ink);}
+  header{padding:18px 16px; display:flex; align-items:center; gap:12px; border-bottom:1px solid #eee; background:#fff;}
+  header h1{font-size:18px; margin:0; font-weight:700}
+  .pill{font-size:12px; padding:6px 10px; border-radius:999px; background:#ffe9d6; color:#8a3a00; font-weight:600}
+  main{max-width:980px; margin:0 auto; padding:16px}
+  .grid{display:grid; gap:12px}
+  @media (min-width:900px){ .grid{grid-template-columns: 1fr 300px} }
+
+  .card{background:var(--card); border:1px solid #eee; border-radius:16px; padding:16px; box-shadow:0 1px 8px rgba(0,0,0,0.03)}
+  .controls{display:flex; flex-wrap:wrap; gap:8px}
+  .group{margin-bottom:12px}
+  .group h3{margin:0 0 8px 0; font-size:13px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted)}
+  .btn{appearance:none; border:1px solid #ddd; background:#fff; padding:10px 12px; border-radius:12px; cursor:pointer; font-weight:600}
+  .btn.active{border-color:var(--accent); color:#8a3a00; background:#fff6ee}
+  .btn:focus{outline:3px solid var(--ring)}
+  .btn.primary{background:var(--accent); color:white; border-color:var(--accent)}
+  .btn.ghost{background:#f6f6f6}
+  .row{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+  label{font-size:13px; color:#333}
+  .promptbox{position:relative; padding:18px; border:2px dashed #ffd7b2; border-radius:16px; background:#fffefa}
+  .lang{margin:4px 0}
+  .lang b{font-size:12px; color:#8a3a00; text-transform:uppercase; letter-spacing:.04em}
+  .lang p{margin:6px 0 0 0; font-size:20px; line-height:1.3}
+  .meta{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+  .badge{font-size:12px; padding:4px 8px; border-radius:999px; border:1px solid #eee; background:#fff}
+  .badge.tier-1{background:#eafff6; border-color:#c1f3e2}
+  .badge.tier-2{background:#fff4d4; border-color:#ffe3a0}
+  .badge.tier-3{background:#ffe6ea; border-color:#ffc6d1}
+  .follow{margin-top:12px; display:none; font-size:15px; color:#333}
+  .follow b{color:#8a3a00}
+  .muted{color:var(--muted)}
+
+  /* Wheel overlay */
+  .wheelWrap{position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,0.35); z-index:50}
+  .wheel{width:240px; height:240px; border-radius:50%; border:8px solid white; background:
+    conic-gradient(#ffd9c0 0 20%, #d1ffe9 0 40%, #d6e6ff 0 60%, #ffe6f2 0 80%, #fff5c4 0 100%);
+    box-shadow:0 10px 40px rgba(0,0,0,0.25), inset 0 0 0 6px rgba(255,255,255,0.6);
+    position:relative;
+    animation:spin 1.2s cubic-bezier(.2,.7,.1,1) 0s 1 normal both;
+  }
+  .needle{width:0; height:0; border-left:14px solid transparent; border-right:14px solid transparent;
+    border-bottom:24px solid #ff3b3b; position:absolute; top:calc(50% - 142px); left:calc(50% - 14px); filter:drop-shadow(0 2px 3px rgba(0,0,0,.2))}
+  @keyframes spin { from{transform:rotate(0)} to{transform:rotate(1080deg)} } /* 3 spins */
+
+  .footer{margin-top:12px; font-size:12px; color:var(--muted)}
+  .rightCol .card{position:sticky; top:10px}
+  .tiny{font-size:12px}
+  .sep{height:8px}
+</style>
+</head>
+<body>
+<header>
+  <span class="pill">QR · Random Prompt</span>
+  <h1>Chiang Mai Connection</h1>
+</header>
+
+<main class="grid">
+  <section class="leftCol">
+    <div class="card">
+      <div class="group">
+        <div class="controls row">
+          <button id="btnNew" class="btn primary">🔁 New Prompt</button>
+          <button id="btnFollow" class="btn ghost">💬 Follow-up</button>
+          <button id="btnSpin" class="btn ghost">🎡 Spin</button>
+          <button id="btnAuto" class="btn ghost">⏱️ Auto-rotate: Off</button>
+          <label class="row tiny">Every <input id="autoSec" type="number" value="20" min="5" max="300" style="width:60px; padding:6px 8px; border:1px solid #ddd; border-radius:8px; margin:0 6px"/> sec</label>
+        </div>
+      </div>
+
+        <div class="group">
+        <h3>Mode</h3>
+        <div class="controls">
+            <button class="btn active" data-mode="all">🔓 All</button>
+            <button class="btn" data-mode="solo">🧍 Solo</button>
+            <button class="btn" data-mode="pair">👫 Pair</button>
+            <button class="btn" data-mode="table">👥 Table</button>
+            <button class="btn" data-mode="debate">⚖️ Debate</button>
+        </div>
+        </div>
+      <div class="group">
+        <h3>Difficulty</h3>
+        <div class="controls">
+          <button class="btn active" data-tier="all">All</button>
+          <button class="btn" data-tier="1">Easy</button>
+          <button class="btn" data-tier="2">Medium</button>
+          <button class="btn" data-tier="3">Deep</button>
+        </div>
+      </div>
+
+      <div class="group">
+        <h3>Tone</h3>
+        <div class="controls">
+          <button class="btn active" data-tone="all">All</button>
+          <button class="btn" data-tone="food">🍜 Food</button>
+          <button class="btn" data-tone="travel">✈️ Travel</button>
+          <button class="btn" data-tone="personality">😎 Personality</button>
+          <button class="btn" data-tone="funny">🤪 Funny</button>
+          <button class="btn" data-tone="deep">🧠 Deep</button>
+        </div>
+      </div>
+
+      <div class="group">
+        <h3>Prompt</h3>
+        <div id="promptbox" class="promptbox">
+          <div class="lang"><b>EN</b><p id="en">Tap “New Prompt” to begin.</p></div>
+          <div class="lang"><b>ไทย</b><p id="th" class="muted">แตะ “สุ่มคำถาม” เพื่อเริ่ม</p></div>
+          <div class="lang"><b>中文</b><p id="cn" class="muted">点击“新题目”开始</p></div>
+          <div class="meta">
+            <span id="badgeTier" class="badge">Tier –</span>
+            <span id="badgeTone" class="badge">Tone –</span>
+            <span id="badgeMode" class="badge">Mode: Solo</span>
+          </div>
+          <div id="follow" class="follow"></div>
+        </div>
+        <div class="footer">Be kind. Listen. Let everyone speak. No politics 💛</div>
+      </div>
+    </div>
+  </section>
+
+  <aside class="rightCol">
+    <div class="card">
+      <h3 style="margin-top:0">How to play (quick)</h3>
+      <ul class="tiny" style="margin:8px 0 0 18px; line-height:1.5">
+        <li>Choose <b>Mode</b> (Solo/Pair/Table/Debate).</li>
+        <li>Optionally set <b>Difficulty</b> and <b>Tone</b>.</li>
+        <li>Hit <b>Spin</b> (fun) or <b>New Prompt</b> (quick).</li>
+        <li>Toggle <b>Follow-up</b> for deeper questions.</li>
+        <li>Enable <b>Auto-rotate</b> to cycle every X seconds.</li>
+      </ul>
+      <div class="sep"></div>
+      <h3>Modes explained</h3>
+      <ul class="tiny" style="margin:8px 0 0 18px; line-height:1.5">
+        <li><b>Solo:</b> One person answers; anyone can add.</li>
+        <li><b>Pair:</b> Turn to a neighbor; both answer.</li>
+        <li><b>Table:</b> Everyone gives a short answer.</li>
+        <li><b>Debate:</b> Split into 2 sides; 30–60s each.</li>
+      </ul>
+      <div class="sep"></div>
+      <p class="tiny muted">Tip: For big groups, use Table or Debate with Easy/Medium tiers; save Deep for the last 20–30 minutes.</p>
+    </div>
+  </aside>
+</main>
+
+<!-- Wheel overlay -->
+<div id="wheelWrap" class="wheelWrap">
+  <div class="needle"></div>
+  <div class="wheel" id="wheel"></div>
+</div>
+
+<script>
+  /************ 1) PASTE YOUR 150-PROMPT ARRAY HERE ************
+   Example:
+   const prompts = [ {en:"...", th:"...", cn:"...", tier:1, follow:"..."}, ... ];
+  ***************************************************************/
+  // If you already pasted the full array earlier on your site, remove the fallback below.
+  if (!window.prompts) {
+    // Minimal fallback (so the file runs if you preview without pasting the big array)
+    window.prompts = [
+{
+en:"A dish you would serve to impress someone.",
+th:"อาหารจานหนึ่งที่คุณจะทำเพื่อให้คนประทับใจ",
+cn:"一道你会做来让别人印象深刻的菜",
+tier:2,
+follow:"Why that dish? Who would you serve it to first?"
+},
+{
+en:"A food you hated as a child but love now.",
+th:"อาหารที่ตอนเด็กคุณเกลียด แต่ตอนนี้ชอบมาก",
+cn:"你小时候讨厌但现在喜欢的食物",
+tier:2,
+follow:"What changed your mind?"
+},
+{
+en:"Your country's most underrated dish.",
+th:"อาหารในประเทศของคุณที่ถูกประเมินต่ำเกินไป",
+cn:"你国家被低估的菜",
+tier:2,
+follow:"Why don’t more people know it?"
+},
+{
+en:"Most underrated ingredient?",
+th:"วัตถุดิบที่คุณคิดว่าถูกประเมินต่ำที่สุด",
+cn:"最被低估的食材",
+tier:1,
+follow:"How do you use it?"
+},
+{
+en:"Favorite soup style.",
+th:"ซุปแบบที่คุณชอบที่สุด",
+cn:"你最喜欢的汤风格",
+tier:1,
+follow:"Clear or creamy?"
+},
+{
+en:"Worst food trend right now.",
+th:"กระแสอาหารที่แย่ที่สุดตอนนี้",
+cn:"现在最糟糕的饮食潮流",
+tier:2,
+follow:"Why do people follow it?"
+},
+{
+en:"A snack you secretly love.",
+th:"ของว่างที่คุณแอบชอบ",
+cn:"你偷偷喜欢的小吃",
+tier:1,
+follow:"When do you eat it?"
+},
+{
+en:"Best late-night street food.",
+th:"อาหารข้างทางที่อร่อยที่สุดตอนดึก",
+cn:"深夜最好吃的街头小吃",
+tier:2,
+follow:"Where did you try it?"
+},
+{
+en:"Sweet breakfast or savory dinner forever?",
+th:"จะเลือกอาหารเช้าหวาน หรืออาหารเย็นเค็มไปตลอดชีวิต?",
+cn:"甜早餐还是咸晚餐一辈子？",
+tier:1,
+follow:"Easy choice or painful?"
+},
+{
+en:"Food memory that makes you smile.",
+th:"ความทรงจำเกี่ยวกับอาหารที่ทำให้คุณยิ้ม",
+cn:"让你微笑的食物回忆",
+tier:3,
+follow:"What emotion does it carry?"
+},
+{
+en:"A dish your country is famous for.",
+th:"อาหารขึ้นชื่อของประเทศคุณ",
+cn:"你国家最出名的菜",
+tier:1,
+follow:"Is fame deserved?"
+},
+{
+en:"Food you'd ban permanently.",
+th:"อาหารที่คุณอยากแบนถาวร",
+cn:"你想永久禁止的食物",
+tier:1,
+follow:"Who would be most angry?"
+},
+{
+en:"Favorite smell in a kitchen.",
+th:"กลิ่นที่คุณชอบที่สุดในครัว",
+cn:"厨房里你最喜欢的味道",
+tier:1,
+follow:"What memory does it trigger?"
+},
+{
+en:"One carb you can’t live without.",
+th:"คาร์บที่คุณขาดไม่ได้",
+cn:"你离不开的碳水",
+tier:1,
+follow:"Boring or exciting answer?"
+},
+{
+en:"Food trend you actually enjoy.",
+th:"กระแสอาหารที่คุณชอบจริงๆ",
+cn:"你真的喜欢的饮食潮流",
+tier:1,
+follow:"Will it last?"
+},
+{
+en:"Dish you'd eat daily without getting bored.",
+th:"อาหารที่คุณกินทุกวันได้โดยไม่เบื่อ",
+cn:"你每天吃都不会腻的菜",
+tier:2,
+follow:"Why does it work long-term?"
+},
+{
+en:"Best dessert texture.",
+th:"เนื้อสัมผัสของขนมที่ดีที่สุด",
+cn:"甜点最好吃的口感",
+tier:1,
+follow:"What dessert nails it?"
+},
+{
+en:"Worst cooking disaster you caused.",
+th:"หายนะในการทำอาหารที่คุณเคยทำ",
+cn:"你造成过最糟糕的烹饪灾难",
+tier:2,
+follow:"Did anyone eat it?"
+},
+{
+en:"Street food > fancy restaurant?",
+th:"อาหารข้างทาง > ร้านหรู จริงไหม?",
+cn:"街头小吃 > 高级餐厅？",
+tier:2,
+follow:"When does fancy win?"
+},
+{
+en:"Most addictive snack from your country.",
+th:"ขนมที่กินแล้วหยุดไม่ได้จากประเทศคุณ",
+cn:"你国家最让人上瘾的小吃",
+tier:1,
+follow:"What makes it addictive?"
+},
+{
+en:"A sauce you could drink straight.",
+th:"ซอสที่คุณดื่มเพียวๆ ได้",
+cn:"你可以直接喝的酱",
+tier:1,
+follow:"With what dish?"
+},
+{
+en:"Food that reminds you of someone you love.",
+th:"อาหารที่ทำให้คุณนึกถึงคนที่คุณรัก",
+cn:"让你想起某位重要人的食物",
+tier:3,
+follow:"What’s the story?"
+},
+{
+en:"A national dish you secretly don't like.",
+th:"อาหารประจำชาติที่คุณแอบไม่ชอบ",
+cn:"你暗地里不喜欢的国家名菜",
+tier:2,
+follow:"Why secretly?"
+},
+{
+en:"Best airport food.",
+th:"อาหารสนามบินที่ดีที่สุด",
+cn:"最好吃的机场餐",
+tier:1,
+follow:"Which airport?"
+},
+{
+en:"Spiciest thing you survived.",
+th:"อาหารที่เผ็ดที่สุดที่คุณเคยกินรอดมาได้",
+cn:"你幸存过的最辣食物",
+tier:1,
+follow:"Would you try again?"
+},
+{
+en:"Food you refuse to try again.",
+th:"อาหารที่คุณจะไม่กินอีกแล้ว",
+cn:"你再也不愿尝试的食物",
+tier:2,
+follow:"How was the aftermath?"
+},
+{
+en:"Best comfort carb combo.",
+th:"คาร์บคู่โปรดที่ทำให้สบายใจ",
+cn:"最安慰的碳水组合",
+tier:1,
+follow:"When do you crave it?"
+},
+{
+en:"Most chaotic dish you invented.",
+th:"อาหารมั่วๆ ที่คุณเคยคิดค้น",
+cn:"你发明过最混乱的食物",
+tier:1,
+follow:"Did anyone else try it?"
+},
+{
+en:"A food smell you can't stand.",
+th:"กลิ่นอาหารที่คุณทนไม่ได้",
+cn:"你无法忍受的食物味道",
+tier:1,
+follow:"Where did you encounter it?"
+},
+{
+en:"The perfect hangover food.",
+th:"อาหารที่ดีที่สุดหลังเมาค้าง",
+cn:"最佳宿醉食物",
+tier:1,
+follow:"Greasy or clean?"
+},
+{
+en:"A city you visited that surprised you.",
+th:"เมืองที่คุณเคยไปแล้วรู้สึกประหลาดใจ",
+cn:"让你感到意外的一座城市",
+tier:2,
+follow:"What expectation did it break?"
+},
+{
+en:"Your funniest hostel roommate moment.",
+th:"เหตุการณ์ตลกกับรูมเมทในโฮสเทล",
+cn:"你在青旅遇到的最搞笑室友瞬间",
+tier:2,
+follow:"Did you stay friends?"
+},
+{
+en:"A place you would move to for one year.",
+th:"สถานที่ที่คุณอยากย้ายไปอยู่หนึ่งปี",
+cn:"你愿意搬去住一年的地方",
+tier:2,
+follow:"What would you do there?"
+},
+{
+en:"Your favorite airport in the world.",
+th:"สนามบินโปรดของคุณในโลก",
+cn:"你最喜欢的机场",
+tier:1,
+follow:"Why does it stand out?"
+},
+{
+en:"A travel scam you nearly fell for.",
+th:"กลโกงการท่องเที่ยวที่คุณเกือบโดน",
+cn:"你差点上当的旅游骗局",
+tier:2,
+follow:"How did you escape it?"
+},
+{
+en:"Strangest hotel/hostel rule you saw.",
+th:"กฎแปลกๆ ที่คุณเคยเจอในโรงแรม/โฮสเทล",
+cn:"你在旅舍/酒店看到的奇怪规定",
+tier:1,
+follow:"Did you break it?"
+},
+{
+en:"Most confusing public transit experience.",
+th:"ระบบขนส่งมวลชนที่งงที่สุดที่คุณเคยเจอ",
+cn:"你遇到过最混乱的公共交通体验",
+tier:2,
+follow:"Did a local help you?"
+},
+{
+en:"A country with the best desserts.",
+th:"ประเทศที่มีของหวานที่ดีที่สุด",
+cn:"甜点最好吃的国家",
+tier:1,
+follow:"What dessert won your heart?"
+},
+{
+en:"Best street food city you've visited.",
+th:"เมืองที่มีอาหารข้างทางดีที่สุดที่คุณเคยไป",
+cn:"你吃过最好街头美食的城市",
+tier:2,
+follow:"Which stall was the star?"
+},
+{
+en:"Your most spontaneous trip.",
+th:"การเดินทางแบบฉับพลันที่สุดของคุณ",
+cn:"你最即兴的旅行",
+tier:2,
+follow:"How did it begin?"
+},
+{
+en:"A local superstition you learned while traveling.",
+th:"ความเชื่อท้องถิ่นที่คุณได้รู้จากการท่องเที่ยว",
+cn:"你旅途中学到的当地迷信",
+tier:2,
+follow:"Do you believe it a bit now?"
+},
+{
+en:"Most beautiful view you’ve ever seen.",
+th:"วิวที่สวยที่สุดที่คุณเคยเห็น",
+cn:"你看过最美的风景",
+tier:2,
+follow:"What emotion did it give you?"
+},
+{
+en:"Your worst night bus/train experience.",
+th:"ประสบการณ์รถบัส/รถไฟกลางคืนที่แย่ที่สุด",
+cn:"你最糟糕的夜班车经历",
+tier:2,
+follow:"Did you sleep at all?"
+},
+{
+en:"Coolest border crossing moment.",
+th:"ช่วงเวลาที่ข้ามพรมแดนที่เจ๋งที่สุด",
+cn:"你经历过最酷的跨境瞬间",
+tier:2,
+follow:"Why was it memorable?"
+},
+{
+en:"A city you'd never visit again.",
+th:"เมืองที่คุณไม่อยากไปอีก",
+cn:"你不会再去的城市",
+tier:2,
+follow:"What disappointed you?"
+},
+{
+en:"Travel item people judge you for packing.",
+th:"ของที่คุณแพ็คแล้วคนมักจะสงสัย",
+cn:"别人会质疑你为什么带的旅行物品",
+tier:1,
+follow:"But you refuse to stop packing it."
+},
+{
+en:"Strangest bathroom you've encountered abroad.",
+th:"ห้องน้ำแปลกที่สุดที่คุณเคยเจอต่างประเทศ",
+cn:"你在国外遇到过最奇怪的厕所",
+tier:1,
+follow:"Was it functional?"
+},
+{
+en:"A travel smell you'll never forget.",
+th:"กลิ่นในการเดินทางที่คุณไม่มีวันลืม",
+cn:"你永远忘不了的旅行气味",
+tier:1,
+follow:"Good or bad?"
+},
+{
+en:"Best random kindness you received traveling.",
+th:"ความใจดีแบบสุ่มที่คุณได้รับ",
+cn:"你旅途中收到的随机善意",
+tier:3,
+follow:"How did it change your day?"
+},
+{
+en:"Travel food that surprised you most.",
+th:"อาหารท่องเที่ยวที่ทำให้คุณประหลาดใจที่สุด",
+cn:"旅行中最让你惊讶的食物",
+tier:2,
+follow:"Was it good or traumatizing?"
+},
+{
+en:"Most stressful airport moment.",
+th:"ช่วงเวลาที่เครียดที่สุดในสนามบิน",
+cn:"你在机场最紧张的时刻",
+tier:2,
+follow:"Did you make the flight?"
+},
+{
+en:"Your favorite travel season.",
+th:"ฤดูกาลที่คุณชอบท่องเที่ยวที่สุด",
+cn:"你最喜欢的旅行季节",
+tier:1,
+follow:"Crowded or quiet?"
+},
+{
+en:"A language fail you made abroad.",
+th:"ความผิดพลาดด้านภาษาเมื่ออยู่ต่างประเทศ",
+cn:"你在国外犯过的语言错误",
+tier:2,
+follow:"Did people laugh?"
+},
+{
+en:"A travel tradition you always repeat.",
+th:"ธรรมเนียมการเดินทางที่คุณทำเสมอ",
+cn:"你每次旅行都会做的习惯",
+tier:1,
+follow:"Where did you pick it up?"
+},
+{
+en:"The most random place you made a friend.",
+th:"สถานที่แปลกๆ ที่คุณได้เพื่อนใหม่",
+cn:"你在最随机的地方结识的朋友",
+tier:2,
+follow:"Still in touch?"
+},
+{
+en:"Best travel recommendation someone gave you.",
+th:"คำแนะนำท่องเที่ยวที่ดีที่สุดที่คุณได้รับ",
+cn:"别人给你最棒的旅行建议",
+tier:2,
+follow:"Who told you?"
+},
+{
+en:"Most photogenic city you visited.",
+th:"เมืองที่ถ่ายรูปสวยที่สุดที่คุณเคยไป",
+cn:"你见过最上镜的城市",
+tier:2,
+follow:"What time of day was best?"
+},
+{
+en:"A souvenir you are proud of.",
+th:"ของฝากที่คุณภูมิใจที่สุด",
+cn:"你最得意的纪念品",
+tier:1,
+follow:"Does it have a story?"
+},
+{
+en:"Best hidden-gem activity you've tried.",
+th:"กิจกรรมลับๆ ที่คุณเคยลองแล้วดีมาก",
+cn:"你尝试过最棒的隐藏玩法",
+tier:2,
+follow:"Tell others how to find it."
+},
+{
+en:"A travel moment that changed you.",
+th:"ช่วงเวลาในการท่องเที่ยวที่เปลี่ยนคุณ",
+cn:"改变过你的旅行瞬间",
+tier:3,
+follow:"How are you different now?"
+},
+{
+en:"Your weekend vibe in one word.",
+th:"อารมณ์ช่วงสุดสัปดาห์ของคุณในคำเดียว",
+cn:"用一个词形容你的周末氛围",
+tier:1,
+follow:"Why that word?"
+},
+{
+en:"The hobby you wish you had time for.",
+th:"งานอดิเรกที่คุณอยากมีเวลาทำ",
+cn:"你希望有时间做的爱好",
+tier:2,
+follow:"What stopped you?"
+},
+{
+en:"A smell you love irrationally.",
+th:"กลิ่นที่คุณชอบแบบงงๆ",
+cn:"你莫名喜欢的味道",
+tier:1,
+follow:"Where does it come from?"
+},
+{
+en:"Your favorite time of day.",
+th:"ช่วงเวลาที่คุณชอบที่สุดของวัน",
+cn:"一天中你最喜欢的时段",
+tier:1,
+follow:"What do you usually do then?"
+},
+{
+en:"Night owl or morning person?",
+th:"เป็นคนนอนดึกหรือตื่นเช้า?",
+cn:"你是夜猫子还是早起鸟？",
+tier:1,
+follow:"What makes you that way?"
+},
+{
+en:"Your comfort movie/series.",
+th:"ภาพยนตร์หรือซีรี่ส์ที่ดูแล้วสบายใจ",
+cn:"你的安慰电影/剧集",
+tier:1,
+follow:"Why does it work every time?"
+},
+{
+en:"A small habit that improved your life.",
+th:"นิสัยเล็กๆ ที่ทำให้ชีวิตดีขึ้น",
+cn:"一个改善了你生活的小习惯",
+tier:2,
+follow:"How did you pick it up?"
+},
+{
+en:"A talent people don’t expect you to have.",
+th:"ความสามารถที่คนอื่นไม่น่าคาดคิดว่าคุณมี",
+cn:"别人想不到你拥有的才能",
+tier:2,
+follow:"How did you learn it?"
+},
+{
+en:"Your favorite drink to relax with.",
+th:"เครื่องดื่มที่ช่วยให้คุณผ่อนคลาย",
+cn:"让你放松的饮品",
+tier:1,
+follow:"Hot or cold?"
+},
+{
+en:"Your current comfort song.",
+th:"เพลงที่ช่วยปลอบใจคุณตอนนี้",
+cn:"你现在的安慰歌曲",
+tier:1,
+follow:"When do you play it?"
+},
+{
+en:"One thing you’re really good at explaining.",
+th:"สิ่งที่คุณอธิบายเก่งมาก",
+cn:"你特别擅长解释的一件事",
+tier:2,
+follow:"Teach it in 20 seconds."
+},
+{
+en:"A skill you’re proud of learning recently.",
+th:"ทักษะที่คุณภูมิใจว่าเพิ่งเรียนรู้ได้",
+cn:"你最近学会并感到自豪的技能",
+tier:2,
+follow:"Why did you learn it?"
+},
+{
+en:"What people misunderstand about you.",
+th:"สิ่งที่คนมักเข้าใจผิดเกี่ยวกับคุณ",
+cn:"别人常误解你的地方",
+tier:3,
+follow:"Does it bother you?"
+},
+{
+en:"Your favorite type of weather.",
+th:"สภาพอากาศที่คุณชอบที่สุด",
+cn:"你最喜欢的天气",
+tier:1,
+follow:"Why that mood?"
+},
+{
+en:"One thing you always carry when traveling.",
+th:"สิ่งหนึ่งที่คุณพกติดตัวเวลาเดินทางเสมอ",
+cn:"你旅行时总会带的东西",
+tier:1,
+follow:"Is it practical or emotional?"
+},
+{
+en:"Your most used emoji right now.",
+th:"อีโมจิที่คุณใช้บ่อยที่สุดตอนนี้",
+cn:"你最近最常用的表情符号",
+tier:1,
+follow:"How does it represent you?"
+},
+{
+en:"A childhood hobby you'd try again as an adult.",
+th:"งานอดิเรกสมัยเด็กที่อยากกลับไปลองตอนเป็นผู้ใหญ่",
+cn:"你长大后想再尝试的童年爱好",
+tier:2,
+follow:"Why did you stop?"
+},
+{
+en:"Something you’ve collected in the past.",
+th:"สิ่งที่คุณเคยสะสมในอดีต",
+cn:"你以前收藏过的东西",
+tier:1,
+follow:"Do you still have them?"
+},
+{
+en:"Your personal theme song right now.",
+th:"เพลงธีมชีวิตของคุณตอนนี้",
+cn:"你现在的个人主题曲",
+tier:1,
+follow:"How long will it last?"
+},
+{
+en:"Describe your personality with a food.",
+th:"นิสัยของคุณในรูปแบบอาหารหนึ่งอย่าง",
+cn:"用一种食物形容你的性格",
+tier:2,
+follow:"What dish would your friends compare you to?"
+},
+{
+en:"Introvert, extrovert, or ambivert?",
+th:"คุณเป็นคนเก็บตัว เปิดตัว หรือกึ่งกลาง?",
+cn:"你是内向、外向还是双向？",
+tier:1,
+follow:"Has it changed over the years?"
+},
+{
+en:"A smell that immediately relaxes you.",
+th:"กลิ่นที่ทำให้คุณผ่อนคลายทันที",
+cn:"一种让你瞬间放松的气味",
+tier:1,
+follow:"Where do you find it?"
+},
+{
+en:"The best advice someone gave you.",
+th:"คำแนะนำที่ดีที่สุดที่คุณเคยได้รับ",
+cn:"你收到过的最好建议",
+tier:3,
+follow:"Who said it?"
+},
+{
+en:"Your favorite kind of silence.",
+th:"ความเงียบที่คุณชอบที่สุด",
+cn:"你最喜欢哪种沉默",
+tier:3,
+follow:"Where do you find it?"
+},
+{
+en:"Your dream breakfast right now.",
+th:"อาหารเช้าในฝันของคุณตอนนี้",
+cn:"你现在梦想的早餐",
+tier:1,
+follow:"Home-cooked or diner?"
+},
+{
+en:"Your most “you” fashion item.",
+th:"แฟชั่นไอเท็มที่เป็นตัวคุณที่สุด",
+cn:"最能代表你的穿搭单品",
+tier:2,
+follow:"Why that item?"
+},
+{
+en:"Best compliment someone gave you.",
+th:"คำชมที่ดีที่สุดที่คุณเคยได้รับ",
+cn:"别人给你最棒的称赞",
+tier:3,
+follow:"Do you remember who said it?"
+},
+{
+en:"Your favorite small luxury.",
+th:"ความหรูหราขนาดเล็กที่คุณชอบ",
+cn:"你喜欢的小奢侈",
+tier:1,
+follow:"How often do you treat yourself?"
+},
+{
+en:"The phone app you use the most daily.",
+th:"แอปที่คุณใช้มากที่สุดต่อวัน",
+cn:"你每天用得最多的手机应用",
+tier:1,
+follow:"Love it or addiction?"
+},
+{
+en:"A habit you want to pick up this year.",
+th:"นิสัยที่คุณอยากเริ่มในปีนี้",
+cn:"你今年想培养的习惯",
+tier:2,
+follow:"How will you start?"
+},
+{
+en:"Worst karaoke song to choose.",
+th:"เพลงคาราโอเกะที่เลือกแล้วพังที่สุด",
+cn:"最糟糕的KTV点歌",
+tier:1,
+follow:"Have you ever picked it?"
+},
+{
+en:"Food that would make terrible toothpaste.",
+th:"อาหารอะไรที่เป็นยาสีฟันแล้วแย่มาก",
+cn:"做成牙膏会很糟糕的食物",
+tier:1,
+follow:"Would you try once?"
+},
+{
+en:"The weirdest snack combo you actually like.",
+th:"การจับคู่ของว่างแปลกๆ ที่คุณชอบจริง",
+cn:"你居然喜欢的奇怪零食组合",
+tier:1,
+follow:"Who judged you the most?"
+},
+{
+en:"Your most chaotic food order.",
+th:"คำสั่งอาหารที่วุ่นวายที่สุดของคุณ",
+cn:"你最混乱的点餐经历",
+tier:2,
+follow:"Did the staff look confused?"
+},
+{
+en:"A dish that would definitely start a fight.",
+th:"อาหารที่สามารถเริ่มสงครามโต๊ะ",
+cn:"一定会引发争吵的菜品",
+tier:1,
+follow:"Why is it controversial?"
+},
+{
+en:"Food smell that should be illegal on a bus.",
+th:"กลิ่นอาหารที่ไม่ควรเปิดกินบนรถบัส",
+cn:"在公交车上应该禁止的食物味道",
+tier:1,
+follow:"Did you suffer this before?"
+},
+{
+en:"Worst airline food experience.",
+th:"ประสบการณ์อาหารบนเครื่องที่แย่ที่สุด",
+cn:"你吃过最糟糕的飞机餐",
+tier:1,
+follow:"Could you identify it?"
+},
+{
+en:"If forks disappeared tomorrow, what happens?",
+th:"ถ้าส้อมหายไปจากโลกพรุ่งนี้จะเกิดอะไรขึ้น",
+cn:"如果明天叉子消失会怎样？",
+tier:1,
+follow:"What replaces it?"
+},
+{
+en:"Song you would play when entering a restaurant like a wrestler.",
+th:"เพลงที่คุณจะเปิดตอนเดินเข้าร้านเหมือนนักมวยปล้ำ",
+cn:"像摔角选手走进餐厅时你会播的歌",
+tier:1,
+follow:"Is there pyrotechnics?"
+},
+{
+en:"Your most embarrassing food spill.",
+th:"เหตุการณ์อาหารหกที่น่าอายที่สุด",
+cn:"你最尴尬的洒食物时刻",
+tier:2,
+follow:"Did anyone clap?"
+},
+{
+en:"Worst beverage to drink warm.",
+th:"เครื่องดื่มอะไรที่อุ่นแล้วแย่มาก",
+cn:"最不适合喝热的饮料",
+tier:1,
+follow:"Have you tried it warm accidentally?"
+},
+{
+en:"If pizza toppings reflected personality, what’s yours?",
+th:"ถ้าหน้าพิซซ่าบอกนิสัยได้ ของคุณคืออะไร",
+cn:"如果披萨配料可以代表性格，你是什么？",
+tier:1,
+follow:"What does it say about you?"
+},
+{
+en:"Most cursed translation you’ve seen on a menu.",
+th:"คำแปลเมนูแปลกๆ ที่คุณเคยเห็น",
+cn:"菜单上你见过最离谱的翻译",
+tier:2,
+follow:"Did you still order it?"
+},
+{
+en:"Food you love that everyone else hates.",
+th:"อาหารที่คุณรักแต่คนอื่นไม่ชอบ",
+cn:"你喜欢但别人都讨厌的食物",
+tier:2,
+follow:"How do you defend it?"
+},
+{
+en:"Worst dish name translation you saw online.",
+th:"ชื่ออาหารแปลเพี้ยนที่คุณเห็นออนไลน์",
+cn:"你在网上见过最离谱的菜名翻译",
+tier:1,
+follow:"Did it go viral?"
+},
+{
+en:"Food packaging lie that fooled you.",
+th:"การตลาดบนแพ็กอาหารที่หลอกคุณได้",
+cn:"让你被骗的食品包装谎言",
+tier:1,
+follow:"Did you forgive the brand?"
+},
+{
+en:"If you had to invent the world's most ridiculous restaurant rule.",
+th:"ถ้าคุณต้องออกกฎร้านอาหารตลกๆ หนึ่งข้อ",
+cn:"如果要发明世界最荒谬的餐馆规则",
+tier:1,
+follow:"How would staff enforce it?"
+},
+{
+en:"Snack you should never eat on first dates.",
+th:"ของว่างที่ไม่ควรกินในเดทแรก",
+cn:"第一次约会绝对不该吃的零食",
+tier:1,
+follow:"Mist learned personally?"
+},
+{
+en:"If you were a kitchen utensil, what would you be?",
+th:"ถ้าคุณเป็นอุปกรณ์ครัว จะเป็นอะไร",
+cn:"如果你是一件厨房工具，你会是什么？",
+tier:1,
+follow:"Describe your skill."
+},
+{
+en:"A moment travel changed your perspective.",
+th:"ช่วงเวลาที่การเดินทางเปลี่ยนมุมมองคุณ",
+cn:"一次旅行改变你观念的瞬间",
+tier:3,
+follow:"What belief shifted?"
+},
+{
+en:"A dish that reminds you of someone you lost or miss.",
+th:"อาหารที่ทำให้คุณนึกถึงคนที่คุณคิดถึงหรือสูญเสียไป",
+cn:"让你想起逝去或思念之人的食物",
+tier:3,
+follow:"How does it comfort you?"
+},
+{
+en:"A stranger’s kindness you still remember.",
+th:"ความใจดีของคนแปลกหน้าที่คุณยังจำได้",
+cn:"你仍然记得的陌生人的善意",
+tier:3,
+follow:"What did they do?"
+},
+{
+en:"A life lesson you learned the hard way.",
+th:"บทเรียนชีวิตที่ได้มาอย่างยากลำบาก",
+cn:"你以艰难方式学到的教训",
+tier:3,
+follow:"Would you change it?"
+},
+{
+en:"A childhood memory tied to food.",
+th:"ความทรงจำวัยเด็กเกี่ยวกับอาหาร",
+cn:"与你童年食物相关的回忆",
+tier:2,
+follow:"Who cooked it?"
+},
+{
+en:"A belief you had that you no longer agree with.",
+th:"ความเชื่อที่คุณเคยมีแต่ตอนนี้ไม่เห็นด้วยแล้ว",
+cn:"你曾相信但现在不认同的观念",
+tier:3,
+follow:"What changed?"
+},
+{
+en:"Your most underrated strength.",
+th:"จุดแข็งที่คุณคิดว่าถูกประเมินต่ำ",
+cn:"你被低估的优点",
+tier:3,
+follow:"How does it show up?"
+},
+{
+en:"A moment you felt truly connected to a group.",
+th:"ช่วงเวลาที่คุณรู้สึกเชื่อมโยงกับกลุ่ม",
+cn:"让你真正感到与群体连结的时刻",
+tier:3,
+follow:"Why that moment?"
+},
+{
+en:"A habit you’re proud of quitting.",
+th:"นิสัยที่คุณภูมิใจที่เลิกได้",
+cn:"你自豪戒掉的习惯",
+tier:3,
+follow:"How did you quit?"
+},
+{
+en:"Something you appreciate about your culture.",
+th:"สิ่งหนึ่งที่คุณซาบซึ้งเกี่ยวกับวัฒนธรรมของคุณ",
+cn:"你欣赏自己文化的一点",
+tier:2,
+follow:"How do you express it?"
+},
+{
+en:"A time you surprised yourself with bravery.",
+th:"ช่วงเวลาที่คุณทำให้ตัวเองแปลกใจเพราะความกล้า",
+cn:"你曾用勇气让自己惊讶的时刻",
+tier:3,
+follow:"What triggered it?"
+},
+{
+en:"A person who shaped who you are today.",
+th:"คนที่มีอิทธิพลต่อการเป็นคุณวันนี้",
+cn:"塑造今天你的那个人",
+tier:3,
+follow:"How did they shape you?"
+},
+{
+en:"A dish that feels like home anywhere in the world.",
+th:"อาหารที่ทำให้คุณรู้สึกเหมือนอยู่บ้านไม่ว่าที่ไหน",
+cn:"无论在哪都像家的那道菜",
+tier:2,
+follow:"Where did you last eat it?"
+},
+{
+en:"What makes you feel instantly comfortable in a room.",
+th:"อะไรทำให้คุณรู้สึกผ่อนคลายในห้องทันที",
+cn:"在房间里什么让你立刻舒适",
+tier:2,
+follow:"Is it people or environment?"
+},
+{
+en:"The hardest part about leaving home.",
+th:"สิ่งที่ยากที่สุดของการออกจากบ้าน",
+cn:"离开家最困难的部分",
+tier:3,
+follow:"Has it gotten easier?"
+},
+{
+en:"Something you miss that no longer exists.",
+th:"สิ่งที่คุณคิดถึงแต่ไม่มีแล้ว",
+cn:"你怀念但已经不存在的事物",
+tier:3,
+follow:"Why was it meaningful?"
+},
+{
+en:"A food memory tied to comfort during stress.",
+th:"อาหารที่เชื่อมโยงกับความสบายใจเวลาคุณเครียด",
+cn:"压力大时让你安慰的食物记忆",
+tier:2,
+follow:"Do you still return to it?"
+},
+{
+en:"A moment travel humbled you.",
+th:"ช่วงเวลาที่การท่องเที่ยวทำให้คุณอ่อนน้อม",
+cn:"旅行中让你变得谦逊的时刻",
+tier:3,
+follow:"What did you learn?"
+},
+{
+en:"A cultural habit you adopted from another country.",
+th:"นิสัยจากวัฒนธรรมอื่นที่คุณรับมาใช้",
+cn:"你采纳自他国文化的习惯",
+tier:2,
+follow:"Do locals notice?"
+},
+{
+en:"A time you felt truly welcomed.",
+th:"ช่วงเวลาที่คุณรู้สึกได้รับการต้อนรับจริงๆ",
+cn:"让你真正感到被欢迎的瞬间",
+tier:3,
+follow:"Where were you?"
+},
+{
+en:"A value you refuse to compromise.",
+th:"ค่านิยมที่คุณไม่มีวันประนีประนอม",
+cn:"你绝不妥协的价值",
+tier:3,
+follow:"Where did it come from?"
+},
+{
+en:"A personal tradition you created for yourself.",
+th:"ธรรมเนียมส่วนตัวที่คุณสร้างขึ้นเอง",
+cn:"你自创的个人传统",
+tier:2,
+follow:"Does anyone else know?"
+},
+{
+en:"A dish that healed you emotionally.",
+th:"อาหารที่รักษาจิตใจของคุณ",
+cn:"曾对你有疗愈作用的食物",
+tier:3,
+follow:"Why that one?"
+},
+{
+en:"Something travel taught you about home.",
+th:"สิ่งที่การเดินทางสอนเกี่ยวกับบ้านเกิด",
+cn:"旅行教会你关于家乡的一件事",
+tier:3,
+follow:"Did it change how you see home?"
+},
+{
+en:"A moment you realized you grew up.",
+th:"ช่วงเวลาที่คุณรู้ว่าตนเองโตแล้ว",
+cn:"你意识到自己长大的瞬间",
+tier:3,
+follow:"How old were you?"
+},
+{
+en:"An old fear that no longer controls you.",
+th:"ความกลัวเก่าที่ไม่ควบคุมคุณแล้ว",
+cn:"不再控制你的恐惧",
+tier:3,
+follow:"What defeated it?"
+},
+{
+en:"Something you once cared about that now feels unimportant.",
+th:"สิ่งที่คุณเคยแคร์มากแต่ตอนนี้ไม่สำคัญแล้ว",
+cn:"你曾经在乎但现在无所谓的事",
+tier:3,
+follow:"What replaced it?"
+},
+{
+en:"A moment food connected you to someone.",
+th:"ช่วงเวลาที่อาหารทำให้คุณเชื่อมโยงกับใครสักคน",
+cn:"食物让你与某人产生连结的瞬间",
+tier:3,
+follow:"What did you share?"
+},
+{
+en:"A cultural misunderstanding you learned from.",
+th:"ความเข้าใจผิดทางวัฒนธรรมที่คุณได้เรียนรู้",
+cn:"你从文化误会中学到的事",
+tier:3,
+follow:"How do you avoid it now?"
+},
+{
+en:"A moment you realized the world is kinder than you thought.",
+th:"ช่วงเวลาที่คุณรู้ว่าโลกใจดีกว่าที่คิด",
+cn:"让你意识到世界比想象更善良的瞬间",
+tier:3,
+follow:"Who was involved?"
+}
+
+    ];
+  }
+
+  /************ 2) TONE MAPPING (by index ranges) ************
+   You didn’t add a "tone" field in each object (no problem).
+   We map tone by position:
+   1–30 Food, 31–60 Travel, 61–90 Personality, 91–120 Funny, 121–150 Deep
+  ************************************************************/
+  function inferTone(idx){
+    const n = idx+1;
+    if (n>=1 && n<=30) return 'food';
+    if (n>=31 && n<=60) return 'travel';
+    if (n>=61 && n<=90) return 'personality';
+    if (n>=91 && n<=120) return 'funny';
+    return 'deep';
+  }
+
+  /************ 3) STATE ************/
+  let mode = 'all';                 // solo | pair | table | debate
+  let tierFilter = 'all';            // all | 1 | 2 | 3
+  let toneFilter = 'all';            // all | food | travel | personality | funny | deep
+  let autoTimer = null;
+  let lastIndex = -1;
+  let currentFollow = '';
+  const $ = sel => document.querySelector(sel);
+  const $$ = sel => [...document.querySelectorAll(sel)];
+
+  /************ 4) DOM HOOKS ************/
+  const enEl = $('#en'), thEl = $('#th'), cnEl = $('#cn');
+  const badgeTier = $('#badgeTier'), badgeTone = $('#badgeTone'), badgeMode = $('#badgeMode');
+  const followEl = $('#follow'), promptBox = $('#promptbox');
+  const wheelWrap = $('#wheelWrap');
+
+  /************ 5) FILTERING ************/
+  function isAllowed(p, idx){
+    if (tierFilter !== 'all' && String(p.tier) !== String(tierFilter)) return false;
+    const tone = inferTone(idx);
+    if (toneFilter !== 'all' && tone !== toneFilter) return false;
+    return true;
+  }
+
+  function filteredPrompts(){
+    const out = [];
+    for (let i=0;i<prompts.length;i++){
+      if (isAllowed(prompts[i], i)) out.push({p:prompts[i], i});
+    }
+    return out.length ? out : prompts.map((p,i)=>({p,i})); // fallback to all if filter too strict
+  }
+
+  function toneLabel(t){
+    return ({
+      food:'Food', travel:'Travel', personality:'Personality', funny:'Funny', deep:'Deep'
+    })[t] || '—';
+  }
+
+  function tierLabel(t){
+    return t===1||t==='1' ? 'Tier 1 (Easy)' :
+           t===2||t==='2' ? 'Tier 2 (Medium)' :
+           t===3||t==='3' ? 'Tier 3 (Deep)' : 'Tier –';
+  }
+
+  /************ 6) PROMPT RENDER ************/
+  function renderPrompt(obj, idx){
+    enEl.textContent = obj.en;
+    thEl.textContent = obj.th;
+    cnEl.textContent = obj.cn;
+    currentFollow = obj.follow || '';
+    followEl.style.display = 'none';
+    followEl.innerHTML = `<b>Follow-up:</b> ${currentFollow ? obj.follow : '—'}`;
+
+    // Badges
+    badgeTier.textContent = tierLabel(obj.tier);
+    badgeTier.className = 'badge tier-'+(obj.tier||'-');
+    const tone = inferTone(idx);
+    badgeTone.textContent = 'Tone: ' + toneLabel(tone);
+    badgeMode.textContent = 'Mode: ' + modeLabel(mode);
+
+    // Tiny pulse
+    promptBox.animate([{transform:'scale(0.98)'},{transform:'scale(1)'}], {duration:180, easing:'ease-out'});
+  }
+
+  function pickNewPrompt(){
+    const pool = filteredPrompts();
+    if (!pool.length) return;
+    let pick;
+    // avoid repeating the very last prompt if possible
+    if (pool.length > 1){
+      do { pick = pool[Math.floor(Math.random()*pool.length)] } while (pick.i === lastIndex);
+    } else {
+      pick = pool[0];
+    }
+    lastIndex = pick.i;
+    renderPrompt(pick.p, pick.i);
+  }
+
+  /************ 7) MODES ************/
+function modeLabel(m){
+  return m==='all' ? 'All'
+       : m==='solo' ? 'Solo'
+       : m==='pair' ? 'Pair'
+       : m==='table' ? 'Table'
+       : 'Debate';
+}
+
+function enrichFollowByMode(){
+  if (!currentFollow) return;
+  let addon = '';
+  if (mode === 'pair')  addon = ' Each partner asks one extra “why?”.';
+  if (mode === 'table') addon = ' Around the table: 10–15s each.';
+  if (mode === 'debate') addon = ' Split sides: 30–60s each side.';
+  // In 'all' mode, no addon:
+  followEl.innerHTML = `<b>Follow-up:</b> ${currentFollow}${addon}`;
+}
+
+
+  /************ 8) WHEEL SPIN ************/
+  function spinWheelThenPick(){
+    wheelWrap.style.display = 'grid';
+    // restart animation by cloning
+    const old = document.getElementById('wheel');
+    const clone = old.cloneNode(true);
+    old.parentNode.replaceChild(clone, old);
+    setTimeout(()=>{
+      wheelWrap.style.display = 'none';
+      pickNewPrompt();
+    }, 1200); // match CSS @keyframes duration
+  }
+
+  /************ 9) AUTO ROTATE ************/
+  function toggleAuto(){
+    const btn = $('#btnAuto');
+    if (autoTimer){
+      clearInterval(autoTimer); autoTimer=null;
+      btn.textContent = '⏱️ Auto-rotate: Off';
+      return;
+    }
+    const sec = Math.max(5, Math.min(300, Number($('#autoSec').value)||20));
+    btn.textContent = `⏱️ Auto-rotate: ${sec}s`;
+    autoTimer = setInterval(()=> { spinWheelThenPick(); }, sec*1000);
+  }
+
+  /************ 10) EVENT WIRING ************/
+  $('#btnNew').addEventListener('click', pickNewPrompt);
+  $('#btnFollow').addEventListener('click', ()=>{
+    if (followEl.style.display==='none'){ enrichFollowByMode(); followEl.style.display='block'; }
+    else followEl.style.display='none';
+  });
+  $('#btnSpin').addEventListener('click', spinWheelThenPick);
+  $('#btnAuto').addEventListener('click', toggleAuto);
+
+  $$('.controls .btn[data-mode]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      $$('.controls .btn[data-mode]').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      mode = b.dataset.mode;
+      badgeMode.textContent = 'Mode: ' + modeLabel(mode);
+      enrichFollowByMode();
+    });
+  });
+
+  $$('.controls .btn[data-tier]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      $$('.controls .btn[data-tier]').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      tierFilter = b.dataset.tier;
+      pickNewPrompt();
+    });
+  });
+
+  $$('.controls .btn[data-tone]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      $$('.controls .btn[data-tone]').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      toneFilter = b.dataset.tone;
+      pickNewPrompt();
+    });
+  });
+
+  // First render a prompt immediately
+  pickNewPrompt();
+</script>
+</body>
+</html>
