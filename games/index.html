@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title id="pageTitle"></title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <div id="gameTitle" class="title"></div>
+        <div class="subtitle">Fill the 10 answers ➜ generate your personalized script for a 2–3 actor performance.</div>
+      </div>
+    <div class="dropdown-wrapper">
+      <label for="categorySelect">Choose Script:</label>
+      <select id="categorySelect" onchange="handleSelection(this.value)">
+        <option value="1" selected>Interogation Room</option>
+        <option value="2">The Suspicious Package</option>
+        <option value="3">The Doctor’s Office Freak-Out</option>
+        <option value="4">Restaurant From Hell</option>
+        <option value="5">Alien Abduction Interview</option>
+        <option value="6">The Bad Detective</option>
+        <option value="7">Airport Security Nightmare</option>
+        <option value="8">Royal Tea Disaster</option>
+        <option value="9">The Haunted House Tour</option>
+        <option value="10">Tech Support Meltdown</option>
+        <option value="11">Time Travel Troubles</option>
+      </select>
+    </div>
+
+    </header>
+    <div class="card">
+      <span id="cast" class="warn"></span>
+    </div>
+    <br>
+    <div class="grid">
+      <!-- LEFT: QUESTIONS -->
+      <section class="card" id="questionsCard">
+        <h2>Answer Sheet (1–2 words each)</h2>
+        <div id="qList"></div>
+        <div class="actions">
+          <button id="btnGenerate" class="good">Generate Script</button>
+          <button id="btnSample" class="secondary">Use Sample Answers</button>
+          <button id="btnClear" class="warn">Clear</button>
+          <button id="btnClear" class="back"><a href="index.html">Back</a></button>  
+        </div>
+        <div class="hr"></div>
+        <div class="tiny muted">Tip: Keep answers short for maximum punch. You can edit after generating.</div>
+      </section>
+
+      <!-- RIGHT: SCRIPT OUTPUT -->
+      <section class="card" id="scriptCard">
+        <h2>Personalized Script</h2>
+        <div class="actions">
+          <button id="btnCopy" class="secondary">Copy Script</button>
+          <button id="btnPrint" class="secondary">Print</button>
+          <label class="tiny muted" style="margin-left:auto"><input type="checkbox" id="toggleNumbers"  /> Show placeholders inline</label>
+        </div>
+        <div class="hr"></div>
+        <div class="script" id="scriptOut" aria-live="polite">
+          <div class="muted">Fill the answers on the left, then click <b>Generate Script</b>.</div>
+        </div>
+        <div class="hr"></div>
+        <div class="tiny muted">
+          <div><span class="mono">[#n]</span> markers refer to answer numbers. Stage directions appear in italics.</div>
+        </div>
+      </section>
+    </div>
+
+  </div>
+
+<script src="script/data.js"></script>
+<script>
+  getData(1);
+  function handleSelection(value) {
+    if (!value) return;
+    getData(parseInt(value));
+    renderQuestions();
+  }
+
+</script>
+<script src="script/script.js"></script>
+
+</body>
+</html>
