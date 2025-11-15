@@ -78,17 +78,17 @@
         </div>
       </div>
 
-        <div class="group">
+      <div class="group">
         <h3>Mode</h3>
         <div class="controls">
-            <button class="btn active" data-mode="all">🔓 All</button>
-            <button class="btn" data-mode="solo">🧍 Solo</button>
+            <button class="btn"  style="display: none;" data-mode="all">🔓 All</button>
+            <button class="btn active" data-mode="solo">🧍 Solo</button>
             <button class="btn" data-mode="pair">👫 Pair</button>
             <button class="btn" data-mode="table">👥 Table</button>
             <button class="btn" data-mode="debate">⚖️ Debate</button>
         </div>
-        </div>
-      <div class="group">
+      </div>
+      <div class="group" style="display: none;">
         <h3>Difficulty</h3>
         <div class="controls">
           <button class="btn active" data-tier="all">All</button>
@@ -98,7 +98,7 @@
         </div>
       </div>
 
-      <div class="group">
+      <div class="group" style="display: none;">
         <h3>Tone</h3>
         <div class="controls">
           <button class="btn active" data-tone="all">All</button>
@@ -114,8 +114,8 @@
         <h3>Prompt</h3>
         <div id="promptbox" class="promptbox">
           <div class="lang"><b>EN</b><p id="en">Tap “New Prompt” to begin.</p></div>
-          <div class="lang"><b>ไทย</b><p id="th" class="muted">แตะ “สุ่มคำถาม” เพื่อเริ่ม</p></div>
-          <div class="lang"><b>中文</b><p id="cn" class="muted">点击“新题目”开始</p></div>
+          <div class="lang" style="display: none;"><b>ไทย</b><p id="th" class="muted">แตะ “สุ่มคำถาม” เพื่อเริ่ม</p></div>
+          <div class="lang" style="display: none;"><b>中文</b><p id="cn" class="muted">点击“新题目”开始</p></div>
           <div class="meta">
             <span id="badgeTier" class="badge">Tier –</span>
             <span id="badgeTone" class="badge">Tone –</span>
@@ -133,7 +133,7 @@
       <h3 style="margin-top:0">How to play (quick)</h3>
       <ul class="tiny" style="margin:8px 0 0 18px; line-height:1.5">
         <li>Choose <b>Mode</b> (Solo/Pair/Table/Debate).</li>
-        <li>Optionally set <b>Difficulty</b> and <b>Tone</b>.</li>
+        <!--li>Optionally set <b>Difficulty</b> and <b>Tone</b>.</li-->
         <li>Hit <b>Spin</b> (fun) or <b>New Prompt</b> (quick).</li>
         <li>Toggle <b>Follow-up</b> for deeper questions.</li>
         <li>Enable <b>Auto-rotate</b> to cycle every X seconds.</li>
@@ -1159,7 +1159,7 @@ follow:"Who was involved?"
   }
 
   /************ 3) STATE ************/
-  let mode = 'all';                 // solo | pair | table | debate
+  let mode = 'solo';                 // solo | pair | table | debate
   let tierFilter = 'all';            // all | 1 | 2 | 3
   let toneFilter = 'all';            // all | food | travel | personality | funny | deep
   let autoTimer = null;
@@ -1324,4 +1324,3 @@ function enrichFollowByMode(){
 </script>
 </body>
 </html>
-
