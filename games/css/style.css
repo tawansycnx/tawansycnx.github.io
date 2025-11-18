@@ -1,1 +1,86 @@
+:root{
+    --bg:#0f172a;/*slate-900*/
+    --panel:#111827;/*gray-900*/
+    --muted:#94a3b8;/*slate-400*/
+    --text:#e5e7eb;/*gray-200*/
+    --accent:#06b6d4;/*cyan-500*/
+    --accent-2:#a78bfa;/*violet-400*/
+    --ok:#22c55e;/*green-500*/
+    --warn:#f59e0b;/*amber-500*/
+    --danger:#ef4444;/*red-500*/
+    --card:#0b1220;
+    --radius:16px;
+}
+html,body {
+    height:100%
+}
+body{
+    margin:0; 
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    background: radial-gradient(1200px 800px at 10% 0%, #0b1220 0%, var(--bg) 60%);
+    color:var(--text);
+    line-height:1.45;
+}
+a{color:var(--accent)}
+.wrap{max-width:1100px; margin:24px auto; padding:0 16px}
+header{
+    display:flex; align-items:center; gap:16px; justify-content:space-between; margin:8px 0 20px
+}
+.title{
+    font-weight:800; font-size: clamp(20px, 3vw, 28px);
+    letter-spacing:.3px;
+}
+.subtitle{color:var(--muted); font-size:14px}
+.grid{display:grid; grid-template-columns:1.1fr .9fr; gap:20px}
+@media (max-width: 900px){.grid{grid-template-columns:1fr}}
+.card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); padding:18px}
+.card h2{margin:0 0 12px; font-size:18px}
+.muted{color:var(--muted)}
+label{display:block; font-weight:600; margin:10px 0 6px}
+input[type="text"], input[type="search"], textarea{
+    width:90%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.15);
+    background:#0a1220; color:var(--text); outline:none;
+}
+input::placeholder{color:#6b7280}
+.row{display:grid; grid-template-columns:40px 1fr; gap:10px; align-items:center}
+.numb{width:40px; height:40px; border-radius:10px; display:grid; place-items:center; background:rgba(6,182,212,.15); color:#67e8f9; font-weight:800}
+.actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px}
+button{
+    border:1px solid rgba(255,255,255,.14);
+    background:linear-gradient(180deg, rgba(167,139,250,.2), rgba(6,182,212,.15)); 
+    color:var(--text);
+    border-radius:12px; 
+    padding:10px 14px; 
+    font-weight:700; 
+    cursor:pointer
+}
+button.secondary{background:transparent}
+button.good{background:linear-gradient(180deg, rgba(34,197,94,.25), rgba(16,185,129,.18))}
+button.back{background:linear-gradient(180deg, rgba(216, 108, 108, 0.25), rgba(16,185,129,.18))}
+button.warn{background:linear-gradient(180deg, rgba(245,158,11,.25), rgba(245,158,11,.12))}
+button:disabled{opacity:.5; cursor:not-allowed}
 
+.script{white-space:pre-wrap; background:linear-gradient(180deg, rgba(2,6,23,.7), rgba(2,6,23,.5)); padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,.08)}
+.line{margin:8px 0;}
+.speaker{font-weight:800; color:#c7d2fe}
+.stage{color:#93c5fd; font-style:italic}
+.highlight{color:#67e8f9; font-weight:700}
+.tiny{font-size:12px}
+.flex{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.pill{padding:4px 8px; border:1px solid rgba(255,255,255,.1); border-radius:999px; color:var(--muted)}
+.hr{height:1px; background:linear-gradient(90deg, rgba(255,255,255,.12), rgba(255,255,255,.02)); margin:12px 0}
+.footer{color:var(--muted); font-size:12px; text-align:center; margin-top:10px}
+.mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+
+.dropdown-wrapper {
+  margin: 1em 0;
+  font-size: 1rem;
+}
+
+#scriptSelect {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: 1rem;
+}
