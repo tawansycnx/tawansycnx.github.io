@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cocktail Menu</title>
+
+  <!-- Your existing global styles here -->
+  <!-- <link rel="stylesheet" href="shared.css" /> -->
+
+  <!-- Page-specific styles -->
+  <link rel="stylesheet" href="cocktails.css" />
+</head>
+<body>
+  <div class="site-wrapper">
+
+    <!-- ✅ Include your existing header/nav here (copy from current site) -->
+    <!-- Example:
+    <header class="site-header">
+      ... your logo, nav, language icon, etc ...
+    </header>
+    -->
+
+    <main class="site-main">
+      <section class="cocktail-page">
+        <header class="cocktail-header">
+          <h1 class="cocktail-page-title">Cocktail Menu</h1>
+          <p class="cocktail-page-tagline">
+            Good drinks, good vibes, questionable dance moves. 🍸🕺
+          </p>
+
+          <!-- If you already have a global language selector,
+               you can hide this block and call setCocktailLanguage(lang)
+               from your existing language handler instead. -->
+          <div class="cocktail-toolbar">
+            <label for="cocktailLanguageSelect" class="cocktail-lang-label">
+              Language:
+            </label>
+            <select id="cocktailLanguageSelect" class="cocktail-lang-select">
+              <option value="en">English</option>
+              <option value="th">ไทย (Thai)</option>
+              <option value="zh">中文 (Chinese)</option>
+            </select>
+          </div>
+        </header>
+
+        <div id="cocktailMenuContainer" class="cocktail-menu-container">
+          <!-- JS will render the menu here -->
+        </div>
+
+        <footer class="cocktail-footer-note">
+          Mix responsibly. If the room is spinning, it’s not the ceiling fan. 😉
+        </footer>
+      </section>
+    </main>
+
+    <!-- ✅ Include your existing footer here -->
+    <!-- Example:
+    <footer class="site-footer">
+      ... your footer content ...
+    </footer>
+    -->
+
+  </div>
+
+  <!-- Your existing shared UI script (if any) -->
+  <!-- <script src="shared-ui.js"></script> -->
+
+  <!-- Page-specific logic -->
+  <script src="cocktails.js"></script>
+</body>
+</html>
