@@ -1,71 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Cocktail Menu</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 20mm;
+    }
 
-  <!-- Your existing global styles here -->
-  <!-- <link rel="stylesheet" href="shared.css" /> -->
+    body {
+      font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fdfaf5;
+      color: #222;
+    }
 
-  <!-- Page-specific styles -->
-  <link rel="stylesheet" href="cocktails.css" />
+    .menu-container {
+      max-width: 750px;
+      margin: 0 auto;
+      padding: 20px 25px 40px;
+      border: 3px solid #222;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    h1, h2 {
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 28px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 5px;
+    }
+
+    .tagline {
+      text-align: center;
+      font-size: 12px;
+      margin-bottom: 18px;
+      color: #666;
+    }
+
+    .note {
+      text-align: center;
+      font-size: 11px;
+      margin-bottom: 18px;
+      color: #777;
+    }
+
+    h2.section-title {
+      font-size: 18px;
+      margin-top: 18px;
+      margin-bottom: 8px;
+      border-bottom: 1px dashed #ccc;
+      padding-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .cocktail {
+      margin-bottom: 10px;
+      padding: 6px 0;
+      border-bottom: 1px dotted #eee;
+    }
+
+    .cocktail-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .cocktail-name {
+      font-size: 14px;
+    }
+
+    .cocktail-price {
+      font-size: 13px;
+    }
+
+    .langs {
+      font-size: 11px;
+      color: #555;
+      margin-top: 1px;
+    }
+
+    .desc {
+      font-size: 11px;
+      color: #777;
+      margin-top: 2px;
+    }
+
+    .footer-text {
+      margin-top: 18px;
+      font-size: 11px;
+      text-align: center;
+      color: #777;
+    }
+
+    .emoji {
+      font-size: 13px;
+    }
+  </style>
 </head>
 <body>
-  <div class="site-wrapper">
+  <div class="menu-container">
+    <h1>Cocktail Menu</h1>
+    <div class="tagline">
+      Good drinks, good vibes, questionable dance moves. <span class="emoji">🍸🕺</span>
+    </div>
+    <div class="note">
+      Sample prices in THB – adjust as you like.
+    </div>
 
-    <!-- ✅ Include your existing header/nav here (copy from current site) -->
-    <!-- Example:
-    <header class="site-header">
-      ... your logo, nav, language icon, etc ...
-    </header>
-    -->
+    <!-- VODKA -->
+    <h2 class="section-title">Vodka เบสวอดก้า 伏特加类</h2>
 
-    <main class="site-main">
-      <section class="cocktail-page">
-        <header class="cocktail-header">
-          <h1 class="cocktail-page-title">Cocktail Menu</h1>
-          <p class="cocktail-page-tagline">
-            Good drinks, good vibes, questionable dance moves. 🍸🕺
-          </p>
+    <div class="cocktail">
+      <div class="cocktail-main">
+        <div class="cocktail-name">Vodka Soda</div>
+        <div class="cocktail-price">160 THB</div>
+      </div>
+      <div class="langs">
+        TH: วอดก้าโซดา · 中: 伏特加苏打
+      </div>
+      <div class="desc">
+        Light, refreshing, and dangerously easy to drink.
+      </div>
+    </div>
 
-          <!-- If you already have a global language selector,
-               you can hide this block and call setCocktailLanguage(lang)
-               from your existing language handler instead. -->
-          <div class="cocktail-toolbar">
-            <label for="cocktailLanguageSelect" class="cocktail-lang-label">
-              Language:
-            </label>
-            <select id="cocktailLanguageSelect" class="cocktail-lang-select">
-              <option value="en">English</option>
-              <option value="th">ไทย (Thai)</option>
-              <option value="zh">中文 (Chinese)</option>
-            </select>
-          </div>
-        </header>
+    <div class="cocktail">
+      <div class="cocktail-main">
+        <div class="cocktail-name">Vodka Sprite</div>
+        <div class="cocktail-price">160 THB</div>
+      </div>
+      <div class="langs">
+        TH: วอดก้าสไปร์ท · 中: 伏特加雪碧
+      </div>
+      <div class="desc">
+        Sweet, smooth, and very tourist-friendly.
+      </div>
+    </div>
 
-        <div id="cocktailMenuContainer" class="cocktail-menu-container">
-          <!-- JS will render the menu here -->
-        </div>
+    <!-- RUM -->
+    <h2 class="section-title">Rum เบสรัม 朗姆类</h2>
 
-        <footer class="cocktail-footer-note">
-          Mix responsibly. If the room is spinning, it’s not the ceiling fan. 😉
-        </footer>
-      </section>
-    </main>
+    <div class="cocktail">
+      <div class="cocktail-main">
+        <div class="cocktail-name">Rum &amp; Coke (Cuba Libre)</div>
+        <div class="cocktail-price">160 THB</div>
+      </div>
+      <div class="langs">
+        TH: รัมโคล่า (คิวบา ลิเบร) · 中: 自由古巴（朗姆可乐）
+      </div>
+      <div class="desc">
+        Classic rum + cola with a squeeze of lime. Simple and perfect.
+      </div>
+    </div>
 
-    <!-- ✅ Include your existing footer here -->
-    <!-- Example:
-    <footer class="site-footer">
-      ... your footer content ...
-    </footer>
-    -->
+    <div class="cocktail">
+      <div class="cocktail-main">
+        <div class="cocktail-name">Rum Sprite</div>
+        <div class="cocktail-price">160 THB</div>
+      </div>
+      <div class="langs">
+        TH: รัมสไปร์ท · 中: 朗姆雪碧
+      </div>
+      <div class="desc">
+        Sweet tropical feel in one easy glass.
+      </div>
+    </div>
 
+    <!-- GIN -->
+    <h2 class="section-title">Gin เบสจิน 金酒类</h2>
+
+    <div class="cocktail">
+      <div class="cocktail-main">
+        <div class="cocktail-name">Gin &amp; Tonic</div>
+        <div class="cocktail-price">170 THB</div>
+      </div>
+      <div class="langs">
+        TH: จินโทนิก · 中: 金汤力
+      </div>
+      <div class="desc">
+        Crisp, botanical, and always in fashion.
+      </div>
+    </div>
+
+    <div class="cocktail">
+      <div class="cocktail-main">
+        <div class="cocktail-name">Gin Soda</div>
+        <div class="cocktail-price">160 THB</div>
+      </div>
+      <div class="langs">
+        TH: จินโซดา · 中: 金酒苏打
+      </div>
+      <div class="desc">
+        Light gin fizz with a squeeze of citrus.
+      </div>
+    </div>
+
+    <!-- TEQUILA -->
+    <h2 class="section-title">Tequila เบสเตกีล่า 龙舌兰类</h2>
+
+    <div class="cocktail">
+      <div class="cocktail-main">
+        <div class="cocktail-name">Tequila Sunrise</div>
+        <div class="cocktail-price">180 THB</div>
+      </div>
+      <div class="langs">
+        TH: เตกีล่า ซันไรส์ · 中: 龙舌兰日出
+      </div>
+      <div class="desc">
+        Tequila, orange, and grenadine – looks like a sunrise, disappears like a sunset.
+      </div>
+    </div>
+
+    <div class="cocktail">
+      <div class="cocktail-main">
+        <div class="cocktail-name">Tequila Soda</div>
+        <div class="cocktail-price">170 THB</div>
+      </div>
+      <div class="langs">
+        TH: เตกีล่าโซดา · 中: 龙舌兰苏打
+      </div>
+      <div class="desc">
+        Clean, refreshing, and deceptively strong.
+      </div>
+    </div>
+
+    <!-- WHISKEY -->
+    <h2 class="section-title">Whiskey เบสวิสกี้ 威士忌类</h2>
+
+    <div class="cocktail">
+      <div class="cocktail-main">
+        <div class="cocktail-name">Whiskey &amp; Coke</div>
+        <div class="cocktail-price">170 THB</div>
+      </div>
+      <div class="langs">
+        TH: วิสกี้โคล่า · 中: 威士忌可乐
+      </div>
+      <div class="desc">
+        Strong, smooth, and always a crowd favorite.
+      </div>
+    </div>
+
+    <div class="cocktail">
+      <div class="cocktail-main">
+        <div class="cocktail-name">Whiskey Highball</div>
+        <div class="cocktail-price">170 THB</div>
+      </div>
+      <div class="langs">
+        TH: วิสกี้ไฮบอล · 中: 威士忌高球
+      </div>
+      <div class="desc">
+        Whiskey + soda water – light, fizzy, and very drinkable.
+      </div>
+    </div>
+
+    <!-- BRANDY -->
+    <h2 class="section-title">Brandy เบสบรั่นดี 白兰地类</h2>
+
+    <div class="cocktail">
+      <div class="cocktail-main">
+        <div class="cocktail-name">Brandy &amp; Coke</div>
+        <div class="cocktail-price">160 THB</div>
+      </div>
+      <div class="langs">
+        TH: บรั่นดีโคล่า · 中: 白兰地可乐
+      </div>
+      <div class="desc">
+        Smooth and sweet – very popular in Asia.
+      </div>
+    </div>
+
+    <div class="cocktail">
+      <div class="cocktail-main">
+        <div class="cocktail-name">Brandy Sprite</div>
+        <div class="cocktail-price">160 THB</div>
+      </div>
+      <div class="langs">
+        TH: บรั่นดีสไปร์ท · 中: 白兰地雪碧
+      </div>
+      <div class="desc">
+        Easy-going, fruity, and dangerously friendly.
+      </div>
+    </div>
+
+    <div class="footer-text">
+      Mix responsibly. If the room is spinning, it’s not the ceiling fan. <span class="emoji">😉</span>
+    </div>
   </div>
-
-  <!-- Your existing shared UI script (if any) -->
-  <!-- <script src="shared-ui.js"></script> -->
-
-  <!-- Page-specific logic -->
-  <script src="cocktails.js"></script>
 </body>
 </html>
