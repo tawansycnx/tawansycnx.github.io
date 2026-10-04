@@ -6,8 +6,77 @@
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png">
   <link rel="icon" type="image/svg+xml" href="/logo.svg">
-  <title>Tawansy Restaurant & Cafe Menu</title>
-  <meta name="description" content="Cozy, modern-fusion kitchen in Chiang Mai. Not just a restaurant — heartfelt food, warm vibes, and a welcoming home-style atmosphere." />
+  <title>Tawansy Restaurant &amp; Cafe – Thai &amp; Western Food in Chiang Mai</title>
+  <meta name="description" content="Cozy Thai, Isan and Western restaurant on Huay Kaew Rd, Chiang Mai. Halal-friendly dishes cooked fresh to order. Open daily 12:00–24:00. Not just a restaurant." />
+  
+  <!-- ===== Google + link preview cards (Facebook, LINE, WhatsApp…) ===== -->
+  <link rel="canonical" href="https://tawansycnx.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Tawansy Restaurant &amp; Cafe">
+  <meta property="og:title" content="Tawansy Restaurant &amp; Cafe – Thai &amp; Western Food in Chiang Mai">
+  <meta property="og:description" content="Cozy Thai, Isan and Western restaurant on Huay Kaew Rd, Chiang Mai. Halal-friendly dishes cooked fresh to order. Open daily 12:00–24:00. Not just a restaurant.">
+  <meta property="og:url" content="https://tawansycnx.github.io/">
+  <meta property="og:image" content="https://tawansycnx.github.io/images/res/share-1200x630.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="th_TH">
+  <meta property="og:locale:alternate" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- ===== Restaurant details for Google. If address, phone or hours change,
+       update them here too (and in scripts/site-config.js). ===== -->
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Tawansy Restaurant & Cafe",
+    "url": "https://tawansycnx.github.io/",
+    "image": "https://tawansycnx.github.io/images/res/share-1200x630.jpg",
+    "logo": "https://tawansycnx.github.io/logo-256.png",
+    "telephone": "+66803913698",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "26/7 Huay Kaew Rd, Chang Phueak",
+      "addressLocality": "Mueang Chiang Mai",
+      "addressRegion": "Chiang Mai",
+      "postalCode": "50300",
+      "addressCountry": "TH"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 18.7981685,
+      "longitude": 98.9739981
+    },
+    "hasMap": "https://maps.google.com/?cid=6287539504188407124",
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "12:00",
+        "closes": "23:59"
+      }
+    ],
+    "servesCuisine": [
+      "Thai",
+      "Isan",
+      "Western"
+    ],
+    "menu": "https://tawansycnx.github.io/menu/menu.html",
+    "priceRange": "฿฿",
+    "sameAs": [
+      "https://www.facebook.com/tawansyplus",
+      "https://www.instagram.com/tawansycnx/"
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./css/landing.css">
 </head>
@@ -32,20 +101,20 @@
       <div class="hero-inner container">
         <div class="hero-copy">
           <h2 class="hero-title" data-i18n="tagline">Not just a restaurant.</h2>
-          <p>
+          <p data-i18n="hero_p1">
             A place where good food meets genuine connection — where guests become friends, and friends become family.
           </p>
-          <p>
+          <p data-i18n-html="hero_p2">
             We <span class="highlight">cook</span>, we <span class="highlight">connect</span>, we <span class="highlight">care</span>.
           </p>
-          <p>
+          <p data-i18n="hero_p3">
             Every meal comes with warmth, stories, and support — a space built on kindness, food, and community.
           </p>
 
 
           <div class="hero-ctas">
             <a class="cta primary" href="./menu/menu.html" data-i18n="cta_menu">View Our Menu</a>
-            <a class="cta secondary" href="https://maps.google.com" target="_blank" rel="noopener" data-i18n="cta_findus">Find Us</a>
+            <a class="cta secondary" data-site="map" href="#" target="_blank" rel="noopener" data-i18n="cta_findus">Find Us</a>
           </div>
         </div>
       </div>
@@ -60,7 +129,7 @@
           <p data-i18n="about_p2" style="margin-top:8px">Relax, share, and enjoy food that’s simple, warm, and welcoming—just like home.</p>
         </div>
         <div class="row">
-          <img src="./images/res/interior.png" alt="Warm interior" loading="lazy" style="border-radius:12px;border:1px solid #23272b">
+          <img src="./images/res/interior-1024.webp" srcset="./images/res/interior-640.webp 640w, ./images/res/interior-1024.webp 1024w" sizes="(min-width: 900px) 50vw, 100vw" width="1024" height="683" alt="Warm interior" loading="lazy" style="width:100%;height:auto;display:block;border-radius:12px;border:1px solid #23272b">
         </div>
       </div>
     </section>
@@ -78,26 +147,10 @@
       <h3 class="section-title" data-i18n="contact_title">Contact & Hours</h3>
       <div class="contact-grid">
         <div class="contact-box">
-          <p><strong data-i18n="address_label">Address:</strong> <span data-i18n="address_val">Chiang Mai, Thailand</span></p>
-          <p><strong data-i18n="phone_label">Phone:</strong> <a href="tel:+66803913698">+66 (0)80-391-3698</a></p>
-          <p><strong data-i18n="hours_label">Hours:</strong> <span data-i18n="hours_val">Daily 12:00 – 24:00</span></p>
-          <div class="footer-social">
-            <a href="https://www.facebook.com/tawansyplus" target="_blank" aria-label="Facebook">
-              <img src="images/res/fb-64.png" alt="Facebook">
-            </a>
-            <a href="https://www.instagram.com/tawansycnx/" target="_blank" aria-label="Instagram">
-              <img src="images/res/ig-64.png" alt="Instagram">
-            </a>
-            <!--a href="https://line.me/ti/p/YourLineID" target="_blank" aria-label="LINE">
-              <img src="images/res/line-64.png" alt="LINE">
-            </a-->
-            <a href="https://r.grab.com/g/6-20251109_132047_2a6c867e32e2461ab5104383fbd87946_MEXMPS-3-C7KGTXX1LRA1A2" target="_blank" aria-label="GrabFood">
-              <img src="images/res/grab-64.png" alt="GrabFood">
-            </a>
-            <a href="https://wa.me/66803913698" target="_blank" aria-label="WhatsApp">
-              <img src="images/res/wa-64.png" alt="WhatsApp">
-            </a>
-          </div>
+          <p><strong data-i18n="address_label">Address:</strong> <span data-site="address"></span></p>
+          <p><strong data-i18n="phone_label">Phone:</strong> <a data-site="phone"></a></p>
+          <p><strong data-i18n="hours_label">Hours:</strong> <span data-site="hours"></span></p>
+          <div class="footer-social" data-site="social"></div>
         </div>
         <div class="contact-box" style="padding:0;overflow:hidden">
           <iframe
@@ -112,8 +165,8 @@
   <!-- Footer include -->
   <div data-include="footer"></div>
 
-  <script src="./scripts/include.js"></script>
-  <script src="./scripts/shared-ui.js"></script>
+  <script src="./scripts/site-config.js"></script>
+  <script src="./scripts/site.js"></script>
   <script src="./scripts/landing.js"></script> 
 
 </body>

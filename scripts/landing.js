@@ -5,26 +5,14 @@ const MENU_JSON_URL = "./menu/data/menu.json"; // relative to index.html
 const state = { lang: "en" };
 
 // Resolve initial language from ?lang=, localStorage, or default EN
-(function resolveInitialLang(){
-  const params = new URLSearchParams(location.search);
-  const q = (params.get("lang") || "").toLowerCase();
-  const allowed = ["en","th","cn","zh"];
-  if (allowed.includes(q)) {
-    state.lang = (q === "zh" ? "cn" : q);
-    try { localStorage.setItem("LANG", state.lang); } catch {}
-  } else {
-    try {
-      const saved = (localStorage.getItem("LANG") || "").toLowerCase();
-      if (["en","th","cn"].includes(saved)) state.lang = saved;
-    } catch {}
-  }
-  document.documentElement.setAttribute("lang", state.lang);
-})();
+state.lang = (window.Site && Site.lang) || "en"; // language is handled by site.js
 
 // ===== i18n strings (same keys as used by your landing page data-i18n attrs) =====
 const I18N = {
   en: {
-    nav_home:"Home", nav_about:"About Us", nav_menu:"Menu", nav_contact:"Contact Us",
+    hero_p1:"A place where good food meets genuine connection — where guests become friends, and friends become family.",
+    hero_p2:'We <span class="highlight">cook</span>, we <span class="highlight">connect</span>, we <span class="highlight">care</span>.',
+    hero_p3:"Every meal comes with warmth, stories, and support — a space built on kindness, food, and community.",
     tagline:"Not just a restaurant.", subtag:"A cozy modern-fusion kitchen in Chiang Mai.",
     cta_menu:"View Our Menu", cta_findus:"Find Us",
     about_title:"About Us",
@@ -32,12 +20,14 @@ const I18N = {
     about_p2:"Relax, share, and enjoy food that’s simple, warm, and welcoming—just like home.",
     sig_title:"Signature Dishes",
     contact_title:"Contact & Hours",
-    address_label:"Address:", address_val:"Chiang Mai, Thailand",
-    phone_label:"Phone:", hours_label:"Hours:", hours_val:"Daily 12:00 – 24:00",
+    address_label:"Address:",
+    phone_label:"Phone:", hours_label:"Hours:",
     footer_note:"Not just a restaurant."
   },
   th: {
-    nav_home:"หน้าหลัก", nav_about:"เกี่ยวกับเรา", nav_menu:"เมนู", nav_contact:"ติดต่อเรา",
+    hero_p1:"สถานที่ที่อาหารอร่อยมาพบกับมิตรภาพที่จริงใจ — ที่ซึ่งแขกกลายเป็นเพื่อน และเพื่อนกลายเป็นครอบครัว",
+    hero_p2:'เรา<span class="highlight">ปรุง</span> เรา<span class="highlight">ผูกพัน</span> เรา<span class="highlight">ใส่ใจ</span>',
+    hero_p3:"ทุกมื้อมาพร้อมความอบอุ่น เรื่องราว และกำลังใจ — พื้นที่ที่สร้างขึ้นจากน้ำใจ อาหาร และชุมชน",
     tagline:"มากกว่าร้านอาหารทั่วไป", subtag:"ครัวฟิวชันสไตล์โฮมมี่ที่เชียงใหม่",
     cta_menu:"ดูเมนู", cta_findus:"ไปที่ร้าน",
     about_title:"เกี่ยวกับเรา",
@@ -45,12 +35,14 @@ const I18N = {
     about_p2:"พักผ่อน แบ่งปัน และอร่อยกับอาหารที่เรียบง่าย อบอุ่น เป็นกันเอง — เหมือนอยู่บ้าน",
     sig_title:"เมนูแนะนำ",
     contact_title:"ติดต่อ & เวลาเปิดทำการ",
-    address_label:"ที่อยู่:", address_val:"เชียงใหม่ ประเทศไทย",
-    phone_label:"โทร:", hours_label:"เวลา:", hours_val:"เปิดทุกวัน 12:00 – 24:00",
+    address_label:"ที่อยู่:",
+    phone_label:"โทร:", hours_label:"เวลา:",
     footer_note:"มากกว่าร้านอาหารทั่วไป"
   },
   cn: {
-    nav_home:"首页", nav_about:"关于我们", nav_menu:"菜单", nav_contact:"联系我们",
+    hero_p1:"在这里，美食与真诚的情谊相遇——客人成为朋友，朋友成为家人。",
+    hero_p2:'我们<span class="highlight">烹饪</span>，我们<span class="highlight">相聚</span>，我们<span class="highlight">关怀</span>。',
+    hero_p3:"每一餐都伴随着温暖、故事与支持——这里是由善意、美食与社区共同构筑的空间。",
     tagline:"不仅仅是一家餐厅", subtag:"清迈的温暖现代融合小厨房",
     cta_menu:"查看菜单", cta_findus:"导航到我们",
     about_title:"关于我们",
@@ -58,8 +50,8 @@ const I18N = {
     about_p2:"放松、分享，享受简单、温暖、亲切的美味—就像在家一样。",
     sig_title:"招牌菜",
     contact_title:"联系与营业时间",
-    address_label:"地址：", address_val:"泰国清迈",
-    phone_label:"电话：", hours_label:"营业：", hours_val:"每日 12:00 – 24:00",
+    address_label:"地址：",
+    phone_label:"电话：", hours_label:"营业：",
     footer_note:"不仅仅是一家餐厅"
   }
 };
@@ -70,46 +62,12 @@ function applyI18n(){
     const key = el.getAttribute("data-i18n");
     if (dict[key]) el.textContent = dict[key];
   });
+  // keys that contain formatting (e.g. highlighted words)
+  document.querySelectorAll("[data-i18n-html]").forEach(el=>{
+    const key = el.getAttribute("data-i18n-html");
+    if (dict[key]) el.innerHTML = dict[key];
+  });
 }
-
-// ===== Language buttons (in header) =====
-const langBtns = {
-  en: document.getElementById("lang-en"),
-  th: document.getElementById("lang-th"),
-  cn: document.getElementById("lang-cn")
-};
-
-function setLanguage(next){
-  state.lang = next;
-  try { localStorage.setItem("LANG", next); } catch {}
-  document.documentElement.setAttribute("lang", next);
-  Object.entries(langBtns).forEach(([k,b])=>{ if(b) b.setAttribute("aria-pressed", k===next ? "true":"false"); });
-  // Update URL ?lang=
-  const u = new URL(location.href);
-  u.searchParams.set("lang", next);
-  history.replaceState({}, "", u);
-  applyI18n();
-  renderSignatures(lastLoadedItems);
-}
-
-Object.entries(langBtns).forEach(([k,b])=>{
-  if(!b) return;
-  b.addEventListener("click", ()=>setLanguage(k));
-});
-Object.entries(langBtns).forEach(([k,b])=>{
-  if(b) b.setAttribute("aria-pressed", k===state.lang ? "true" : "false");
-});
-
-// ===== Hamburger drawer =====
-const ham = document.getElementById("hamburger");
-const drawer = document.getElementById("appDrawer");
-const drawerClose = document.getElementById("drawerClose");
-function openDrawer(){ if(drawer){ drawer.classList.add("open"); drawer.setAttribute("aria-hidden","false"); ham.setAttribute("aria-expanded","true"); } }
-function closeDrawer(){ if(drawer){ drawer.classList.remove("open"); drawer.setAttribute("aria-hidden","true"); ham.setAttribute("aria-expanded","false"); } }
-if (ham) ham.addEventListener("click", openDrawer);
-if (drawer) drawer.addEventListener("click", e => { if(e.target === drawer) closeDrawer(); });
-if (drawerClose) drawerClose.addEventListener("click", closeDrawer);
-window.addEventListener("keydown", e => { if(e.key === "Escape") closeDrawer(); });
 
 // ===== Signature dishes (preview from menu.json) =====
 let lastLoadedItems = [];

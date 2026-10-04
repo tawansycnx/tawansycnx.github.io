@@ -1,0 +1,37 @@
+<!doctype html>
+<!-- =====================================================================
+  NEW PAGE TEMPLATE — how to add a page:
+  1. Copy this file into the folder you want and rename it (e.g. events/events.html).
+  2. Fix the "PATH" below to point back to the website's main folder:
+       page in the main folder        ->  ./
+       page one folder down (menu/)   ->  ../
+       page two folders down          ->  ../../
+  3. Write the page content inside <main>.
+  4. Add ONE line to the "nav" list in scripts/site-config.js, e.g.
+       { label: { en: "Events", th: "กิจกรรม", cn: "活动" }, href: "events/events.html" },
+  The header, ☰ menu, language switch, footer and icons are added automatically.
+  Contact details anywhere on the page: <span data-site="address"></span>,
+  <a data-site="phone"></a>, <span data-site="hours"></span>, <div class="footer-social" data-site="social"></div>
+===================================================================== -->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Page title – Tawansy Restaurant & Cafe</title>
+  <meta name="description" content="One sentence about this page." />
+  <link rel="stylesheet" href="PATH/css/style.css">
+</head>
+<body>
+  <div data-include="header"></div>
+
+  <main class="container">
+    <h2 class="section-title">Page title</h2>
+    <p>Page content goes here.</p>
+  </main>
+
+  <div data-include="footer"></div>
+
+  <script src="PATH/scripts/site-config.js"></script>
+  <script src="PATH/scripts/site.js"></script>
+</body>
+</html>

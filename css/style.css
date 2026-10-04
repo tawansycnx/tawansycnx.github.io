@@ -154,7 +154,7 @@
       grid-area:logo;
       width:40px; height:40px;
       border-radius:10px;
-      background: url('../images/res/logov2-bg.png') center/cover no-repeat;
+      background: url('../images/res/logov2-bg-320.webp') center/cover no-repeat;
     }
     .actions{ grid-area:actions; display:flex; align-items:center; gap:6px; justify-self:end; }
     #siteTitle{ grid-area:title; margin:0; font-size:18px; }

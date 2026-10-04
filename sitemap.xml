@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- List of pages for Google. Add a <url> block when you add a new public page. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://tawansycnx.github.io/</loc></url>
+  <url><loc>https://tawansycnx.github.io/menu/menu.html</loc></url>
+  <url><loc>https://tawansycnx.github.io/tools/qrcode.html</loc></url>
+</urlset>

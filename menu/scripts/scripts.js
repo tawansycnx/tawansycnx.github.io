@@ -11,15 +11,6 @@ const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightboxImg');
 const lightboxClose = document.getElementById('lightboxClose');
 
-// Run only after header/footer are included
-function whenChromeReady(fn){
-  if (window._includesReady && typeof window._includesReady.then === 'function') {
-    window._includesReady.then(fn);
-  } else {
-    // includes not used (fallback)
-    fn();
-  }
-}
 
 function openLightbox(src, alt){
   if(!src) return;
@@ -312,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ====== STATE ======
-const state={items:[],categories:[],lang:'en',q:'',cat:'all'};
+const state={items:[],categories:[],lang:(window.Site && Site.lang) || 'en',q:'',cat:'all'};
 
 // ====== UI NODES ======
 const grid=document.getElementById('grid');

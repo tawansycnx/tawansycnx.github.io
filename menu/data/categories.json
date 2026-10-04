@@ -28,13 +28,6 @@
     "order": 3
   },
   {
-    "id": 4,
-    "en_name": "Burgers",
-    "th_name": "เบอร์เกอร์",
-    "cn_name": "汉堡",
-    "order": 4
-  },
-  {
     "id": 5,
     "en_name": "Spaghetti",
     "th_name": "สปาเก็ตตี้",
