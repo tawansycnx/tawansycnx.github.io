@@ -11,11 +11,12 @@
     "desc_th": "",
     "desc_cn": "香浓的烤南瓜汤，带有一丝香料风味，淋上新鲜奶油，并搭配黄油吐司。",
     "image_url": "\\images\\dishes\\01-01.webp",
-    "badges": "",
+    "badges": "vegetarian",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "1-2",
@@ -29,11 +30,12 @@
     "desc_th": "",
     "desc_cn": "丝滑的胡萝卜汤，带有天然植物的甜味。浓稠、温热。",
     "image_url": "\\images\\dishes\\01-02.webp",
-    "badges": "",
+    "badges": "vegetarian",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "1-3",
@@ -47,11 +49,12 @@
     "desc_th": "",
     "desc_cn": "经典的泰式汤品，内含虾——可选择清汤底（辣或者不辣）/奶香椰奶汤底。",
     "image_url": "\\images\\dishes\\01-03.webp",
-    "badges": "seafood",
+    "badges": "seafood, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "1"
+    "sig": "1",
+    "spice": "2"
   },
   {
     "prefix": "1-4",
@@ -65,11 +68,12 @@
     "desc_th": "",
     "desc_cn": "经典的泰式汤品，内含虾和鱿鱼——可选择清汤底/浓的奶香椰奶汤底。",
     "image_url": "\\images\\dishes\\01-04.webp",
-    "badges": "seafood",
+    "badges": "seafood, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "1-5",
@@ -83,11 +87,12 @@
     "desc_th": "",
     "desc_cn": "泰式香草与青柠调味的清新冬阴功鸡汤。",
     "image_url": "\\images\\dishes\\01-05.webp",
-    "badges": "halal",
+    "badges": "halal, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "1-6",
@@ -101,11 +106,12 @@
     "desc_th": "",
     "desc_cn": "椰奶、高良姜、香茅与嫩鸡肉组合烹饪所制的热汤。",
     "image_url": "\\images\\dishes\\01-06.webp",
-    "badges": "halal",
+    "badges": "halal, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "1"
   },
   {
     "prefix": "1-7",
@@ -119,11 +125,12 @@
     "desc_th": "",
     "desc_cn": "加入新鲜青柠与炖牛肉的酸辣火热汤。",
     "image_url": "\\images\\dishes\\01-07.webp",
-    "badges": "halal",
+    "badges": "halal, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "3"
   },
   {
     "prefix": "2-1",
@@ -137,11 +144,12 @@
     "desc_th": "",
     "desc_cn": "黄瓜、番茄和洋葱与清新柠檬酱汁、孜然、蚝油等拌制。",
     "image_url": "\\images\\dishes\\02-01.webp",
-    "badges": "vegetarian",
+    "badges": "vegetarian@Plain, halal",
     "options_en": "Plain: 95 | Grilled Chicken: 149",
     "options_th": "ธรรมดา: 95 | ไก่ย่าง: 149",
     "options_cn": "原味: 95 | 烤鸡肉: 149",
-    "sig": "1"
+    "sig": "1",
+    "spice": ""
   },
   {
     "prefix": "2-2",
@@ -159,7 +167,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "2-3",
@@ -177,7 +186,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "2-4",
@@ -191,11 +201,12 @@
     "desc_th": "",
     "desc_cn": "鸡肉末沙拉，配以泰式香草、洋葱和青柠酱汁。",
     "image_url": "\\images\\dishes\\02-04.webp",
-    "badges": "halal",
+    "badges": "halal, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "2-5",
@@ -209,11 +220,12 @@
     "desc_th": "",
     "desc_cn": "多汁的澳洲烤牛肉，配以泰式香草、洋葱和青柠凉拌。",
     "image_url": "\\images\\dishes\\02-05.webp",
-    "badges": "halal",
+    "badges": "halal, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "2-7",
@@ -227,11 +239,12 @@
     "desc_th": "",
     "desc_cn": "牛肉末沙拉，配以泰式香草、洋葱和青柠酱汁。",
     "image_url": "\\images\\dishes\\02-07.webp",
-    "badges": "halal",
+    "badges": "halal, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "2-8",
@@ -245,11 +258,12 @@
     "desc_th": "",
     "desc_cn": "爽滑粉丝配以泰式辣酱，可选配虾、鱿鱼或双拼。",
     "image_url": "\\images\\dishes\\02-08.webp",
-    "badges": "seafood",
+    "badges": "seafood, spicy",
     "options_en": "Shrimp: 169 | Squid: 169 | Seafood: 179",
     "options_th": "กุ้ง: 169 | ปลาหมึก: 169 | ซีฟูด: 179",
     "options_cn": "虾: 169 | 鱿鱼: 169 | 海鲜: 179",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "2-10",
@@ -263,11 +277,12 @@
     "desc_th": "",
     "desc_cn": "辛辣浓郁的泰式海鲜沙拉——包含虾、鱿鱼、蟹柳。",
     "image_url": "\\images\\dishes\\02-10.webp",
-    "badges": "seafood",
+    "badges": "seafood, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "3"
   },
   {
     "prefix": "2-12",
@@ -281,11 +296,12 @@
     "desc_th": "",
     "desc_cn": "轻焯的虾配以香茅、青柠和新鲜泰式香草所制的沙拉。",
     "image_url": "\\images\\dishes\\02-12.webp",
-    "badges": "seafood",
+    "badges": "seafood, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "3-1",
@@ -299,11 +315,12 @@
     "desc_th": "",
     "desc_cn": "完美炸制的金黄酥脆腰果，拌以开胃的泰式调味料。可选纯腰果或混合（腰果+花生）。",
     "image_url": "\\images\\dishes\\03-01.webp",
-    "badges": "spicy",
+    "badges": "vegetarian, nuts, spicy",
     "options_en": "Cashew: 139 | Mixed: 139",
     "options_th": "เม็ดมะม่วง: 139 | รวมถั่ว: 139",
     "options_cn": "腰果: 139 | 混合: 139",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "3-2",
@@ -317,11 +334,12 @@
     "desc_th": "",
     "desc_cn": "完美炸制咸香酥脆的花生，是地道的泰式小吃。",
     "image_url": "\\images\\dishes\\03-02.webp",
-    "badges": "spicy",
+    "badges": "vegetarian, nuts, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "3-3",
@@ -339,7 +357,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "3-4",
@@ -353,11 +372,12 @@
     "desc_th": "",
     "desc_cn": "金黄酥脆的洋葱圈，经久不衰的经典小吃。",
     "image_url": "\\images\\dishes\\03-04.webp",
-    "badges": "",
+    "badges": "vegetarian",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "3-5",
@@ -375,7 +395,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "3-7",
@@ -389,11 +410,12 @@
     "desc_th": "",
     "desc_cn": "酸甜咸香的风味鸡翅，裹以特色罗望子酱。",
     "image_url": "\\images\\dishes\\03-07.webp",
-    "badges": "halal, new",
+    "badges": "halal",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "1"
+    "sig": "1",
+    "spice": ""
   },
   {
     "prefix": "3-8",
@@ -407,11 +429,12 @@
     "desc_th": "",
     "desc_cn": "酸甜咸香多汁的虾，裹以特色罗望子酱。",
     "image_url": "\\images\\dishes\\03-08.webp",
-    "badges": "new",
+    "badges": "seafood",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "3-9",
@@ -429,7 +452,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "3-10",
@@ -447,7 +471,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "3-11",
@@ -461,11 +486,12 @@
     "desc_th": "",
     "desc_cn": "经咸香泰式鱼露腌制后，炸得酥脆的鸡翅。",
     "image_url": "\\images\\dishes\\03-11.webp",
-    "badges": "halal, spicy",
+    "badges": "halal",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "5-2",
@@ -483,7 +509,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "1"
+    "sig": "1",
+    "spice": ""
   },
   {
     "prefix": "5-3",
@@ -501,7 +528,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "5-4",
@@ -519,7 +547,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "5-5",
@@ -533,11 +562,12 @@
     "desc_th": "",
     "desc_cn": "鲜虾/鱿鱼+有罗勒风味的意大利面。",
     "image_url": "\\images\\dishes\\05-05.webp",
-    "badges": "seafood",
+    "badges": "seafood, spicy",
     "options_en": "Shrimp: 175 | Squid: 175 | Seafood: 195",
     "options_th": "กุ้ง: 175 | ปลาหมึก: 175 | ซีฟูด: 195",
     "options_cn": "虾: 175 | 鱿鱼: 175 | 海鲜: 195",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "5-6",
@@ -551,11 +581,12 @@
     "desc_th": "",
     "desc_cn": "泰式爆炒大块牛肉，配以辣椒和红咖喱。",
     "image_url": "\\images\\dishes\\05-06.webp",
-    "badges": "halal",
+    "badges": "halal, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "6-1",
@@ -573,7 +604,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "3"
   },
   {
     "prefix": "6-3",
@@ -587,11 +619,12 @@
     "desc_th": "",
     "desc_cn": "包含酸甜辣多种风味的木瓜沙拉，配有花生和虾干。",
     "image_url": "\\images\\dishes\\06-03.webp",
-    "badges": "spicy",
+    "badges": "seafood, nuts, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "3"
   },
   {
     "prefix": "6-4",
@@ -605,11 +638,12 @@
     "desc_th": "",
     "desc_cn": "甜辣木瓜沙拉，搭配浓郁的咸蛋。",
     "image_url": "\\images\\dishes\\06-04.webp",
-    "badges": "spicy",
+    "badges": "nuts, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "3"
   },
   {
     "prefix": "6-5",
@@ -627,7 +661,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "3"
   },
   {
     "prefix": "6-7",
@@ -641,11 +676,12 @@
     "desc_th": "",
     "desc_cn": "泰国东北风味的鱼露所拌的花生、泰式凤尾鱼、大蒜、辣椒和青柠。",
     "image_url": "\\images\\dishes\\06-07.webp",
-    "badges": "spicy",
+    "badges": "nuts, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "3"
   },
   {
     "prefix": "7-1",
@@ -659,11 +695,12 @@
     "desc_th": "",
     "desc_cn": "丝滑绿咖喱，注入泰式罗勒香气，配以顾客自选的新鲜嫩肉。",
     "image_url": "\\images\\dishes\\07-01.webp",
-    "badges": "halal",
+    "badges": "halal, seafood, spicy",
     "options_en": "Chicken: 150 | Australian Beef: 180 | Shrimp: 180 | Seafood: 180",
     "options_th": "ไก่: 150 | เนื้อออสเตรเลีย: 180 | กุ้ง: 180 | ซีฟูด: 180",
     "options_cn": "鸡肉: 150 | 澳洲牛肉: 180 | 虾: 180 | 海鲜: 180",
-    "sig": "0"
+    "sig": "0",
+    "spice": "1"
   },
   {
     "prefix": "7-2",
@@ -677,11 +714,12 @@
     "desc_th": "",
     "desc_cn": "奶油质地的咖喱牛肉/鸡肉，带有强烈的香料风味和芳香的椰子风味。",
     "image_url": "\\images\\dishes\\07-02.webp",
-    "badges": "halal",
+    "badges": "halal, seafood, spicy",
     "options_en": "Chicken: 150 | Australian Beef: 180 | Shrimp: 180 | Seafood: 180",
     "options_th": "ไก่: 150 | เนื้อออสเตรเลีย: 180 | กุ้ง: 180 | ซีฟูด: 180",
     "options_cn": "鸡肉: 150 | 澳洲牛肉: 180 | 虾: 180 | 海鲜: 180",
-    "sig": "0"
+    "sig": "0",
+    "spice": "1"
   },
   {
     "prefix": "7-3",
@@ -695,11 +733,12 @@
     "desc_th": "",
     "desc_cn": "经典泰式红咖喱鸡肉/牛肉—辛辣且椰香浓郁。",
     "image_url": "\\images\\dishes\\07-03.webp",
-    "badges": "halal",
+    "badges": "halal, seafood, spicy",
     "options_en": "Chicken: 150 | Australian Beef: 180 | Shrimp: 180 | Seafood: 180",
     "options_th": "ไก่: 150 | เนื้อออสเตรเลีย: 180 | กุ้ง: 180 | ซีฟูด: 180",
     "options_cn": "鸡肉: 150 | 澳洲牛肉: 180 | 虾: 180 | 海鲜: 180",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "7-4",
@@ -713,11 +752,12 @@
     "desc_th": "",
     "desc_cn": "泰式红咖喱配椰奶，可选虾、鱿鱼或双拼。",
     "image_url": "\\images\\dishes\\07-04.webp",
-    "badges": "seafood",
+    "badges": "seafood, spicy",
     "options_en": "Shrimp: 189 | Squid: 189 | Seafood: 229",
     "options_th": "กุ้ง: 189 | ปลาหมึก: 189 | ซีฟูด: 229",
     "options_cn": "虾: 189 | 鱿鱼: 189 | 海鲜: 229",
-    "sig": "0"
+    "sig": "0",
+    "spice": "1"
   },
   {
     "prefix": "7-5",
@@ -731,11 +771,12 @@
     "desc_th": "",
     "desc_cn": "地道的乡村风味咖喱牛肉，配以东北香草。",
     "image_url": "\\images\\dishes\\07-05.webp",
-    "badges": "halal",
+    "badges": "halal, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "8-1",
@@ -753,7 +794,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "8-2",
@@ -771,7 +813,8 @@
     "options_en": "Shrimp: 129 | Squid: 129 | Seafood: 149",
     "options_th": "กุ้ง: 129 | ปลาหมึก: 129 | ซีฟูด: 149",
     "options_cn": "虾: 129 | 鱿鱼: 129 | 海鲜: 149",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "8-3",
@@ -789,7 +832,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "8-4",
@@ -803,11 +847,12 @@
     "desc_th": "",
     "desc_cn": "泰式罗勒炒饭，配以顾客任选的肉类。",
     "image_url": "\\images\\dishes\\08-04.webp",
-    "badges": "halal",
+    "badges": "halal, seafood, spicy",
     "options_en": "Chicken: 100 | Beef: 120 | Shrimp: 150 | Squid: 150 | Seafood: 150",
     "options_th": "ไก่: 100 | เนื้อ: 120 | กุ้ง: 150 | ปลาหมึก: 150 | ซีฟูด: 150",
     "options_cn": "鸡肉: 100 | 牛肉: 120 | 虾: 150 | 鱿鱼: 150 | 海鲜: 150",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "8-5",
@@ -821,11 +866,12 @@
     "desc_th": "",
     "desc_cn": "以泰式香草、高良姜、绿胡椒籽爆炒的米饭，配以顾客任选的肉类。",
     "image_url": "\\images\\dishes\\08-05.webp",
-    "badges": "halal",
+    "badges": "halal, seafood, spicy",
     "options_en": "Chicken: 100 | Beef: 120 | Seafood: 150",
     "options_th": "ไก่: 100 | เนื้อ: 120 | ซีฟูด: 150",
     "options_cn": "鸡肉: 100 | 牛肉: 120 | 海鲜: 150",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "8-6",
@@ -843,7 +889,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "1"
+    "sig": "1",
+    "spice": ""
   },
   {
     "prefix": "8-7",
@@ -861,7 +908,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "8-8",
@@ -875,11 +923,12 @@
     "desc_th": "",
     "desc_cn": "经典泰式炒河粉-与大虾、鸡蛋和花生在酸甜酱汁中爆炒。",
     "image_url": "\\images\\dishes\\08-08.webp",
-    "badges": "seafood",
+    "badges": "seafood, nuts",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "8-9",
@@ -897,7 +946,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "8-10",
@@ -911,11 +961,12 @@
     "desc_th": "",
     "desc_cn": "蓬松金黄的泰式风格煎蛋卷。",
     "image_url": "\\images\\dishes\\08-10.webp",
-    "badges": "",
+    "badges": "vegetarian",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "8-11",
@@ -929,11 +980,12 @@
     "desc_th": "",
     "desc_cn": "完美的单面煎蛋。",
     "image_url": "\\images\\dishes\\08-11.webp",
-    "badges": "",
+    "badges": "vegetarian",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "8-12",
@@ -947,11 +999,12 @@
     "desc_th": "",
     "desc_cn": "蓬松的蒸茉莉香米饭。",
     "image_url": "\\images\\dishes\\08-12.webp",
-    "badges": "",
+    "badges": "vegetarian",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "9-1",
@@ -969,7 +1022,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "9-2",
@@ -987,7 +1041,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "9-4",
@@ -1005,7 +1060,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "9-5",
@@ -1019,11 +1075,12 @@
     "desc_th": "",
     "desc_cn": "嫩烤澳洲牛肉条，配以酸甜辣口味的东北风格Jaew酱。",
     "image_url": "\\images\\dishes\\09-05.webp",
-    "badges": "halal",
+    "badges": "halal, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "10-1",
@@ -1037,11 +1094,12 @@
     "desc_th": "",
     "desc_cn": "泰式风味的炒鸡肉，配以金黄酥脆的腰果。",
     "image_url": "\\images\\dishes\\10-01.webp",
-    "badges": "halal",
+    "badges": "halal, nuts, spicy",
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": "1"
   },
   {
     "prefix": "10-2",
@@ -1055,11 +1113,12 @@
     "desc_th": "",
     "desc_cn": "泰国最受欢迎的美食！与泰式罗勒叶、辣椒及顾客自选肉类一同爆炒。",
     "image_url": "\\images\\dishes\\10-02.webp",
-    "badges": "halal",
+    "badges": "halal, seafood, spicy",
     "options_en": "Chicken: 120 | Beef: 149 | Shrimp: 169 | Squid: 169",
     "options_th": "ไก่: 120 | เนื้อ: 149 | กุ้ง: 169 | ปลาหมึก: 169",
     "options_cn": "鸡肉: 120 | 牛肉: 149 | 虾: 169 | 鱿鱼: 169",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "10-3",
@@ -1073,11 +1132,12 @@
     "desc_th": "",
     "desc_cn": "风味浓郁辛辣，带有高良姜、胡椒籽、泰式香草的香气，配以顾客自选肉类。",
     "image_url": "\\images\\dishes\\10-03.webp",
-    "badges": "halal",
+    "badges": "halal, seafood, spicy",
     "options_en": "Chicken: 120 | Beef: 149 | Shrimp: 169 | Squid: 169",
     "options_th": "ไก่: 120 | เนื้อ: 149 | กุ้ง: 169 | ปลาหมึก: 169",
     "options_cn": "鸡肉: 120 | 牛肉: 149 | 虾: 169 | 鱿鱼: 169",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "10-5",
@@ -1091,11 +1151,12 @@
     "desc_th": "",
     "desc_cn": "浓郁而可口——甜辣酱与您选择的蛋白质一起翻炒。",
     "image_url": "\\images\\dishes\\10-05.webp",
-    "badges": "halal",
+    "badges": "halal, seafood, spicy",
     "options_en": "Chicken: 149 | Shrimp: 169 | Squid: 169",
     "options_th": "ไก่: 149 | กุ้ง: 169 | ปลาหมึก: 169",
     "options_cn": "鸡肉: 149 | 虾: 169 | 鱿鱼: 169",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "10-6",
@@ -1113,7 +1174,8 @@
     "options_en": "Shrimp: 179 | Squid: 179 | Seafood: 229",
     "options_th": "กุ้ง: 179 | ปลาหมึก: 179 | ซีฟูด: 229",
     "options_cn": "虾: 179 | 鱿鱼: 179 | 海鲜: 229",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "10-7",
@@ -1131,7 +1193,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "10-8",
@@ -1149,7 +1212,8 @@
     "options_en": "Shrimp: 160 | Squid: 160 | Seafood: 180",
     "options_th": "กุ้ง: 160 | ปลาหมึก: 160 | ซีฟูด: 180",
     "options_cn": "虾: 160 | 鱿鱼: 160 | 海鲜: 180",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "10-9",
@@ -1167,7 +1231,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "10-10",
@@ -1185,7 +1250,8 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   },
   {
     "prefix": "10-11",
@@ -1199,11 +1265,12 @@
     "desc_th": "",
     "desc_cn": "泰式红咖喱酱与您选择的蛋白质一起翻炒。",
     "image_url": "\\images\\dishes\\10-11.webp",
-    "badges": "halal",
+    "badges": "halal, seafood, spicy",
     "options_en": "Chicken: 120 | Beef: 150 | Seafood: 180",
     "options_th": "ไก่: 120 | เนื้อ: 150 | ซีฟูด: 180",
     "options_cn": "鸡肉: 120 | 牛肉: 150 | 海鲜: 180",
-    "sig": "0"
+    "sig": "0",
+    "spice": "2"
   },
   {
     "prefix": "10-12",
@@ -1221,6 +1288,7 @@
     "options_en": "",
     "options_th": "",
     "options_cn": "",
-    "sig": "0"
+    "sig": "0",
+    "spice": ""
   }
 ]

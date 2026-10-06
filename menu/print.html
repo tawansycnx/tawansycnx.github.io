@@ -88,6 +88,14 @@ body{background:#d9d4cc;color:var(--ink);font-family:var(--f-body);-webkit-print
 .bdg.halal{color:var(--halal)} .bdg.spicy{color:var(--spicy)} .bdg.vegetarian{color:var(--veg)}
 .bdg.seafood{color:var(--sea)} .bdg.new{color:#fff;background:var(--new);border-color:var(--new)}
 .bdg.sig{color:#fff;background:var(--frame);border-color:var(--frame)}
+/* icons-only badges + footer legend (2026-10-06) */
+.bdg small.q{text-transform:none;font-size:6.3pt;font-weight:600;letter-spacing:0;margin-left:.6mm;color:var(--veg)}
+.bdg.spicy,.bdg.vegetarian,.bdg.seafood,.bdg.nuts{border:none;padding:0;font-size:9pt;letter-spacing:-.5mm}
+.bdg.sig{font-size:7.5pt;padding:.7mm 1.4mm}
+.p-foot .f-spacer{width:15mm;flex:none} /* same width as the halal logo, keeps the legend centred on the page */
+.p-foot .legend{flex:1;display:flex;flex-wrap:wrap;gap:.6mm 3mm;align-items:center;justify-content:center;text-align:center;font-size:6.3pt;color:var(--muted);line-height:1.25;padding:0 3mm}
+.p-foot .legend b.sig{display:inline-block;color:#fff;background:var(--frame);border-radius:10mm;padding:0 1.2mm;margin-right:1mm;font-weight:700}
+.p-foot .legend .lvl{flex-basis:100%;text-align:center;color:var(--spicy);font-weight:600}
 .d-price{font-weight:700;color:var(--price);text-align:right;white-space:nowrap}
 .d-price .cur,.d-opts .cur{font-size:.7em;font-weight:600;margin-left:.6mm;color:var(--muted)}
 .d-opts{text-align:right;line-height:1.35}
@@ -100,7 +108,7 @@ body{background:#d9d4cc;color:var(--ink);font-family:var(--f-body);-webkit-print
 .d-photo.cutout img{object-fit:contain}
 
 /* ---------- CLASSIC layout: 4 dishes per page, photo alternates left/right ---------- */
-.layout-classic .p-body{grid-template-rows:repeat(4,1fr)}
+.layout-classic .p-body{grid-template-rows:repeat(var(--rows,4),1fr)}
 .layout-classic .dish{display:flex;align-items:center;gap:4mm;min-height:0}
 .layout-classic .dish.flip{flex-direction:row-reverse}
 .layout-classic .d-photo{width:82mm;height:100%;max-height:57mm}
@@ -112,6 +120,26 @@ body{background:#d9d4cc;color:var(--ink);font-family:var(--f-body);-webkit-print
 .layout-classic .d-desc{font-size:9pt;margin-top:1.4mm;-webkit-line-clamp:3}
 .layout-classic .d-price{font-size:16pt}
 .layout-classic .d-opts{font-size:9.5pt}
+
+/* ---------- CLASSIC, large size: 3 dishes per page (category fits better in 3s) ---------- */
+.layout-classic .rows-3 .d-photo{width:100mm;max-height:none}
+.layout-classic .rows-3 .d-text{max-height:none;padding:4mm 5mm}
+.layout-classic .rows-3 .d-th,.layout-classic .rows-3 .d-num{font-size:14pt}
+.layout-classic .rows-3 .d-en{font-size:14.5pt;margin-top:.8mm}
+.layout-classic .rows-3 .d-cn{font-size:11pt;margin-top:.6mm}
+.layout-classic .rows-3 .d-desc{font-size:10pt;margin-top:2mm;-webkit-line-clamp:5}
+.layout-classic .rows-3 .d-price{font-size:18pt}
+.layout-classic .rows-3 .d-opts{font-size:10.5pt}
+
+/* ---------- Filler tile in leftover space: logo + QR codes ---------- */
+.filler{display:flex;align-items:center;justify-content:space-evenly;gap:6mm;min-height:0;
+  background:var(--cream);border-radius:4mm;border:.35mm dashed var(--frame-soft);padding:3mm 6mm}
+.filler .f-logo{height:min(38mm,80%);width:auto;object-fit:contain}
+.filler{display:grid;grid-template-columns:1fr auto 1fr;justify-items:center} /* QR | logo (centred) | QR */
+.filler .f-qr{display:flex;flex-direction:column;align-items:center;gap:1.5mm;text-align:center;min-height:0;height:100%;justify-content:center}
+.filler .f-qr img{height:min(36mm,70%);aspect-ratio:1;width:auto;border-radius:2mm;background:#fff;padding:1mm}
+.filler .f-qr .t1{font-family:var(--f-title);font-weight:700;font-size:10pt;color:var(--frame);line-height:1.1}
+.filler .f-qr .t2{font-size:8pt;color:var(--muted);line-height:1.2}
 
 /* ---------- COMPACT layout: 8 dishes per page (2 columns × 4 rows) ---------- */
 .layout-compact .p-body{grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,1fr);column-gap:4mm}
@@ -177,11 +205,11 @@ body{background:#d9d4cc;color:var(--ink);font-family:var(--f-body);-webkit-print
   const isOos = it => /out\.of\.stock/i.test(it.image_url || '');
 
   // "\images\dishes\01-01.webp" -> "../images/dishes/01-01-640.webp"
-  function photoUrl(url){
+  function photoUrl(url, w){
     if(!url) return '';
     let u = String(url).replace(/\\/g,'/').replace(/^\.?\//,'');
     const m = u.match(/^(.*?)(?:-(?:320|640|1024))?\.(jpg|jpeg|png|webp)$/i);
-    if (m) u = m[1] + '-640.webp';
+    if (m) u = m[1] + '-' + (w || 640) + '.webp';
     return '../' + u;
   }
   // "Chicken: 120 | AUS Beef: 170" -> [{label, price}]
@@ -201,22 +229,28 @@ body{background:#d9d4cc;color:var(--ink);font-family:var(--f-body);-webkit-print
     });
     return out;
   }
-  const badges = s => String(s||'').split(/[,|]+/).map(b => b.trim().toLowerCase()).filter(Boolean);
+  const PRINT_ICONS = { spicy: '🌶️', vegetarian: '🌿', seafood: '🦐', nuts: '🥜' };
+  const LEGEND = `<div class="legend"><span><b class="sig">★</b>Signature · เมนูแนะนำ · 招牌菜</span><span>🌶️ Spicy · เผ็ด · 辣</span><span>🌿 Vegetarian · มังสวิรัติ · 素食</span><span>🦐 Seafood · อาหารทะเล · 海鲜</span><span>🥜 Nuts · มีถั่ว · 含坚果</span>`
+    + `<span class="lvl">🌶️ Spice level on request: mild · medium · hot  /  เลือกระดับความเผ็ดได้  /  可选辣度</span></div>`;
+  // "vegetarian@Plain" -> icon + (Plain) — badge for one option only
+  const badges = s => String(s||'').split(/[,|]+/).map(b => b.trim()).filter(Boolean);
   const prefixNum = p => String(p||'').split('-').map(Number);
 
-  function dishHTML(it, idx){
+  function dishHTML(it, idx, rows){
     const opts = groupByPrice(parseOptions(it.options_en));
     const priceHTML = opts.length
       ? `<div class="d-opts">${opts.map(o=>`<div><span class="lbl">${esc(o.label)}</span><span class="val">${esc(o.price)}</span></div>`).join('')}</div>`
       : (it.price ? `<div class="d-price">${esc(it.price)}</div>` : '');
-    // halal badge not shown on the printed menu — the halal logo is in the footer (Artee, 2026-10-06)
-    const b = badges(it.badges).filter(x => x !== 'halal').map(x => `<span class="bdg ${esc(x)}">${esc(x === 'vegetarian' ? 'veg' : x)}</span>`);
-    if (String(it.sig) === '1') b.unshift('<span class="bdg sig">★ Signature</span>');
+    // Print = icons only (legend in the footer). No halal (logo in footer), no "new" (Artee, 2026-10-06)
+    const b = badges(it.badges).map(t => { const [x0, q] = t.split('@'); const x = x0.trim().toLowerCase(); return { x, q: q ? q.trim() : '' }; })
+      .filter(o => PRINT_ICONS[o.x])
+      .map(({ x, q }) => `<span class="bdg ${esc(x)}" title="${esc(x)}">${x === 'spicy' ? PRINT_ICONS.spicy.repeat(Math.min(3, Math.max(1, parseInt(it.spice, 10) || 1))) : PRINT_ICONS[x]}${q ? `<small class="q">(${esc(q)})</small>` : ''}</span>`);
+    if (String(it.sig) === '1') b.unshift('<span class="bdg sig">★</span>');
     const flip = (state.layout === 'classic' && idx % 2 === 1) ? ' flip' : '';
     const oos = isOos(it);
     return `
       <article class="dish${flip}">
-        <div class="d-photo">${it.image_url ? `<img src="${esc(photoUrl(it.image_url))}" alt="">` : ''}${oos ? '<span class="oos-tag">OUT OF STOCK</span>' : ''}</div>
+        <div class="d-photo">${it.image_url ? `<img src="${esc(photoUrl(it.image_url, rows && rows <= 3 ? 1024 : 640))}" alt="">` : ''}${oos ? '<span class="oos-tag">OUT OF STOCK</span>' : ''}</div>
         <div class="d-text">
           <div class="d-head"><span class="d-num">${esc(it.prefix)}</span> <span class="d-th">${esc(it.th_name)}</span></div>
           <div class="d-en">${esc(it.en_name)}</div>
@@ -227,6 +261,19 @@ body{background:#d9d4cc;color:var(--ink);font-family:var(--f-body);-webkit-print
       </article>`;
   }
 
+  // Filler tile for leftover space on a category's last page (classic layout)
+  const QR_MENU = '../images/res/qr-menu.svg';      // -> https://tawansycnx.github.io/index.html
+  const QR_REVIEW = '../images/res/qr-review.svg';  // -> Google Maps page (write a review)
+  function fillerHTML(p){
+    const free = p.rows - p.items.length;
+    if (state.layout !== 'classic' || free < 1) return '';
+    return `<div class="filler" style="grid-row:span ${free}">
+      <div class="f-qr"><img src="${QR_MENU}" alt="QR online menu"><div class="t1">Full menu online</div><div class="t2">เมนูออนไลน์ · 在线菜单</div></div>
+      <img class="f-logo" src="${LOGO}" alt="Tawansy">
+      <div class="f-qr"><img src="${QR_REVIEW}" alt="QR Google review"><div class="t1">Review us on Google</div><div class="t2">รีวิวเราบน Google · 在Google上评价我们</div></div>
+    </div>`;
+  }
+
   function render(menu, cats){
     const per = PER_PAGE[state.layout];
     const order = cats.filter(c => c.id !== 'all').sort((a,b) => a.order - b.order);
@@ -235,21 +282,24 @@ body{background:#d9d4cc;color:var(--ink);font-family:var(--f-body);-webkit-print
       const items = menu
         .filter(it => it.category === cat.en_name && (state.oos || !isOos(it)))
         .sort((a,b) => { const x=prefixNum(a.prefix), y=prefixNum(b.prefix); return (x[0]-y[0]) || (x[1]-y[1]); });
-      for (let i = 0; i < items.length; i += per)
-        pages.push({ cat, items: items.slice(i, i + per), cont: i > 0 });
+      // Classic: biggest dish size that adds no pages (e.g. 5 dishes -> 3 + 2, 9 -> 3 + 3 + 3)
+      const size = (state.layout === 'classic' && items.length) ? Math.ceil(items.length / Math.ceil(items.length / per)) : per;
+      for (let i = 0; i < items.length; i += size)
+        pages.push({ cat, items: items.slice(i, i + size), cont: i > 0, rows: size });
     });
     $('pages').className = 'pages layout-' + state.layout;
     $('pages').innerHTML = pages.map((p, n) => `
-      <section class="page">
+      <section class="page rows-${p.rows}">
         <header class="p-head">
           <div class="p-title"><span class="th">${esc(p.cat.th_name)}</span><span class="en">${esc(p.cat.en_name)}</span></div>
           <img class="p-logo" src="${LOGO}" alt="Tawansy">
         </header>
         <div class="p-rule"></div>
-        <div class="p-body">${p.items.map(dishHTML).join('')}</div>
+        <div class="p-body" style="--rows:${p.rows}">${p.items.map((it, i) => dishHTML(it, i, p.rows)).join('')}${fillerHTML(p)}</div>
         <footer class="p-foot">
           <img class="halal" src="${HALAL}" alt="Halal">
-          <span class="pn">${n + 1} / ${pages.length}</span>
+          ${LEGEND}
+          <span class="f-spacer"></span>
         </footer>
       </section>`).join('');
     $('pageCount').textContent = `${pages.length} pages · ${pages.reduce((s,p)=>s+p.items.length,0)} dishes`;

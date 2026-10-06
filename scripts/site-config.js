@@ -54,6 +54,9 @@ window.SITE_CONFIG = {
     menu_intro_title: { en: "Halal Thai Food in Chiang Mai", th: "อาหารไทยฮาลาล ในเชียงใหม่", cn: "清迈清真泰国美食" },
     menu_intro:   { en: "Halal chicken and beef dishes and fresh seafood – Thai, Isan and Western food cooked to order on Huay Kaew Road, Chiang Mai. Look for the halal badge on each dish.",
                     th: "เมนูไก่และเนื้อฮาลาล และอาหารทะเลสด – อาหารไทย อีสาน และตะวันตก ปรุงสดใหม่ทุกจาน ถนนห้วยแก้ว เชียงใหม่ ดูสัญลักษณ์ฮาลาลที่แต่ละเมนู",
-                    cn: "清真鸡肉和牛肉菜肴及新鲜海鲜——泰式、伊森和西式料理，现点现做，位于清迈汇乔路（Huay Kaew Road）。请留意每道菜上的清真标识。" }
+                    cn: "清真鸡肉和牛肉菜肴及新鲜海鲜——泰式、伊森和西式料理，现点现做，位于清迈汇乔路（Huay Kaew Road）。请留意每道菜上的清真标识。" },
+    menu_spice_note: { en: "🌶️ Spicy dishes can be cooked mild, medium or hot – just tell us when you order.",
+                    th: "🌶️ เมนูเผ็ดเลือกระดับความเผ็ดได้ – เผ็ดน้อย กลาง หรือมาก แจ้งพนักงานตอนสั่งได้เลย",
+                    cn: "🌶️ 辣味菜品可选微辣、中辣或特辣——点餐时告诉我们即可。" }
   }
 };

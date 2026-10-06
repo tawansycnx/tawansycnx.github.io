@@ -207,8 +207,52 @@ function parseOptions(v){
 
 function parseBadges(v){ 
   if(!v) return []; 
-  const s=String(v).replace(/^\s*\"|\"\\s*$/g,''); 
-  return s.split(/\\s*,\\s*|\\s*[|;]+\\s*/).map(x=>x.trim()).filter(Boolean); 
+  const s=String(v).replace(/^\s*"|"\s*$/g,''); 
+  return s.split(/\s*[,|;]+\s*/).map(x=>x.trim()).filter(Boolean); // fixed 2026-10-06: "a, b" was one badge
+}
+
+// Badges: icon + translated label (Artee, 2026-10-06). Spicy shows 1-3 chilies from the "spice" column.
+// Signature comes from the "sig" column. Order below = display order.
+const BADGE_INFO = {
+  signature:  { icon: '★',  en: 'Signature',  th: 'เมนูแนะนำ', cn: '招牌菜' },
+  halal:      { img: '../images/res/halal.png', en: 'Halal', th: 'ฮาลาล', cn: '清真' },
+  spicy:      { icon: '🌶️', en: 'Spicy', th: 'เผ็ด', cn: '辣' },
+  vegetarian: { icon: '🌿', en: 'Vegetarian', th: 'มังสวิรัติ', cn: '素食' },
+  seafood:    { icon: '🦐', en: 'Seafood', th: 'อาหารทะเล', cn: '海鲜' },
+  nuts:       { icon: '🥜', en: 'Contains nuts', th: 'มีถั่ว', cn: '含坚果' },
+  'new':      { icon: '✨', en: 'New', th: 'ใหม่', cn: '新品' }
+};
+const SPICE_TIP = {
+  en: 'Spice level on request: mild, medium or hot',
+  th: 'เลือกระดับความเผ็ดได้: น้อย กลาง มาก',
+  cn: '可按要求选择辣度：微辣、中辣、特辣'
+};
+function renderBadges(it, lang){
+  lang = lang || 'en';
+  // "badge@Option" = badge applies to one option only (e.g. vegetarian@Plain); shown as "Vegetarian (Plain)"
+  const qual = {};
+  const list = parseBadges(it.badges).map(t => { const [b, q] = t.split('@'); const k = b.trim().toLowerCase(); if (q) qual[k] = q.trim(); return k; });
+  if (String(it.sig) === '1' && !list.includes('signature')) list.unshift('signature');
+  const order = Object.keys(BADGE_INFO);
+  list.sort((a, b) => (order.indexOf(a) + 99 * (order.indexOf(a) < 0)) - (order.indexOf(b) + 99 * (order.indexOf(b) < 0)));
+  return list.map(b => {
+    const d = BADGE_INFO[b];
+    if (!d) return `<span class="badge ${b}">${b}</span>`;
+    let label = d[lang] || d.en;
+    if (qual[b]) {
+      const en = parseOptions(it.options_en || ''), loc = parseOptions(getItemOptionsForLang(it, lang) || '');
+      const i = en.findIndex(o => o.label.toLowerCase() === qual[b].toLowerCase());
+      label += ` (${(i >= 0 && loc[i]) ? loc[i].label : qual[b]})`;
+    }
+    let icon = d.img ? `<img src="${d.img}" alt="" aria-hidden="true">` : `<span class="bi" aria-hidden="true">${d.icon}</span>`;
+    let title = label;
+    if (b === 'spicy') {
+      const n = Math.min(3, Math.max(1, parseInt(it.spice, 10) || 1));
+      icon = `<span class="bi" aria-hidden="true">${d.icon.repeat(n)}</span>`;
+      title = SPICE_TIP[lang] || SPICE_TIP.en;
+    }
+    return `<span class="badge ${b}" title="${title}">${icon}${label}</span>`;
+  }).join('');
 }
 
 function formatPrice(v){ 
@@ -613,7 +657,7 @@ function render(){
       ? `<div class="single-price" aria-label="Price">${formatPrice(it.price)}</div>`
       : '';
 
-    const badgesHTML = (parseBadges(it.badges) || []).map(b => `<span class="badge ${b}">${b}</span>`).join('');
+    const badgesHTML = renderBadges(it, state.lang);
     const mainTitle = (it.prefix ? `${String(it.prefix).trim()} ` : '') + (view.main || '');
 
     // Note: image is a button so it's keyboard-activatable; data-full points to 640 variant
@@ -743,7 +787,7 @@ function renderItemCard(it){
        </div>`
     : '';
   const singlePriceHTML = !hasVariants ? `<div class="single-price">${formatPrice(it.price)}</div>` : '';
-  const badgesHTML = (parseBadges(it.badges)||[]).map(b=>`<span class="badge ${b}">${b}</span>`).join('');
+  const badgesHTML = renderBadges(it, state.lang);
   const prefixHTML = it.prefix ? `<span class="prefix">${String(it.prefix).trim()}</span>` : '';
 
   return `
@@ -813,6 +857,8 @@ async function loadItems() {
       desc_cn: r.desc_cn || r.Description_cn || r.cn_desc || '',
       image_url: r.image_url || r.Image || r.image || '',
       badges: r.badges || r.Badges || '',
+      sig: r.sig || '',
+      spice: r.spice || '',
 
       // ✳️ NEW: language-specific options (plus legacy)
       options_en: r.options_en || r.Options_en || '',
@@ -849,6 +895,8 @@ async function loadItems() {
       desc_cn: r.desc_cn || r.Description_cn || r.cn_desc || '',
       image_url: r.image_url || r.Image || r.image || '',
       badges: r.badges || r.Badges || '',
+      sig: r.sig || '',
+      spice: r.spice || '',
 
       // ✳️ NEW: language-specific options (plus legacy)
       options_en: r.options_en || r.Options_en || '',

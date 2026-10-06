@@ -600,3 +600,13 @@ this will override it: */
 .menu-intro{margin:14px 0 0;padding:0 16px}
 .menu-intro h2{font-size:1.15rem;margin:0 0 4px;color:#fff}
 .menu-intro p{margin:0;font-size:.92rem;color:#cfd6dd;line-height:1.45}
+
+/* Badges with icon + label (added 2026-10-06) */
+.badge{display:inline-flex;align-items:center;gap:4px}
+.badge img{width:14px;height:14px;object-fit:contain}
+.badge .bi{font-size:12px;line-height:1;letter-spacing:-1px}
+.badge.vegetarian{color:#d4f5b5;border-color:#3d5a1e}
+.badge.seafood{color:#bfe0ff;border-color:#1d3f63}
+.badge.nuts{color:#f3dcb4;border-color:#5a4220}
+.badge.signature{color:#ffe08a;border-color:#6b5310}
+.menu-intro .spice-note{margin-top:6px;color:#ffccb8}
