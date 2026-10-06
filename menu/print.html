@@ -209,7 +209,8 @@ body{background:#d9d4cc;color:var(--ink);font-family:var(--f-body);-webkit-print
     const priceHTML = opts.length
       ? `<div class="d-opts">${opts.map(o=>`<div><span class="lbl">${esc(o.label)}</span><span class="val">${esc(o.price)}</span></div>`).join('')}</div>`
       : (it.price ? `<div class="d-price">${esc(it.price)}</div>` : '');
-    const b = badges(it.badges).map(x => `<span class="bdg ${esc(x)}">${esc(x === 'vegetarian' ? 'veg' : x)}</span>`);
+    // halal badge not shown on the printed menu — the halal logo is in the footer (Artee, 2026-10-06)
+    const b = badges(it.badges).filter(x => x !== 'halal').map(x => `<span class="bdg ${esc(x)}">${esc(x === 'vegetarian' ? 'veg' : x)}</span>`);
     if (String(it.sig) === '1') b.unshift('<span class="bdg sig">★ Signature</span>');
     const flip = (state.layout === 'classic' && idx % 2 === 1) ? ' flip' : '';
     const oos = isOos(it);

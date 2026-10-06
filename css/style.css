@@ -595,3 +595,8 @@ this will override it: */
   transform: scale(1.15);
   opacity: 0.8;
 }
+
+/* Menu page intro (added 2026-10-06) */
+.menu-intro{margin:14px 0 0;padding:0 16px}
+.menu-intro h2{font-size:1.15rem;margin:0 0 4px;color:#fff}
+.menu-intro p{margin:0;font-size:.92rem;color:#cfd6dd;line-height:1.45}

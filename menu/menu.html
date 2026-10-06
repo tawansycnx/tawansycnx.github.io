@@ -6,15 +6,15 @@
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="icon" type="image/png" sizes="180x180" href="../favicon.png">
   <link rel="icon" type="image/svg+xml" href="../logo.svg">
-  <title>Menu – Tawansy Restaurant &amp; Cafe, Chiang Mai</title>
-  <meta name="description" content="Full menu with photos and prices: Tom Yum and soups, salads, som tum, curries, fried rice, stir-fries, spaghetti and more. In English, Thai and Chinese." />
+  <title>Halal Thai Food Menu – Tawansy Restaurant &amp; Cafe, Chiang Mai</title>
+  <meta name="description" content="Halal chicken and beef dishes in Chiang Mai: Tom Yum, curries, fried rice, stir-fries, som tum and more, plus fresh seafood. Full menu with photos and prices in English, Thai and Chinese. Huay Kaew Rd." />
   
   <!-- ===== Google + link preview cards (Facebook, LINE, WhatsApp…) ===== -->
   <link rel="canonical" href="https://tawansycnx.github.io/menu/menu.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Tawansy Restaurant &amp; Cafe">
-  <meta property="og:title" content="Menu – Tawansy Restaurant &amp; Cafe, Chiang Mai">
-  <meta property="og:description" content="Full menu with photos and prices: Tom Yum and soups, salads, som tum, curries, fried rice, stir-fries, spaghetti and more. In English, Thai and Chinese.">
+  <meta property="og:title" content="Halal Thai Food Menu – Tawansy Restaurant &amp; Cafe, Chiang Mai">
+  <meta property="og:description" content="Halal chicken and beef dishes in Chiang Mai: Tom Yum, curries, fried rice, stir-fries, som tum and more, plus fresh seafood. Full menu with photos and prices in English, Thai and Chinese. Huay Kaew Rd.">
   <meta property="og:url" content="https://tawansycnx.github.io/menu/menu.html">
   <meta property="og:image" content="https://tawansycnx.github.io/images/res/share-1200x630.jpg">
   <meta property="og:image:width" content="1200">
@@ -23,6 +23,29 @@
   <meta property="og:locale:alternate" content="th_TH">
   <meta property="og:locale:alternate" content="zh_CN">
   <meta name="twitter:card" content="summary_large_image">
+  <!-- ===== Restaurant details for Google (menu page). Keep in step with index.html. ===== -->
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Tawansy Restaurant & Cafe",
+    "url": "https://tawansycnx.github.io/",
+    "description": "Halal Thai, Isan and Western restaurant on Huay Kaew Rd, Chiang Mai. Halal chicken and beef dishes cooked fresh to order.",
+    "image": "https://tawansycnx.github.io/images/res/share-1200x630.jpg",
+    "telephone": "+66803913698",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "26/7 Huay Kaew Rd, Chang Phueak",
+      "addressLocality": "Mueang Chiang Mai",
+      "addressRegion": "Chiang Mai",
+      "postalCode": "50300",
+      "addressCountry": "TH"
+    },
+    "servesCuisine": ["Thai", "Isan", "Western", "Halal"],
+    "menu": "https://tawansycnx.github.io/menu/menu.html",
+    "keywords": "halal food Chiang Mai, halal restaurant Chiang Mai, halal Thai food, ร้านอาหารฮาลาล เชียงใหม่, 清迈清真餐厅"
+}
+  </script>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body data-search>
@@ -38,6 +61,12 @@
   
   <!-- Menu main -->
   <main class="container">
+    <!-- Short intro (also helps Google find the menu for "halal food Chiang Mai"). Text + translations: scripts/site-config.js -->
+    <section class="menu-intro">
+      <h2 data-site-text="menu_intro_title">Halal Thai Food in Chiang Mai</h2>
+      <p data-site-text="menu_intro">Halal chicken and beef dishes and fresh seafood – Thai, Isan and Western food cooked to order on Huay Kaew Road, Chiang Mai. Look for the halal badge on each dish.</p>
+    </section>
+
     <!-- Category header stays visible even for ALL -->
     <h2 id="categoryTitle" class="category-title">All</h2>
 
