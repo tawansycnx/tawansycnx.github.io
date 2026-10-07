@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tawansy – Printable Menu (DRAFT new categories)</title>
+<meta name="robots" content="noindex">  <!-- staff page: keep out of Google -->
+<link rel="icon" type="image/png" href="../favicon.png">
+<!-- Fonts (need internet when opening the page; the browser falls back to system fonts otherwise) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@600;700&family=Sarabun:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   TAWANSY PRINT MENU
+   Reads ./data/menu.json + ./data/categories.json and lays out A4 pages.
+   Print with Chrome: Ctrl+P → Destination "Save as PDF" (or printer),
+   Paper A4, Margins "None", tick "Background graphics".
+   ===================================================================== */
+:root{
+  --frame:#8b5a2b;        /* brown page frame            */
+  --frame-soft:#e9d6bd;
+  --cream:#fbf4e6;        /* text bubble background      */
+  --ink:#2b2118;          /* main text                   */
+  --name:#1f3a8a;         /* dish names (blue, like Canva) */
+  --muted:#6b5b4b;        /* descriptions                */
+  --accent:#e2701f;       /* orange from the logo        */
+  --price:#2b2118;
+  --halal:#1e7d3a; --spicy:#c62828; --veg:#4f8a10; --sea:#1565c0; --new:#e2701f;
+  --f-title:'Kanit','Loma','Noto Sans CJK SC',sans-serif;
+  --f-body:'Sarabun','Loma','Noto Sans SC','Noto Sans CJK SC',sans-serif;
+  --f-cn:'Noto Sans SC','Noto Sans CJK SC','Microsoft YaHei',sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:#d9d4cc;color:var(--ink);font-family:var(--f-body);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+/* ---------- On-screen toolbar (hidden when printing) ---------- */
+.toolbar{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;
+  padding:10px 16px;background:#2b2118;color:#fff;font:14px/1.3 system-ui,Segoe UI,sans-serif}
+.toolbar b{color:#ffcf8a}
+.toolbar label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.toolbar select,.toolbar button{font:inherit;padding:6px 10px;border-radius:8px;border:1px solid #6b5b4b;background:#3a2e24;color:#fff;cursor:pointer}
+.toolbar button.primary{background:var(--accent);border-color:var(--accent);font-weight:600}
+.toolbar .info{opacity:.8}
+.toolbar .tip{flex-basis:100%;opacity:.7;font-size:12px}
+#status{padding:40px;text-align:center;font:16px system-ui,sans-serif}
+
+/* ---------- A4 page ---------- */
+@page{size:A4;margin:0}
+.pages{display:flex;flex-direction:column;align-items:center;gap:10mm;padding:10mm 0}
+.page{position:relative;width:210mm;height:297mm;background:#fff;overflow:hidden;
+  box-shadow:0 2px 12px rgba(0,0,0,.25);display:flex;flex-direction:column;padding:9mm 10mm 8mm}
+.page::before{ /* brown rounded frame */
+  content:"";position:absolute;inset:4mm;border:2.2mm solid var(--frame);border-radius:7mm;pointer-events:none}
+.page::after{ /* thin inner line */
+  content:"";position:absolute;inset:7.4mm;border:.35mm solid var(--frame-soft);border-radius:4.5mm;pointer-events:none}
+
+/* Header */
+.p-head{position:relative;display:flex;align-items:center;justify-content:space-between;height:26mm;padding:0 3mm;flex:none}
+.p-title{font-family:var(--f-title);font-weight:700;line-height:1;display:flex;align-items:baseline;gap:5mm;color:var(--ink)}
+.p-title .th{font-size:32pt}
+.p-title .en{font-size:26pt;color:var(--frame)}
+.p-title .cont{font-family:var(--f-body);font-weight:400;font-size:10pt;color:var(--muted);align-self:center}
+.p-logo{width:24mm;height:24mm;object-fit:contain}
+.p-rule{height:.6mm;background:linear-gradient(90deg,var(--accent),var(--frame) 60%,transparent);margin:0 3mm 3mm;flex:none;border-radius:1mm}
+
+/* Footer */
+.p-foot{flex:none;height:15mm;display:flex;align-items:flex-end;justify-content:space-between;padding:0 1mm 0 0;font-size:8pt;color:var(--muted)}
+.p-foot .halal{width:15mm;height:15mm;object-fit:contain}
+.p-foot .pn{font-weight:700;color:var(--frame);padding-bottom:1mm}
+
+/* Body area */
+.p-body{flex:1;min-height:0;padding:0 3mm;display:grid;gap:3.5mm}
+
+/* ---------- Shared dish bits ---------- */
+.d-photo{border-radius:4mm;overflow:hidden;background:#f1ebe2;flex:none}
+.d-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.d-text{background:var(--cream);border-radius:4mm;padding:2.8mm 3.8mm;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.d-num{font-weight:700;color:var(--accent)}
+.d-old{font-size:.62em;font-weight:600;color:var(--muted);margin-left:1mm;white-space:nowrap}
+.p-title .cn{font-family:var(--f-cn);font-weight:600;font-size:15pt;color:var(--muted)}
+.p-title{white-space:nowrap;min-width:0;overflow:hidden}
+.p-head{gap:4mm}
+.draft-tag{position:absolute;top:1mm;left:50%;transform:translateX(-50%);font:700 8pt/1 sans-serif;color:#fff;background:#c62828;padding:1.2mm 2.5mm;border-radius:2mm;letter-spacing:.05em}
+.d-th{font-weight:600;color:var(--name)}
+.d-en{font-weight:700;color:var(--name);line-height:1.2}
+.d-cn{font-family:var(--f-cn);color:var(--name);opacity:.9}
+.d-desc{font-style:italic;color:var(--muted);line-height:1.3;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+.d-bottom{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:3mm;padding-top:1.5mm}
+.d-badges{display:flex;flex-wrap:wrap;gap:1.2mm}
+.bdg{font-size:6.8pt;font-weight:700;line-height:1;padding:.9mm 1.8mm;border-radius:10mm;border:.3mm solid currentColor;text-transform:uppercase;letter-spacing:.02em;white-space:nowrap}
+.bdg.halal{color:var(--halal)} .bdg.spicy{color:var(--spicy)} .bdg.vegetarian{color:var(--veg)}
+.bdg.seafood{color:var(--sea)} .bdg.new{color:#fff;background:var(--new);border-color:var(--new)}
+.bdg.sig{color:#fff;background:var(--frame);border-color:var(--frame)}
+/* icons-only badges + footer legend (2026-10-06) */
+.bdg small.q{text-transform:none;font-size:6.3pt;font-weight:600;letter-spacing:0;margin-left:.6mm;color:var(--veg)}
+.bdg.spicy,.bdg.vegetarian,.bdg.seafood,.bdg.nuts{border:none;padding:0;font-size:9pt;letter-spacing:-.5mm}
+.bdg.sig{font-size:7.5pt;padding:.7mm 1.4mm}
+.p-foot .f-spacer{width:15mm;flex:none} /* same width as the halal logo, keeps the legend centred on the page */
+.p-foot .legend{flex:1;display:flex;flex-wrap:wrap;gap:.6mm 3mm;align-items:center;justify-content:center;text-align:center;font-size:6.3pt;color:var(--muted);line-height:1.25;padding:0 3mm}
+.p-foot .legend b.sig{display:inline-block;color:#fff;background:var(--frame);border-radius:10mm;padding:0 1.2mm;margin-right:1mm;font-weight:700}
+.p-foot .legend .okey{flex-basis:100%;display:flex;justify-content:center;gap:3.5mm;white-space:nowrap;overflow:hidden;color:var(--name);font-weight:600}
+.p-foot .legend .lvl{flex-basis:100%;text-align:center;color:var(--spicy);font-weight:600}
+.d-price{font-weight:700;color:var(--price);text-align:right;white-space:nowrap}
+.d-price .cur,.d-opts .cur{font-size:.7em;font-weight:600;margin-left:.6mm;color:var(--muted)}
+.d-opts{text-align:right;line-height:1.35}
+.d-opts div{white-space:nowrap}
+.d-opts .lbl{font-weight:600;color:var(--muted)}
+.d-opts .val{font-weight:700;margin-left:1.5mm}
+.oos-tag{position:absolute;top:2mm;left:2mm;background:rgba(0,0,0,.65);color:#fff;font-size:7pt;font-weight:700;padding:.8mm 2mm;border-radius:2mm}
+.d-photo{position:relative}
+.d-photo.cutout{background:none;border-radius:0;overflow:visible}
+.d-photo.cutout img{object-fit:contain}
+
+/* ---------- CLASSIC layout: 4 dishes per page, photo alternates left/right ---------- */
+.layout-classic .p-body{grid-template-rows:repeat(var(--rows,4),1fr)}
+.layout-classic .dish{display:flex;align-items:center;gap:4mm;min-height:0}
+.layout-classic .dish.flip{flex-direction:row-reverse}
+.layout-classic .d-photo{width:82mm;height:100%;max-height:57mm}
+.layout-classic .d-text{flex:1;height:100%;max-height:57mm}
+.layout-classic .d-head{font-size:10pt;line-height:1.3}
+.layout-classic .d-en{font-size:12pt;margin-top:.4mm}
+.layout-classic .d-th,.layout-classic .d-num{font-size:12pt}
+.layout-classic .d-cn{font-size:9.5pt;margin-top:.4mm}
+.layout-classic .d-desc{font-size:9pt;margin-top:1.4mm;-webkit-line-clamp:3}
+.layout-classic .d-price{font-size:16pt}
+.layout-classic .d-opts{font-size:9.5pt}
+
+/* ---------- CLASSIC, large size: 3 dishes per page (category fits better in 3s) ---------- */
+.layout-classic .rows-3 .d-photo{width:100mm;max-height:none}
+.layout-classic .rows-3 .d-text{max-height:none;padding:4mm 5mm}
+.layout-classic .rows-3 .d-th,.layout-classic .rows-3 .d-num{font-size:14pt}
+.layout-classic .rows-3 .d-en{font-size:14.5pt;margin-top:.8mm}
+.layout-classic .rows-3 .d-cn{font-size:11pt;margin-top:.6mm}
+.layout-classic .rows-3 .d-desc{font-size:10pt;margin-top:2mm;-webkit-line-clamp:5}
+.layout-classic .rows-3 .d-price{font-size:18pt}
+.layout-classic .rows-3 .d-opts{font-size:10.5pt}
+
+/* ---------- Filler tile in leftover space: QR | logo | QR ----------
+   Fixed sizes (not % of the tile) so each QR code and its captions share one centre line.
+   .f-small = tile of 1/4 page or less -> smaller QR codes + logo. */
+.filler{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;justify-items:center;gap:6mm;min-height:0;
+  background:var(--white);border-radius:4mm;border:.35mm dashed var(--frame-soft);padding:3mm 6mm;overflow:hidden}
+.filler .f-logo{width:38mm;height:38mm;object-fit:contain}
+.filler .f-qr{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.2mm;width:100%;min-width:0}
+.filler .f-qr img{width:34mm;height:34mm;border-radius:2mm;background:#fff;padding:1mm;display:block}
+.filler .f-qr .t1{font-family:var(--f-title);font-weight:700;font-size:10pt;color:var(--frame);line-height:1.1}
+.filler .f-qr .t2{font-size:8pt;color:var(--muted);line-height:1.2}
+.filler.f-small{padding:2mm 6mm}
+.filler.f-small .f-logo{width:30mm;height:30mm}
+.filler.f-small .f-qr img{width:25mm;height:25mm}
+.filler.f-small .f-qr{gap:.8mm}
+.filler.f-small .f-qr .t1{font-size:9pt}
+.filler.f-small .f-qr .t2{font-size:7pt;line-height:1.1}
+
+/* ---------- COMPACT layout: 8 dishes per page (2 columns × 4 rows) ---------- */
+.layout-compact .p-body{grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,1fr);column-gap:4mm}
+.layout-compact .dish{display:flex;gap:2.5mm;min-height:0;background:var(--cream);border-radius:4mm;padding:2.2mm}
+.layout-compact .d-photo{width:37mm;height:100%;border-radius:3mm}
+.layout-compact .d-text{flex:1;padding:.5mm 1mm;background:none;border-radius:0}
+.layout-compact .d-head{font-size:8.5pt;line-height:1.25}
+.layout-compact .d-en{font-size:9.5pt;margin-top:.3mm}
+.layout-compact .d-th,.layout-compact .d-num{font-size:9.5pt}
+.layout-compact .d-cn{font-size:8pt;margin-top:.3mm}
+.layout-compact .d-desc{font-size:7.6pt;margin-top:.8mm;-webkit-line-clamp:3}
+.layout-compact .d-price{font-size:12.5pt}
+.layout-compact .d-opts{font-size:8pt}
+.layout-compact .bdg{font-size:6pt;padding:.7mm 1.4mm}
+
+/* ---------- Print ---------- */
+@media print{
+  body{background:#fff}
+  .toolbar,#status{display:none!important}
+  .pages{display:block;padding:0}
+  .page{box-shadow:none;break-after:page;page-break-after:always;margin:0}
+  .page:last-child{break-after:auto;page-break-after:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <b>Tawansy · Print Menu — DRAFT new categories</b>
+  <label>Dishes per page
+    <select id="optPer">
+      <option value="3">Large – 3 per page</option>
+      <option value="4">Standard – up to 4 per page</option>
+    </select>
+  </label>
+  <label><input type="checkbox" id="optOld" checked> Show old numbers</label>
+  <label><input type="checkbox" id="optDraft" checked> "Draft" tag</label>
+  <label><input type="checkbox" id="optOos"> Include out-of-stock dishes</label>
+  <span class="info" id="pageCount"></span>
+  <button class="primary" onclick="window.print()">Print / Save as PDF</button>
+  <span class="tip">Chrome print settings: Paper size A4 · Margins None · tick “Background graphics” · Scale 100 (Default).</span>
+</div>
+
+<div id="status">Loading menu…</div>
+<div id="pages" class="pages"></div>
+
+<script>
+(function(){
+  const MENU_URL = './data/menu.json';
+  const CAT_URL  = './data/categories.json';
+  const LOGO     = '../logo-256.png';
+  const HALAL    = '../images/res/halal.png';
+  const PER_PAGE = { classic: 4 };
+  // ===== DRAFT: proposed new categories (option B, 2026-10-06). Old dish number -> new category, in this order. =====
+  const NEW_CATS = [
+    { en: 'Snacks & Starters',     th: 'ของทานเล่น',            cn: '小吃与开胃菜',
+      old: ['3-1','3-2','3-3','3-4','3-5','3-7','3-8','3-9','3-10','3-11','9-1','9-2','9-4','9-5'] },
+    { en: 'Soups',                 th: 'ซุป',                   cn: '汤类',
+      old: ['1-1','1-2','1-3','1-4','1-5','1-6','1-7'] },
+    { en: 'Salads & Som Tum',      th: 'สลัด ยำ และส้มตำ',       cn: '沙拉与青木瓜沙拉',
+      old: ['2-1','2-2','2-3','2-4','2-5','2-7','2-8','2-10','2-12','6-1','6-3','6-4','6-5','6-7'] },
+    { en: 'Curries & Stir-fries',  th: 'แกงและผัด',             cn: '咖喱与炒菜',
+      old: ['7-1','7-2','7-3','7-4','7-5','10-1','10-2','10-3','10-5','10-6','10-7','10-8','10-9','10-10','10-11','10-12'] },
+    { en: 'Rice, Noodles & Pasta', th: 'ข้าว เส้น และพาสต้า',     cn: '米饭、面条与意面',
+      old: ['8-1','8-2','8-3','8-4','8-5','8-6','8-7','8-8','8-9','5-2','5-3','5-4','5-5','5-6'] },
+    { en: 'Sides',                 th: 'เครื่องเคียง',            cn: '配菜',
+      old: ['8-10','8-11','8-12'], qr: true }   // qr: in "up to 4" mode this page also holds the QR/logo tile
+  ];
+
+
+  const params = new URLSearchParams(location.search);
+  const state = {
+    layout: PER_PAGE[params.get('layout')] ? params.get('layout') : 'classic',
+    oos: params.get('oos') === '1',
+    per: params.get('per') === '4' ? 4 : 3,          // default: 3 large dishes per page
+    old: params.get('old') !== '0',
+    draft: params.get('draft') !== '0'
+  };
+  const $ = id => document.getElementById(id);
+  $('optPer').value = String(state.per);
+  $('optOld').checked = state.old;
+  $('optDraft').checked = state.draft;
+  $('optOos').checked = state.oos;
+
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const isOos = it => /out\.of\.stock/i.test(it.image_url || '');
+
+  // "\images\dishes\01-01.webp" -> "../images/dishes/01-01-640.webp"
+  function photoUrl(url, w){
+    if(!url) return '';
+    let u = String(url).replace(/\\/g,'/').replace(/^\.?\//,'');
+    const m = u.match(/^(.*?)(?:-(?:320|640|1024))?\.(jpg|jpeg|png|webp)$/i);
+    if (m) u = m[1] + '-' + (w || 640) + '.webp';
+    return '../' + u;
+  }
+  // "Chicken: 120 | AUS Beef: 170" -> [{label, price}]
+  function parseOptions(s){
+    if(!s) return [];
+    return String(s).split(/[|;]+/).map(p => {
+      const [label='', price=''] = p.split(/[:=]/);
+      return { label: label.trim(), price: price.trim() };
+    }).filter(o => o.label);
+  }
+  // Options with the same price share one line: "Beef | Shrimp | Squid  140"
+  function groupByPrice(opts){
+    const out = [];
+    opts.forEach(o => {
+      const g = o.price ? out.find(x => x.price === o.price) : null;
+      if (g) g.label += ' | ' + o.label; else out.push({ label: o.label, price: o.price });
+    });
+    return out;
+  }
+  const PRINT_ICONS = { spicy: '🌶️', vegetarian: '🌿', seafood: '🦐', nuts: '🥜' };
+  const LEGEND = `<div class="legend"><span><b class="sig">★</b>Signature · เมนูแนะนำ · 招牌菜</span><span>🌶️ Spicy · เผ็ด · 辣</span><span>🌿 Vegetarian · มังสวิรัติ · 素食</span><span>🦐 Seafood · อาหารทะเล · 海鲜</span><span>🥜 Nuts · มีถั่ว · 含坚果</span>`
+    + `<span class="lvl">🌶️ Spice level on request: mild · medium · hot  /  เลือกระดับความเผ็ดได้  /  可选辣度</span></div>`;
+  // "vegetarian@Plain" -> icon + (Plain) — badge for one option only
+  const badges = s => String(s||'').split(/[,|]+/).map(b => b.trim()).filter(Boolean);
+  const prefixNum = p => String(p||'').split('-').map(Number);
+
+  function dishHTML(it, idx, rows){
+    const opts = groupByPrice(parseOptions(it.options_en));
+    const priceHTML = opts.length
+      ? `<div class="d-opts">${opts.map(o=>`<div><span class="lbl">${esc(o.label)}</span><span class="val">${esc(o.price)}</span></div>`).join('')}</div>`
+      : (it.price ? `<div class="d-price">${esc(it.price)}</div>` : '');
+    // Print = icons only (legend in the footer). No halal (logo in footer), no "new" (Artee, 2026-10-06)
+    const b = badges(it.badges).map(t => { const [x0, q] = t.split('@'); const x = x0.trim().toLowerCase(); return { x, q: q ? q.trim() : '' }; })
+      .filter(o => PRINT_ICONS[o.x])
+      .map(({ x, q }) => `<span class="bdg ${esc(x)}" title="${esc(x)}">${x === 'spicy' ? PRINT_ICONS.spicy.repeat(Math.min(3, Math.max(1, parseInt(it.spice, 10) || 1))) : PRINT_ICONS[x]}${q ? `<small class="q">(${esc(q)})</small>` : ''}</span>`);
+    if (String(it.sig) === '1') b.unshift('<span class="bdg sig">★</span>');
+    const flip = (state.layout === 'classic' && idx % 2 === 1) ? ' flip' : '';
+    const oos = isOos(it);
+    return `
+      <article class="dish${flip}">
+        <div class="d-photo">${it.image_url ? `<img src="${esc(photoUrl(it.image_url, rows && rows <= 3 ? 1024 : 640))}" alt="">` : ''}${oos ? '<span class="oos-tag">OUT OF STOCK</span>' : ''}</div>
+        <div class="d-text">
+          <div class="d-head"><span class="d-num">${esc(it.prefix)}${state.old && it.old_prefix ? `<span class="d-old">(was ${esc(it.old_prefix)})</span>` : ''}</span> <span class="d-th">${esc(it.th_name)}</span></div>
+          <div class="d-en">${esc(it.en_name)}</div>
+          ${it.cn_name ? `<div class="d-cn">${esc(it.cn_name)}</div>` : ''}
+          ${it.desc_en ? `<div class="d-desc">${esc(it.desc_en)}</div>` : ''}
+          <div class="d-bottom"><div class="d-badges">${b.join('')}</div>${priceHTML}</div>
+        </div>
+      </article>`;
+  }
+
+  // Filler tile for leftover space on a category's last page (classic layout)
+  const QR_MENU = '../images/res/qr-menu.svg';      // -> https://tawansycnx.github.io/index.html
+  const QR_REVIEW = '../images/res/qr-review.svg';  // -> Google Maps page (write a review)
+  function fillerHTML(p){
+    const free = p.rows - p.items.length;
+    if (state.layout !== 'classic' || free < 1) return '';
+    const small = free / p.rows <= 0.25;
+    return `<div class="filler${small ? ' f-small' : ''}" style="grid-row:span ${free}">
+      <div class="f-qr"><img src="${QR_MENU}" alt="QR online menu"><div class="t1">Full menu online</div><div class="t2">เมนูออนไลน์<br>在线菜单</div></div>
+      <img class="f-logo" src="${LOGO}" alt="Tawansy">
+      <div class="f-qr"><img src="${QR_REVIEW}" alt="QR Google review"><div class="t1">Review us on Google</div><div class="t2">รีวิวเราบน Google<br>在Google上评价我们</div></div>
+    </div>`;
+  }
+
+  // Options key: the option words used on THIS page, in EN · TH · CN (one line in the footer; Artee 2026-10-06)
+  function optionsKey(items){
+    const seen = new Map();
+    const lab = v => String(v||'').split(/[|;]+/).map(x => x.split(/[:=]/)[0].trim());
+    items.forEach(it => {
+      const en = lab(it.options_en), th = lab(it.options_th), cn = lab(it.options_cn);
+      en.forEach((w, i) => { if (w && !seen.has(w)) seen.set(w, [th[i] || '', cn[i] || '']); });
+    });
+    if (!seen.size) return '';
+    return `<span class="okey">${[...seen].map(([en, [th, cn]]) => `<span>${esc([en, th, cn].filter(Boolean).join(' · '))}</span>`).join('')}</span>`;
+  }
+  // keep the key on one line: shrink the text a little if a page ever has too many words
+  function fitKeys(){
+    document.querySelectorAll('.okey').forEach(k => {
+      let pt = 6.3;
+      while (k.scrollWidth > k.clientWidth + 1 && pt > 4.6) { pt -= 0.2; k.style.fontSize = pt + 'pt'; }
+    });
+  }
+
+  // split n dishes into the fewest pages of 3-4 dishes (4s first); 5 -> [3,2], 1/2 -> one page
+  function splitPages(n){
+    if (n <= 4) return n ? [n] : [];
+    const p = Math.ceil(n / 4);
+    if (n < 3 * p) return [3, n - 3];             // only n = 5
+    const fours = n - 3 * p;
+    return Array.from({ length: p }, (_, i) => i < fours ? 4 : 3);
+  }
+
+  function fitTitles(){
+    document.querySelectorAll('.p-title').forEach(t => {
+      let k = 1;
+      while (t.scrollWidth > t.clientWidth + 1 && k > 0.55) {
+        k -= 0.05;
+        t.querySelector('.th').style.fontSize = (32 * k) + 'pt';
+        t.querySelector('.en').style.fontSize = (26 * k) + 'pt';
+        const cn = t.querySelector('.cn'); if (cn) cn.style.fontSize = (15 * k) + 'pt';
+      }
+    });
+  }
+
+  function render(menu, cats){
+    const per = state.per;
+    const byOld = new Map(menu.map(it => [String(it.prefix).trim(), it]));
+    const used = new Set();
+    const pages = [];
+    NEW_CATS.forEach((nc, ci) => {
+      const cat = { en_name: nc.en, th_name: nc.th, cn_name: nc.cn };
+      const items = [];
+      nc.old.forEach(o => {
+        const it = byOld.get(o); if (!it) return; used.add(o);
+        if (!state.oos && isOos(it)) return;
+        items.push(Object.assign({}, it, { prefix: (ci + 1) + '-' + (items.length + 1), old_prefix: o }));
+      });
+      // 3 per page: always 3 (large).
+      // Up to 4 (Artee 2026-10-06): fewest pages, every page 3 or 4 dishes, 4s first (6 -> 3+3, 7 -> 4+3, 10 -> 4+3+3).
+      // Only when impossible (1, 2 or 5 dishes) a page gets fewer: 5 -> 3+2.
+      const sizes = per === 3 ? [] : splitPages(items.length);
+      if (per === 3) { for (let i = 0; i < items.length; i += 3) pages.push({ cat, items: items.slice(i, i + 3), cont: i > 0, rows: 3 }); }
+      else { let i = 0; sizes.forEach((sz, k) => {
+        // Sides (qr) page: 3 dishes + QR/logo tile in the 4th slot (Artee 2026-10-06)
+        const rows = (nc.qr && k === sizes.length - 1 && sz < 4) ? 4 : Math.max(sz, 3);
+        pages.push({ cat, items: items.slice(i, i + sz), cont: i > 0, rows }); i += sz; }); }
+    });
+    const missing = menu.map(it => String(it.prefix).trim()).filter(p => !used.has(p));
+    if (missing.length) console.warn('Not in any new category:', missing);
+    $('pages').className = 'pages layout-classic';
+    $('pages').innerHTML = pages.map((p, n) => `
+      <section class="page rows-${p.rows}">
+        <header class="p-head">
+          <div class="p-title"><span class="th">${esc(p.cat.th_name)}</span><span class="en">${esc(p.cat.en_name)}</span><span class="cn">${esc(p.cat.cn_name)}</span></div>
+          ${state.draft ? '<span class="draft-tag">DRAFT</span>' : ''}
+          <img class="p-logo" src="${LOGO}" alt="Tawansy">
+        </header>
+        <div class="p-rule"></div>
+        <div class="p-body" style="--rows:${p.rows}">${p.items.map((it, i) => dishHTML(it, i, p.rows)).join('')}${fillerHTML(p)}</div>
+        <footer class="p-foot">
+          <img class="halal" src="${HALAL}" alt="Halal">
+          ${LEGEND.replace('<div class="legend">', '<div class="legend">' + optionsKey(p.items))}
+          <span class="f-spacer"></span>
+        </footer>
+      </section>`).join('');
+    $('pageCount').textContent = `${pages.length} pages · ${pages.reduce((s,p)=>s+p.items.length,0)} dishes` + (missing.length ? ` · NOT PLACED: ${missing.join(', ')}` : '');
+    fitKeys();
+    fitTitles();
+    if (document.fonts) document.fonts.ready.then(() => { fitTitles(); fitKeys(); });
+    toJpeg().then(() => { document.documentElement.dataset.ready = '1'; });
+  }
+
+  // Chrome stores .webp photos uncompressed inside a PDF (~50 MB menu).
+  // Converting each photo to JPEG first keeps the saved PDF small.
+  const jpegCache = {};
+  function toJpeg(){
+    const imgs = [...document.querySelectorAll('.d-photo img')];
+    return Promise.all(imgs.map(img => new Promise(done => {
+      const src = img.getAttribute('src');
+      const box = img.parentElement;
+      if (jpegCache[src]) { img.src = jpegCache[src].url; box.classList.toggle('cutout', jpegCache[src].cutout); return done(); }
+      const tmp = new Image();
+      tmp.onload = () => {
+        try {
+          const c = document.createElement('canvas');
+          c.width = tmp.naturalWidth; c.height = tmp.naturalHeight;
+          const ctx = c.getContext('2d');
+          ctx.drawImage(tmp, 0, 0);
+          const px = ctx.getImageData(0, 0, c.width, c.height).data;
+          let cutout = false;                       // any see-through pixels?
+          for (let i = 3; i < px.length; i += 4 * 97) if (px[i] < 250) { cutout = true; break; }
+          ctx.globalCompositeOperation = 'destination-over';
+          ctx.fillStyle = '#ffffff';                // white behind see-through areas (JPEG has no transparency)
+          ctx.fillRect(0, 0, c.width, c.height);
+          jpegCache[src] = { url: c.toDataURL('image/jpeg', 0.85), cutout };
+          img.src = jpegCache[src].url;
+          box.classList.toggle('cutout', cutout);
+        } catch (e) { /* keep original image */ }
+        done();
+      };
+      tmp.onerror = () => done();
+      tmp.src = src;
+    })));
+  }
+
+  function syncUrl(){
+    const q = new URLSearchParams();
+    if (state.per === 4) q.set('per', '4');
+    if (!state.old) q.set('old', '0');
+    if (!state.draft) q.set('draft', '0');
+    if (state.oos) q.set('oos', '1');
+    history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : ''));
+  }
+
+  Promise.all([MENU_URL, CAT_URL].map(u => fetch(u, { cache:'no-store' }).then(r => { if(!r.ok) throw new Error(u + ' ' + r.status); return r.json(); })))
+    .then(([menu, cats]) => {
+      $('status').remove();
+      const draw = () => { syncUrl(); render(menu, cats); };
+      $('optPer').onchange = e => { state.per = Number(e.target.value); draw(); };
+      $('optOld').onchange = e => { state.old = e.target.checked; draw(); };
+      $('optDraft').onchange = e => { state.draft = e.target.checked; draw(); };
+      $('optOos').onchange = e => { state.oos = e.target.checked; draw(); };
+      render(menu, cats);
+    })
+    .catch(err => {
+      $('status').innerHTML = 'Could not load the menu data (' + esc(err.message) + ').<br>' +
+        'Open this page through a web server (the live site, or VS Code “Live Server”) — not by double-clicking the file.';
+    });
+})();
+</script>
+</body>
+</html>
